@@ -3,22 +3,32 @@
 
 <head>
   <%- include('../partials/head') %>
-    <!-- Include any custom css classes that you want available on this page here -->
-    <style>
 
-    </style>
+  <link rel="stylesheet" href="/static/styles/main.css">
 </head>
 
 <body>
-  <header>
+  <nav>
     <%- include('../partials/nav') %>
+  </nav>
+  <header>
+    <h1>Ruffhouse</h1>
+    <p>Your one and only dog collection</p>
   </header>
+  <main>
+    <section class="posts__featured">
+      <h2 class="section--title">Featured</h2>
+      <div class="section--scroll">
+       <% for(var i=0; i < 8; i++) {%>
+          <%- include('../partials/scroll-item') %>
+       <% } %>
+      </div>
+    </section>
+    <section class="posts__latest"></section>
+  </main>
 
-  Fill me in!
-  <!-- CS5356 TODO #1 Add your landing page here -->
+  <%- include('../partials/footer') %>
 
 </body>
-
-<%- include('../partials/footer') %>
 
 </html>
