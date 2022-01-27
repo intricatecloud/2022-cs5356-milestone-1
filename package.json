@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/index.js & yarn run scss",
+    "scss": "sass --watch src/styles/main.scss public/styles/main.css"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +15,7 @@
     "cookie-parser": "^1.4.6",
     "ejs": "^3.1.6",
     "express": "^4.17.2",
+    "firebase": "^9.6.4",
     "firebase-admin": "^10.0.2",
     "nodemon": "^2.0.15"
   },
