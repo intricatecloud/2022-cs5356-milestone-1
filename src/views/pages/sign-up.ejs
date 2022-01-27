@@ -50,7 +50,33 @@
     const app = firebase.initializeApp(firebaseConfig);
 
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+    
+    
+    /////// HELPERS
 
+    function getCookie(name) {
+      const v = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
+      return v ? v[2] : null;
+    }
+
+    const postIdTokenToSessionLogin = function (url, idToken, csrfToken) {
+      return fetch(url, {
+        type: "POST",
+        data: { idToken: idToken, csrfToken: csrfToken },
+      });
+    };
+
+   // Send IDtoken to SessionLogin
+    // async function postIdTokenToSessionLogin(data) {
+    //   const response = await fetch("/sessionLogin", {
+    //     method: 'POST',
+    //     body: JSON.stringify(data) 
+    //   });
+    //   console.log("response.json()", response.json())
+    //   return response.json(); 
+    // }
+
+    // Handle login form
     document
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
@@ -58,11 +84,39 @@
         const login = event.target.login.value;
         const password = event.target.password.value;
 
+        // DONE ✅
+
         // CS5356 TODO #3
         // Create a new user using the Firebase SDK for Web
-        // Get the users ID token
-        // Start a new session with the users ID token
-        // Redirect the user to the /dashboard
+
+        firebase.auth().createUserWithEmailAndPassword(login, password)
+        .then((userCredential) => {
+          // Signed in 
+
+          // Get the users ID token
+          let user = userCredential.user;
+          let userIdToken = user.getIdToken();
+
+          // Start a new session with the users ID token
+          return userIdToken.then(idToken => {
+
+            const csrfToken = getCookie('csrfToken')
+            return postIdTokenToSessionLogin('/sessionLogin', idToken, csrfToken)
+          });
+        }).then(() => {
+          // Redirect the user to the /dashboard
+          window.location.assign('/dashboard');
+        })
+        .catch((error) => {
+          let errorCode = error.code;
+          let errorMessage = error.message;
+          
+          // PERSONAL TODO 
+          // Send data to error message field in DOM
+          console.log(errorCode, errorMessage)
+        });
+
+ 
 
         return false;
       });
