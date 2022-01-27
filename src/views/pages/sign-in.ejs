@@ -27,7 +27,6 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
 <script>
-const firebaseConfigSecure = require("./config/firebaseConfig");
 
   window.onload = () => {
     const firebaseConfig = {
@@ -50,6 +49,8 @@ const firebaseConfigSecure = require("./config/firebaseConfig");
 
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
+
+
     document
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
@@ -57,11 +58,33 @@ const firebaseConfigSecure = require("./config/firebaseConfig");
         const login = event.target.login.value;
         const password = event.target.password.value;
 
+
+        // DONE ✅
+
         // CS5356 TODO #3
         // Sign in using the Firebase SDK for Web
-        // Get the users ID token
-        // Start a new session with the users ID token
-        // Redirect the user to the /dashboard
+
+        firebase.auth().signInWithEmailAndPassword(login, password)
+        .then((userCredential) => {
+          // Signed in 
+
+          // Get the users ID token
+          let user = userCredential.user;
+          let userUid = user.uid;
+
+        
+          // Start a new session with the users ID token
+          // Redirect the user to the /dashboard
+        })
+        .catch((error) => {
+          let errorCode = error.code;
+          let errorMessage = error.message;
+          
+          // PERSONAL TODO 
+          // Send data to error message field in DOM
+          console.log(errorCode, errorMessage)
+        });
+
 
         return false;
       });
