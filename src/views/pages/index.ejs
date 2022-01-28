@@ -4,6 +4,9 @@
 <head>
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Landing Page</title>
     <style>
 
     </style>
@@ -30,24 +33,28 @@
 
   <!-- columns  -->
   <!-- feature sets -->
-  <div class="columns">
-    <div class="column">
-      <div class="card">
-        <div class="card-content">
-          <h2 class="title">View</h2>
-          <h3 class="subtitle">Find photos for you and your dog to enjoy</h3>
+  <div class="block">
+    <div class="columns">
+      <div class="column">
+        <div class="card">
+          <div class="card-content">
+            <h2 class="title">View</h2>
+            <h3 class="subtitle">Find photos for you and your dog to enjoy</h3>
+          </div>
         </div>
-      </div>
-      <div class="card">
-        ,<div class="card-content">
-          <h2 class="title">Share</h2>
-          <h3 class="subtitle">Share photos of your pup with your puppy's pals</h3>
+      </div>  
+      <div class="column">
+        <div class="card">
+          ,<div class="card-content">
+            <h2 class="title">Share</h2>
+            <h3 class="subtitle">Share photos of your pup with your puppy's pals</h3>
+          </div>
         </div>
-      </div>
+      </div>    
     </div>
   </div>
 <!-- Sign up -->
-
+<a href="/pages/sign-up.ejs" class="button is-link">Join Ruffhouse</a>
 </body>
 
 <%- include('../partials/footer') %>
