@@ -84,7 +84,25 @@ app.use("/static", express.static("static/"));
 // use res.render to load up an ejs view file
 // index page
 app.get("/", function (req, res) {
-  res.render("pages/index");
+  let features = [
+    {
+      title: "Dog-first",
+      text: "Lorem Ipsum Dolor sit amet",
+      img: "/static/icon-usp_1.png",
+    },
+    {
+      title: "Be in control",
+      text: "Lorem Ipsum Dolor sit amet",
+      img: "/static/icon-usp_2.png",
+    },
+    {
+      title: "Roof yourself",
+      text: "Lorem Ipsum Dolor sit amet",
+      img: "/static/icon-usp_3.png",
+    },
+  ];
+
+  res.render("pages/index", { features: features });
 });
 
 app.get("/sign-in", function (req, res) {

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/index.js & yarn run scss",
-    "scss": "sass --watch src/styles/main.scss public/styles/main.css"
+    "scss": "sass --watch src/styles:static/styles"
   },
   "author": "",
   "license": "ISC",
@@ -17,7 +17,9 @@
     "express": "^4.17.2",
     "firebase": "^9.6.4",
     "firebase-admin": "^10.0.2",
-    "nodemon": "^2.0.15"
+    "node-sass": "^7.0.1",
+    "nodemon": "^2.0.15",
+    "sass": "^1.49.0"
   },
   "devDependencies": {
     "cypress": "^9.3.1"

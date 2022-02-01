@@ -14,17 +14,39 @@
   <header>
     <h1>Ruffhouse</h1>
     <p>Your one and only dog collection</p>
+    <a class="button shiny" href="#">Big shiny button</a>
   </header>
   <main>
     <section class="posts__featured">
-      <h2 class="section--title">Featured</h2>
+      <h2 class="section--title">Our golden bois</h2>
       <div class="section--scroll">
        <% for(var i=0; i < 8; i++) {%>
           <%- include('../partials/scroll-item') %>
        <% } %>
       </div>
     </section>
-    <section class="posts__latest"></section>
+    <section class="product__usp">
+      <h2 class="section--title">Our best assets, are yours too</h2>
+
+      <div class="columns">
+          <% features.forEach(function(feature){ %>
+            <div class="usp--box">
+        
+              <div class="icon--wrapper">
+                <img src=<%= feature.img %> alt="Icon of a lock in 3D">
+              </div>
+              <h3><%= feature.title %></h3>
+              <p><%= feature.text %></p>
+            </div>
+          <% }) %>
+
+      </div>
+    
+    </section>
+    <section class="product__cta">
+      <h2 class="section--title">Not convinced? Did you know our service is free?</h2>
+      <a  class="button is-large shiny" href="#">Wow, sign me up</a>
+    </section>
   </main>
 
   <%- include('../partials/footer') %>

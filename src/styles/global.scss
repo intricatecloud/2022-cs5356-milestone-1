@@ -11,7 +11,7 @@
   --c-grey_light: #f9f9f9;
   --c-grey_medium: #dbdbdb;
   --c-grey_dark: #797979;
-  --c-grey_darkest: #151515;
+  --c-grey_darkest: #21232c;
 
   // Theming
 
@@ -82,6 +82,22 @@ body {
   }
 }
 
+h1 {
+  font-size: clamp(2rem, calc(2rem + 2vw), 8rem);
+  color: var(--c-white);
+  + p {
+    opacity: 0.6;
+    color: var(--c-white);
+  }
+}
+
+h2 {
+  font-size: clamp(1.8rem, calc(1.8rem + 1vw), 6rem);
+  + p {
+    opacity: 0.6;
+  }
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -98,4 +114,39 @@ li {
   @media screen and (max-width: 720px) {
     font-size: 0.8rem;
   }
+}
+
+@mixin basicBox {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  backdrop-filter: blur(2px);
+  color: var(--c-white);
+
+  h3,
+  h4 {
+    font-size: 1.8rem;
+    + p {
+      opacity: 0.6;
+    }
+  }
+}
+
+@mixin bgShiny {
+  background: radial-gradient(
+      ellipse farthest-corner at right bottom,
+      #fedb37 0%,
+      #fdb931 8%,
+      #9f7928 30%,
+      #8a6e2f 40%,
+      transparent 80%
+    ),
+    radial-gradient(
+      ellipse farthest-corner at left top,
+      #ffffff 0%,
+      #ffffac 8%,
+      #d1b464 25%,
+      #5d4a1f 62.5%,
+      #5d4a1f 100%
+    );
 }
