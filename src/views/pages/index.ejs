@@ -5,7 +5,15 @@
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
     <style>
-
+      .hero {
+        background-image: linear-gradient(rgba(0,0,0, .3),rgba(0,0,0, .3)), url(https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80);
+      }
+      .title {
+        font-family: 'Balsamiq Sans', cursive;
+      }
+      .subtitle {
+        font-family: 'Balsamiq Sans', cursive;
+      }
     </style>
 </head>
 
@@ -13,8 +21,15 @@
   <header>
     <%- include('../partials/nav') %>
   </header>
+  <section class="hero is-fullheight is-primary">
 
-  Fill me in!
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title is-size-1">Ruffhouse</h1>
+        <h2 class="subtitle">It's ruff out there. Socialize with other dogs today.</h2>
+      </div>
+    </div>
+  </section>
   <!-- CS5356 TODO #1 Add your landing page here -->
 
 </body>
