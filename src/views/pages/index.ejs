@@ -5,6 +5,16 @@
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
     <style>
+      .has-bg-img {
+        background-image:
+          linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
+          url(static/hero-bg.jpg);
+        background-size: cover;
+      }
+
+      .card {
+        height: 100%;
+      }
 
     </style>
 </head>
@@ -14,8 +24,68 @@
     <%- include('../partials/nav') %>
   </header>
 
-  Fill me in!
   <!-- CS5356 TODO #1 Add your landing page here -->
+  <!-- Hero Product Overview -->
+    <section class="hero is-fullheight has-bg-img">
+      <div class="hero-body is-align-items-flex-start">
+        <div class="container">
+          <p class="title is-1 has-text-white">Ruffhouse</p>
+          <p class="subtitle is-4 has-text-white">The best place to share, browse, and discuss dog photos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <div class="section">
+      <p class="title is-2 has-text-centered">Features</p>
+      <div class="columns">
+        <div class="column">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-square">
+                <img src="static/stages-and-rubrics.svg" alt="Share image">
+              </figure>
+              <div class="card-content">
+                <p class="subtitle is-4">Easily share your favorite dog photos with others.</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-square">
+                <img src="static/alarm-clock.svg" alt="Browse image">
+              </figure>
+              <div class="card-content">
+                <p class="subtitle is-4">Browse a constant stream of the best dog photos ever taken.</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-square">
+                <img src="static/charts.svg" alt="Comment image">
+              </figure>
+              <div class="card-content">
+                <p class="subtitle is-4">Comment and react to show your support!</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sign Up -->
+    <div class="section has-background-primary-light">
+      <p class="title is-2 has-text-centered">Ready to join the fun?</p>
+      <div class="buttons are-large is-justify-content-center">
+        <button class="button is-primary">Sign Up</button>
+      </div>
+    </div>
+
 
 </body>
 
