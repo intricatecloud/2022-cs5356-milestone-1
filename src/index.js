@@ -66,7 +66,6 @@ app.post("/sessionLogin", async (req, res) => {
   const expiresIn = 60 * 60 * 24 * 5 * 1000;
   const options = { maxAge: expiresIn, httpOnly: true, secure: true }
 
-  // console.log("pde", firebaseApp.getAuth);
   adminAuth.getAuth()
   .createSessionCookie(idToken, { expiresIn })
   .then(
@@ -92,6 +91,10 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   // Get the message that was submitted from the request body
   // Get the user object from the request body
   // Add the message to the userFeed so its associated with the user
+  const message = req.body.message;
+  const user = req.user;
+  await userFeed.add(user, message);
+  return res.redirect("/dashboard");
 });
 
 app.listen(port);

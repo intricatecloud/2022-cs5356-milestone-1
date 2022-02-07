@@ -71,9 +71,22 @@
         firebase.auth().createUserWithEmailAndPassword(login, password)
           .then((userCredential) => {
             // Signed in 
-            const user = userCredential.user;
-            console.log("pde ", user);
-            window.location.href = "/dashboard";
+            firebase.auth().signInWithEmailAndPassword(login, password)
+              .then(async (userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                const idToken = await user.getIdToken();
+
+                await fetch('/sessionLogin', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ idToken: idToken })
+                })
+                  .then(() => {
+                    console.log("Successfully posted idToken!");
+                    document.location = "/dashboard";
+                  });
+              })
           })
           .catch((error) => {
             const errorCode = error.code;
