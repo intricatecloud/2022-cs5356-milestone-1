@@ -11,17 +11,27 @@
   </header>
 
   <div class="container">
-    Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
-    <form id="login-form">
-      <label>Login</label>
-      <input id="login" type="text" name="login" />
-      <label>Password</label>
-      <input type="password" name="password" />
-      <button>Log in</button>
-    </form>
-    <div id="login-error" style="display: none;">
-    </div>
+
     <a href="/dashboard">Dashboard</a>
+
+    <div class='columns is-centered is-desktop'>
+      <div class='column is-one-quarter'>
+
+        <form id="login-form">
+          <input class='column is-full m-5' id='login' type="text" name="login" placeholder="Email address" />
+          <input class='column is-full m-5' id='password' type="password" name="password" placeholder="Password" />
+          <button class='column is-full mt-5 ml-5 mr-5'>
+            Sign Up
+          </button>
+          <div class='column pl-5'>
+            Already have an account?
+            <a href="/sign-in">Sign In</a>
+          </div>
+          <div id="login-error" style="color: red;"> </div>
+      </div>
+      </form>
+    </div>
+
   </div>
 </body>
 
@@ -32,9 +42,14 @@
 
   window.onload = () => {
     console.log('Running onload')
+
     const firebaseConfig = {
-      // CS5356 TODO #2
-      // Copy your Firebase config here too
+      apiKey: "AIzaSyDx0Mevlnf4oDjDYidM2EzkOiOpXHoiZBo",
+      authDomain: "xqz-cs5356.firebaseapp.com",
+      projectId: "xqz-cs5356",
+      storageBucket: "xqz-cs5356.appspot.com",
+      messagingSenderId: "748563665138",
+      appId: "1:748563665138:web:5e74ce1cb1e0787db0006b"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -53,6 +68,18 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+        firebase.auth().createUserWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            console.log("pde ", user);
+            window.location.href = "/dashboard";
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            document.getElementById("login-error").textContent = errorMessage;
+          });
 
         return false;
       });
