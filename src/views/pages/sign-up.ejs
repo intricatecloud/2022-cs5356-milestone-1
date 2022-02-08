@@ -57,6 +57,21 @@
 
         // CS5356 TODO #3
         // Create a new user using the Firebase SDK for Web
+        import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+        const auth = getAuth();
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+          });
+
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
