@@ -58,7 +58,18 @@
           .then((userCredential) => {
             // Signed in 
             var user = userCredential.user;
-            // ...
+            return user.getIdToken().then(idToken => {
+              // Session login endpoint is queried and the session cookie is set.
+              // CSRF protection should be taken into account.
+              // ...
+              fetch('/sessionLogin', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({idToken})
+              }).then(() => {
+                window.location.href = '/dashboard'
+              })
+            });
           })
           .catch((error) => {
             var errorCode = error.code;

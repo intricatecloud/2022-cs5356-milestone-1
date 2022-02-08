@@ -71,7 +71,7 @@ app.post("/sessionLogin", async (req, res) => {
     .then(
       (sessionCookie) => {
         // Set cookie policy for session cookie.
-        const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+        const options = { maxAge: expiresIn, httpOnly: true };
         res.cookie('session', sessionCookie, options);
         res.status(200).send(JSON.stringify({status: "success"}));
         // res.status(200).send();

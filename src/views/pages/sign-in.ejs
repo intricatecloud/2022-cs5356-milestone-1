@@ -64,19 +64,16 @@
           .then(userCredential => {
             // Signed in
             var user = userCredential.user;
-            debugger
             // ...
             return user.getIdToken().then(idToken => {
               // Session login endpoint is queried and the session cookie is set.
               // CSRF protection should be taken into account.
               // ...
-              debugger
               fetch('/sessionLogin', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({idToken})
               }).then(() => {
-                debugger
                 window.location.href = '/dashboard'
               })
             });
