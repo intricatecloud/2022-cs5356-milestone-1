@@ -3,6 +3,9 @@
 
 <head>
   <%- include('../partials/head') %>
+  <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.0/css/bulma.min.css">
+	<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 </head>
 
 <body>
@@ -11,39 +14,58 @@
   </header>
 
 
-  <form id="login-form">
-    <input type="text" name="login" placeholder="Your user name" />
-    <input type="password" name="password" id="password" />
-    <button>
-      Sign In
-    </button>
-    <div id="login-error">
+  <section class="section">
+    <div class="container">
+      <div class="columns">
+        <form id="login-form" method="POST">
 
+
+          <lable for="username">Username</lable>
+          <input type="text" name="username" placeholder="Your user name" />
+      
+          <lable for="Password">Password</lable>
+          <input required type="password" name="password" id="password" />
+          <button>
+            Sign In
+          </button>
+          <div id="login-error">
+      
+          </div>
+          </div>
+        </form>
+      </div>
     </div>
-    </div>
-  </form>
+  </section>
+
+  
 </body>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
 <script>
-
   window.onload = () => {
     const firebaseConfig = {
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
+      apiKey: "AIzaSyBGJ2lHJVFJbx3ZkIrVdzK-Ls0rTfJ55J8",
+      authDomain: "building-24f8f.firebaseapp.com",
+      projectId: "building-24f8f",
+      storageBucket: "building-24f8f.appspot.com",
+      messagingSenderId: "904907594090",
+      appId: "1:904907594090:web:e4b6772b8e34a6f7982d13",
+      measurementId: "G-R6YSSLXB1F"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
-
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+    const auth = firebase.auth();
 
     document
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
         event.preventDefault();
-        const login = event.target.login.value;
+        const username = event.target.username.value;
         const password = event.target.password.value;
 
         // CS5356 TODO #3
@@ -52,6 +74,18 @@
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
 
+        firebase.auth().createUserWithEmailAndPassword(username, password)
+        .then((userCredential) => {
+          // Signed in 
+          debugger
+          var user = userCredential.user;
+          window.location.href = "/dashboard";
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // ..
+        });
         return false;
       });
   };
