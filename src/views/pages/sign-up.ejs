@@ -35,6 +35,13 @@
     const firebaseConfig = {
       // CS5356 TODO #2
       // Copy your Firebase config here too
+      apiKey: "AIzaSyDT3lkF3PrL1PeykpouOdi_cq7bjUh_lBk",
+      authDomain: "csc5356-milestone1.firebaseapp.com",
+      projectId: "csc5356-milestone1",
+      storageBucket: "csc5356-milestone1.appspot.com",
+      messagingSenderId: "78775062001",
+      appId: "1:78775062001:web:01a3609e445269540d0850",
+      measurementId: "G-CSWH6QJ65W"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -45,7 +52,7 @@
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
         event.preventDefault();
-        const login = event.target.login.value;
+        const email = event.target.login.value;
         const password = event.target.password.value;
 
         // CS5356 TODO #3
@@ -53,7 +60,18 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
-
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Signed in 
+          var user = userCredential.user;
+          // ...
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // ..
+        });
+        debugger
         return false;
       });
   };

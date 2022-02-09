@@ -9,15 +9,15 @@ const port = process.env.PORT || 8080;
 // CS5356 TODO #2
 // Uncomment this next line after you've created
 // serviceAccountKey.json
-// const serviceAccount = require("./../config/serviceAccountKey.json");
+const serviceAccount = require("../serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
 
 // CS5356 TODO #2
 // Uncomment this next block after you've created serviceAccountKey.json
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-// });
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 // use cookies
 app.use(cookieParser());
@@ -58,7 +58,23 @@ app.post("/sessionLogin", async (req, res) => {
   // Create a session cookie using the Firebase Admin SDK
   // Set that cookie with the name 'session'
   // And then return a 200 status code instead of a 501
-  res.status(501).send();
+  const idToken = req.body.idToken;
+
+  const expiresIn = 60 * 60 * 24 * 5 * 1000;
+
+  admin
+    .auth()
+    .createSessionCookie(idToken, { expiresIn })
+    .then(
+      sessionCookie => {
+        const options = { maxAge: expiresIn, httpOnly: true};
+        res.cookie("session", sessionCookie, options);
+        res.status(200).send(JSON.stringify({ status : "success"}));
+      },
+      error => {
+        res.status(401).send("UNAUTHORIZED REQUEST!");
+      }
+    ) 
 });
 
 app.get("/sessionLogout", (req, res) => {
@@ -75,3 +91,29 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
 
 app.listen(port);
 console.log("Server started at http://localhost:" + port);
+
+
+
+// // Firebase initialization
+// // Import the functions you need from the SDKs you need
+// import { initializeApp } from "firebase/app";
+// import { getAnalytics } from "firebase/analytics";
+// // TODO: Add SDKs for Firebase products that you want to use
+// // https://firebase.google.com/docs/web/setup#available-libraries
+
+// // Your web app's Firebase configuration
+// // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// const firebaseConfig = {
+//   apiKey: "AIzaSyDT3lkF3PrL1PeykpouOdi_cq7bjUh_lBk",
+//   authDomain: "csc5356-milestone1.firebaseapp.com",
+//   projectId: "csc5356-milestone1",
+//   storageBucket: "csc5356-milestone1.appspot.com",
+//   messagingSenderId: "78775062001",
+//   appId: "1:78775062001:web:01a3609e445269540d0850",
+//   measurementId: "G-CSWH6QJ65W"
+// };
+
+// // Initialize Firebase
+// const firebase_app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(firebase_app);
+
