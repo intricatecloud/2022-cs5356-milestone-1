@@ -17,14 +17,18 @@
         height: 100%;
       }
       .hero-background.is-transparent {
-        opacity: 0.3;
+        opacity: 0.35;
       }
 
       .tile.is-child.box .title {
         color: #4a4a4a;
       }
       .tile.is-child.box .subtitle {
-          color: #4a4a4a;
+        color: #4a4a4a;
+      }
+
+      .hero {
+        background-color: rgb(234, 234, 234);
       }
 
     </style>
@@ -38,7 +42,7 @@
   <!-- <h1>Fill me ino!</h1>
   CS5356 TODO #1 Add your landing page here -->
 
-  <div class="hero is-halfheight is-primary has-background" height="50%">
+  <div class="hero is-halfheight grey has-background" height="50%">
     <img alt="hero-bg" class="hero-background is-transparent" src="../../static/hero-bg.jpg" />
     <div class="hero-body">
       <div class="container">
@@ -54,43 +58,49 @@
 
   <section class="hero is-info">
     <div class="hero-body">
-      <p class="title">
-        Feature Sets
-      </p>
-      <div class="tile is-ancestor">
-        <div class="tile is-parent">
-          <article class="tile is-child box">
-            <p class="title ">Hello World</p>
-            <p class="subtitle">What is up?</p>
-          </article>
+      <div class="container">
+        <p class="title">
+          Feature Sets
+        </p>
+        <div class="tile is-ancestor">
+          <div class="tile is-parent">
+            <article class="tile is-child box">
+              <p class="title ">Hello World</p>
+              <p class="subtitle">What is up?</p>
+            </article>
+          </div>
+          <div class="tile is-parent">
+            <article class="tile is-child box">
+              <p class="title">Foo</p>
+              <p class="subtitle">Bar</p>
+            </article>
+          </div>
+          <div class="tile is-parent">
+            <article class="tile is-child box">
+              <p class="title">Third column</p>
+              <p class="subtitle">With some content</p>
+              <div class="content">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
+              </div>
+            </article>
+          </div>
         </div>
-        <div class="tile is-parent">
-          <article class="tile is-child box">
-            <p class="title">Foo</p>
-            <p class="subtitle">Bar</p>
-          </article>
-        </div>
-        <div class="tile is-parent">
-          <article class="tile is-child box">
-            <p class="title">Third column</p>
-            <p class="subtitle">With some content</p>
-            <div class="content">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-            </div>
-          </article>
-        </div>
-    </div>
+      </div>
     </div>
   </section>
 
-  <section class="hero is-primary">
+  <section class="hero grey">
     <div class="hero-body">
-      <p class="title">
-        How to Sign Up
-      </p>
-      <p class="subtitle">
-        Primary subtitle
-      </p>
+      <div class="container">
+        <p class="title">
+          How to Sign Up
+        </p>
+        <p class="subtitle">
+          Primary subtitle
+        </p>
+        <a href="/sign-up" class="button is-info">Sign Up
+        </a>
+      </div>
     </div>
   </section>
 
