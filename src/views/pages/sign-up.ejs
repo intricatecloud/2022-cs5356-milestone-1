@@ -35,6 +35,12 @@
     const firebaseConfig = {
       // CS5356 TODO #2
       // Copy your Firebase config here too
+      apiKey: "AIzaSyAL3Kpw3UjhROUgRQpnmV0m9NDDoZQw7D0",
+      authDomain: "milestone-1-gl.firebaseapp.com",
+      projectId: "milestone-1-gl",
+      storageBucket: "milestone-1-gl.appspot.com",
+      messagingSenderId: "358158722021",
+      appId: "1:358158722021:web:0feaf80c70dcda7388450c"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -47,13 +53,26 @@
         event.preventDefault();
         const login = event.target.login.value;
         const password = event.target.password.value;
+        let uid;
 
         // CS5356 TODO #3
         // Create a new user using the Firebase SDK for Web
+        firebase.auth().createUserWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+            // Signed in 
+            var user = userCredential.user;
+            uid = user.uid
+            // ...
+          })
+          .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ..
+          });
         // Get the users ID token
         // Start a new session with the users ID token
+        //window.location.assign('/dashboard'));
         // Redirect the user to the /dashboard
-
         return false;
       });
   };

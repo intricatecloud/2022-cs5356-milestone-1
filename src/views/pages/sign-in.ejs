@@ -31,8 +31,12 @@
   window.onload = () => {
     const firebaseConfig = {
       // CS5356 TODO #2
-      // Create your own Firebase project. See the assignment for
-      // where you can get the Firebase config
+      apiKey: "AIzaSyAL3Kpw3UjhROUgRQpnmV0m9NDDoZQw7D0",
+      authDomain: "milestone-1-gl.firebaseapp.com",
+      projectId: "milestone-1-gl",
+      storageBucket: "milestone-1-gl.appspot.com",
+      messagingSenderId: "358158722021",
+      appId: "1:358158722021:web:0feaf80c70dcda7388450c"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -45,13 +49,30 @@
         event.preventDefault();
         const login = event.target.login.value;
         const password = event.target.password.value;
-
         // CS5356 TODO #3
         // Sign in using the Firebase SDK for Web
+        firebase.auth().signInWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+            // Signed in 
+            var user = userCredential.user;
+            var token = userCredential.user.getIdToken()
+            return userCredential.user.getIdToken().then(
+              idToken => {
+                fetch('/sessionLogin', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ idToken })
+                }).then(() => console.log('success!'))
+              }
+            );
+          }).then(() => window.location.assign('/dashboard'))
+          .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+          });
         // Get the users ID token
         // Start a new session with the users ID token
-        // Redirect the user to the /dashboard
-
+        //window.location.assign('/dashboard'));
         return false;
       });
   };
