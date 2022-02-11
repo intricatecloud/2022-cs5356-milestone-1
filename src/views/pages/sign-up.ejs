@@ -1,62 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <%- include('../partials/head') %>
+  </head>
 
-<head>
-  <%- include('../partials/head') %>
-</head>
+  <body>
+    <header><%- include('../partials/nav') %></header>
 
-<body>
-  <header>
-    <%- include('../partials/nav') %>
-  </header>
-
-  <div class="container">
-    Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
-    <form id="login-form">
-      <label>Login</label>
-      <input id="login" type="text" name="login" />
-      <label>Password</label>
-      <input type="password" name="password" />
-      <button>Log in</button>
-    </form>
-    <div id="login-error" style="display: none;">
+    <div class="container">
+      Sign Up for a new account or
+      <a href="/sign-in">click here to sign in with an existing account</a>
+      <form id="login-form">
+        <label>Login</label>
+        <input id="login" type="text" name="login" />
+        <label>Password</label>
+        <input type="password" name="password" />
+        <button>Log in</button>
+      </form>
+      <div id="login-error" style="display: none"></div>
+      <a href="/dashboard">Dashboard</a>
     </div>
-    <a href="/dashboard">Dashboard</a>
-  </div>
-</body>
+  </body>
 
-<script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
-<script>
+  <script>
+    window.onload = () => {
+      console.log("Running onload");
+      const firebaseConfig = {
+        // CS5356 TODO #2
+        // Copy your Firebase config here too
+        apiKey: "AIzaSyCBJZ4JynJNbUEPm5oAYJ5J8ypb4fEmB3Q",
+        authDomain: "cs5356-milestone-1-20ba7.firebaseapp.com",
+        projectId: "cs5356-milestone-1-20ba7",
+        storageBucket: "cs5356-milestone-1-20ba7.appspot.com",
+        messagingSenderId: "157545597741",
+        appId: "1:157545597741:web:bd1f831f0b807d1d3be1a4",
+        measurementId: "G-X441Q259Q5",
+      };
 
-  window.onload = () => {
-    console.log('Running onload')
-    const firebaseConfig = {
-      // CS5356 TODO #2
-      // Copy your Firebase config here too
+      const app = firebase.initializeApp(firebaseConfig);
+
+      app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+
+      document
+        .getElementById("login-form")
+        .addEventListener("submit", (event) => {
+          event.preventDefault();
+          const login = event.target.login.value;
+          const password = event.target.password.value;
+
+          // CS5356 TODO #3
+          // Create a new user using the Firebase SDK for Web
+          // Get the users ID token
+          // Start a new session with the users ID token
+          // Redirect the user to the /dashboard
+
+          return false;
+        });
     };
-
-    const app = firebase.initializeApp(firebaseConfig);
-
-    app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
-
-    document
-      .getElementById("login-form")
-      .addEventListener("submit", (event) => {
-        event.preventDefault();
-        const login = event.target.login.value;
-        const password = event.target.password.value;
-
-        // CS5356 TODO #3
-        // Create a new user using the Firebase SDK for Web
-        // Get the users ID token
-        // Start a new session with the users ID token
-        // Redirect the user to the /dashboard
-
-        return false;
-      });
-  };
-</script>
-
+  </script>
 </html>
