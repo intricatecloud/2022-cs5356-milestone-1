@@ -54,6 +54,7 @@
           // Signed in 
           var user = userCredential.user;
           console.log('sign in success');
+          window.location = "http://localhost:8080/dashboard";
 
           // ...
         })
@@ -65,7 +66,6 @@
         });
 
 
-        return false;
       });
 
   };
