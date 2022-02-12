@@ -55,23 +55,28 @@
 
         // CS5356 TODO #3
         // Sign in using the Firebase SDK for Web
-        import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
-        const auth = getAuth();
-        signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user;
-            // ...
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-          });
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
 
+        import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+        const auth = getAuth();
+        auth.signInWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            // ...
+            user.getIdToken().then((idToken) => {
+              fetch('/sessionLogin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idToken })
+              }).then(() => {
+                window.location.href = '/dashboard'
+              })
+            })
+          })
         return false;
       });
   };
