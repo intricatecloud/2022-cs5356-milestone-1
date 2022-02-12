@@ -10,18 +10,23 @@
     <%- include('../partials/nav', { hideSignIn: true }) %>
   </header>
 
-
+  <div class="container">
+    <h1 style="font-size: x-large;">Sign In</h1>
   <form id="login-form">
     <input type="text" name="login" placeholder="Your user name" />
     <input type="password" name="password" id="password" />
     <button>
       Sign In
     </button>
+    <br>
+    <a href="/sign-up">Sign Up for a new account</a>
     <div id="login-error">
 
     </div>
     </div>
   </form>
+  <p id="demo"></p>
+  </div>
 </body>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
@@ -33,6 +38,13 @@
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
+      apiKey: "AIzaSyDhIKqZGW92FNO0CUzH5YrB0oLAA0RKjVI",
+      authDomain: "cs5356milestone1-d6db2.firebaseapp.com",
+      projectId: "cs5356milestone1-d6db2",
+      storageBucket: "cs5356milestone1-d6db2.appspot.com",
+      messagingSenderId: "207012382234",
+      appId: "1:207012382234:web:cc80551103a1408a7fb3a3",
+      measurementId: "G-VM3X3QBGZN"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -51,6 +63,18 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+
+        firebase.auth().signInWithEmailAndPassword(login, password)
+        .then((userCredential) => {
+          // Signed in
+          var user = userCredential.user;
+          window.location.href = "/dashboard";
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          document.getElementById("demo").innerHTML = "Failed to Sign In. " + errorMessage;
+        });
 
         return false;
       });
