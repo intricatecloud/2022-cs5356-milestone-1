@@ -1,24 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <%- include('../partials/head') %>
+  <head>
+    <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
     <style>
 
     </style>
-</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  </head>
 
-<body>
-  <header>
-    <%- include('../partials/nav') %>
-  </header>
+  <body>
+    <header>
+      <%- include('../partials/nav') %>
+    </header>
 
-  Fill me in!
-  <!-- CS5356 TODO #1 Add your landing page here -->
+    <section class="hero is-primary">
+      <div class="hero-body">
+        <h1 class="title">
+          Ruffhouse
+        </h1>
+        <p class="subtitle">
+          Where dogs bark
+        </p>
+      </div>
+    </section>
 
-</body>
+    <section class="hero">
+      <div class="hero-body">
+        <h2>Howl with other dogs</h2>
+        <p>Ruffhouse is THE place to find out what all your furry-tailed friends are up to!</p>
+      </div>
+    </section>
 
-<%- include('../partials/footer') %>
+    <section class="hero">
+      <div class="hero-body">
+        <h2>Bow wow at the Ruffhouse Pow Wow</h2>
+        <p>Ruffhouse has the following features:</p>
+      </div>
+    </section>
+
+    <section class="hero">
+      <div class="hero-body">
+        <h2>Fetch yourself a Ruffhouse account</h2>
+        <p>Ready to find out what Ruffhouse is all about?</p>
+        <p>Click below to create an account</p>
+        <a href="/sign-up" class="button is-primary">
+          Sign up!
+        </a>
+      </div>
+    </section>
+
+  </body>
+
+  <%- include('../partials/footer') %>
 
 </html>
