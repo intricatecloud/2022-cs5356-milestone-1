@@ -76,8 +76,6 @@ app.post("/sessionLogin", async (req, res) => {
       }
     )
 });
-//   res.status(501).send();
-// });
 
 app.get("/sessionLogout", (req, res) => {
   res.clearCookie("session");
