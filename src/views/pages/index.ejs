@@ -4,6 +4,8 @@
 <head>
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css" integrity="sha384-3B6NwesSXE7YJlcLI9RpRqGf2p/EgVH8BgoKTaUrmKNDkHPStTQ3EyoYjCGXaOTS" crossorigin="anonymous">
     <style>
 
     </style>
@@ -13,8 +15,126 @@
   <header>
     <%- include('../partials/nav') %>
   </header>
+    
+  <section class="hero is-dark is-fullheight-with-navbar" style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url('https://wallpapercave.com/wp/wp7763772.jpg'); background-size: cover">
+    <div class="hero-body">
+      <div class="container has-text-left">
+        <h1 class="title is-1 is-spaced">
+          <i class="fa-solid fa-paw"></i>
+          RuffHouse
+        </h1>
+        <h2 class="subtitle">Don't your dogs want to show the world that they look good too?</h2>
+      </div>
+    </div>
+  </section>
 
-  Fill me in!
+  <nav class="level">
+    <div class="level-item has-text-centered">
+      <div>
+        <p class="py-6 is-size-3">Share your favorite furry moments</p>
+      </div>
+    </div>
+  </nav>
+
+  <div class="columns mx-1">
+    <div class="column">
+      <div class="card">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img src="https://chico.ca.us/sites/main/files/imagecache/lightbox/main-images/dog_license.jpg" alt="Placeholder image">
+          </figure>
+        </div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <span class="fa-stack fa-2x">
+                <i class="fa-solid fa-square fa-stack-2x"></i>
+                <i class="fa-solid fa-r fa-stack-1x fa-inverse"></i>
+              </span>
+            </div>
+            <div class="media-content">
+              <p class="title is-4">Rachel</p>
+              <p class="subtitle is-6">@rachel</p>
+            </div>
+          </div>
+      
+          <div class="content">
+            Life would definitely be ruff without you
+            <br>
+            <a href="#">#dogoftheday</a> <a href="#">#mybestfriend</a>
+            <br>
+            <time datetime="2022-1-23">11:11 AM - 23 Jan 2022</time>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="card">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img src="https://wallpaperfx.com/view_image/smiling-dog-1280x960-wallpaper-16332.jpg" alt="Placeholder image">
+          </figure>
+        </div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <span class="fa-stack fa-2x">
+                <i class="fa-solid fa-square fa-stack-2x"></i>
+                <i class="fa-solid fa-u fa-stack-1x fa-inverse"></i>
+              </span>
+            </div>
+            <div class="media-content">
+              <p class="title is-4">Usman</p>
+              <p class="subtitle is-6">@usman</p>
+            </div>
+          </div>
+      
+          <div class="content">
+            Smileeeee
+            <i class="fa-regular fa-face-smile-beam"></i>
+            <i class="fa-regular fa-face-smile-beam"></i>
+            <i class="fa-regular fa-face-smile-beam"></i>
+            <br>
+            <a href="#">#natural</a>
+            <br>
+            <time datetime="2022-1-30">05:15 PM - 30 Jan 2022</time>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="card">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img src="https://cdn.wallpapersafari.com/5/84/qE3zXb.jpg" alt="Placeholder image">
+          </figure>
+        </div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <span class="fa-stack fa-2x">
+                <i class="fa-solid fa-square fa-stack-2x"></i>
+                <i class="fa-solid fa-f fa-stack-1x fa-inverse"></i>
+              </span>
+            </div>
+            <div class="media-content">
+              <p class="title is-4">Frankie</p>
+              <p class="subtitle is-6">@frankie</p>
+            </div>
+          </div>
+      
+          <div class="content">
+            Who needs to walk their dogs when they walk themselves
+            <i class="fa-solid fa-dog"></i>
+            <a href="#">#luckyme</a> <a href="#">#ilovemydogs</a>
+            <br>
+            <time datetime="2022-2-1">08:08 PM - 1 Feb 2022</time>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- CS5356 TODO #1 Add your landing page here -->
 
 </body>
