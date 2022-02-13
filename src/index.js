@@ -52,13 +52,19 @@ app.get("/dashboard", authMiddleware, async function (req, res) {
   res.render("pages/dashboard", { user: req.user, feed });
 });
 
-app.post("/sessionLogin", async (req, res) => {
-  // CS5356 TODO #4
-  // Get the ID token from the request body
-  // Create a session cookie using the Firebase Admin SDK
-  // Set that cookie with the name 'session'
-  // And then return a 200 status code instead of a 501
-  res.status(501).send();
+app.post("/sessionLogin", async(req, res) => {
+  const idToken = req.body.idToken.toString();
+  console.log(idToken)
+  const expiresIn = 60 * 60 * 24 * 5 * 1000;  
+
+  admin.auth().createSessionCookie(idToken, { expiresIn }).then( (sessionCookie) => {
+      const options = { maxAge: expiresIn, httpOnly: false };
+      res.cookie("session", sessionCookie, options);
+      res.status(200).send(JSON.stringify({status: 'success'}))
+  }, error => {
+    res.status(401).send('UNAUTHORIZED REQUEST!')
+  })
+
 });
 
 app.get("/sessionLogout", (req, res) => {

@@ -44,30 +44,36 @@
         event.preventDefault();
         const login = event.target.login.value;
         const password = event.target.password.value;
-        // CS5356 TODO #3
-        // Sign in using the Firebase SDK for Web
-        // Get the users ID token
-        // Start a new session with the users ID token
-        // Redirect the user to the /dashboard
         firebase.auth().signInWithEmailAndPassword(login, password)
         .then((userCredential) => {
-          // Signed in 
-          var user = userCredential.user;
-          console.log('sign in success');
-          window.location = "http://localhost:8080/dashboard";
+          var firebaseUser = userCredential.user;
+          
+                if(firebaseUser){
+                  firebaseUser.getIdToken().then(function(idToken) {  
+                  
+                  return fetch("/sessionLogin", {
+                      method: "POST",
+                      headers: {
+                      Accept: "application/json",
+                      "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({ idToken }),
+                  });                    
+                }).then(() => {
+                  window.location.href = '/dashboard'
+                }
+                                      
+              ).catch( error => {
+                window.location.href("/sign-in");  
 
-          // ...
-        })
-        .catch((error) => {
-          console.log('sign in failed');
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // ..
+                console.log(error);
+              });                        
+          }
         });
 
-
-      });
-
+       
+      });  
+     
   };
 
 </script>
