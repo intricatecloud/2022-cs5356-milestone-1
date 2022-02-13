@@ -5,18 +5,42 @@
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
     <style>
+      .big-box { 
+        height: 100vh;
+      }
+      .my-hero {
+        margin-bottom: 2em;
+      }
 
     </style>
 </head>
 
-<body>
+<body class="has-background-success">
   <header>
     <%- include('../partials/nav') %>
   </header>
-
-  Fill me in!
-  <!-- CS5356 TODO #1 Add your landing page here -->
-
+  <section class="hero is-warning is-halfheight">
+    <div class="hero-body">
+      <div class="container">
+        <p class="title">
+          Pawwy
+        </p>
+        <p class="subtitle">
+          A social site for your furry family!
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="hero is-success is-halfheight">
+    <div class="hero-body">
+      <div class="container">
+        <p class="subtitle">
+          Pawwy is a social site where you can create and share profiles for your pets. You can also find friends for
+          them!
+        </p>
+      </div>
+    </div>
+  </section>
 </body>
 
 <%- include('../partials/footer') %>
