@@ -65,10 +65,6 @@
             .then((userCredential) => {
               const user = userCredential.user;
 
-              //user.getIdToken().then((idToken) => {
-              //  console.log(idToken);
-              //});
-
               user.getIdToken().then((idToken) => {
                 fetch("/sessionLogin", {
                   method: "POST",

@@ -63,8 +63,6 @@ app.post("/sessionLogin", async (req, res) => {
 
   const expiresIn = 60 * 60 * 24 * 5 * 1000;
 
-  //console.log(idToken);
-
   admin
     .auth()
     .createSessionCookie(idToken, { expiresIn })
