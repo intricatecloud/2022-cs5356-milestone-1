@@ -135,7 +135,6 @@ app.post("/sessionLogin", async (req, res) => {
     .then(
       (sessionCookie) => {
         // Set cookie policy for session cookie.
-        console.log("sessionCookie12", sessionCookie);
         const options = { maxAge: expiresIn, httpOnly: true, secure: true };
         // Set that cookie with the name 'session'
         res.cookie("session", sessionCookie, options);
@@ -159,14 +158,12 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
 
   // Get the message that was submitted from the request body
   const userMessage = req.body.message.toString();
-  console.log("userMessage", userMessage);
 
   // Get the user object from the request body
   const user = req.user;
-  console.log("user", user);
 
   // Add the message to the userFeed so its associated with the user
-  const feed = userFeed.add(user, userMessage);
+  userFeed.add(user, userMessage);
 
   // Reload dashboard to show new feed
   res.redirect("/dashboard");
