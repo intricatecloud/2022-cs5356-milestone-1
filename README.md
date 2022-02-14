@@ -23,7 +23,6 @@ There are likely some other bugs that I don't intend to be here, so there may be
 I made some small tweaks to the repo
 
 1. Used `yarn` instead of `npm`, therefor auto generated `yarn.lock` 
-2. Changed `header` to `nav` in `index.js` to be more semanticly correct
+2. Changed `header` to `nav` in `index.js` for semantics
 3. Moved `partials/footer` to inside the `<body>` tag, following the [Mozilla Sectioning Root standards](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#Sectioning_root)
 4. Added `node-sass` for styling with `SCSS`, thus added custom command `"scss": "node-sass — watch scss -o css"` to `package.json`
-5. Moved `firebaseConfig` to external, and hidden file for security (no API keys publicly available)
