@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,11 +14,11 @@
   <div class="container">
     Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
     <form id="login-form">
-      <label>Login</label>
+      <label>Signup</label>
       <input id="login" type="text" name="login" />
       <label>Password</label>
       <input type="password" name="password" />
-      <button>Log in</button>
+      <button>Signup</button>
     </form>
     <div id="login-error" style="display: none;">
     </div>
@@ -28,99 +29,91 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
+
 <script>
 
   window.onload = () => {
-    console.log('Running onload')
+
+    // Helper function to post User ID to body
+    // PERSONAL TODO: move to shared function w/ sign-in
+    const postUserId = async function (url, idTokenUser) {
+      const data = { idToken: idTokenUser };
+
+      const response = await fetch(url, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      return response;
+    };
+
+    // DONE ✅
+
+    // CS5356 TODO #2
+    // Copy your Firebase config here too
 
     const firebaseConfig = {
-      // DONE ✅
-
-      // CS5356 TODO #2
-      // Copy your Firebase config here too
       apiKey: "AIzaSyBF4BxY_1MgepA3J5aHP2z88f8ftjH6gwU",
       authDomain: "cs5356-22.firebaseapp.com",
       projectId: "cs5356-22",
       storageBucket: "cs5356-22.appspot.com",
       messagingSenderId: "802452725516",
-      appId: "1:802452725516:web:798e1cffa572327083b329",
-      measurementId: "G-PK7ELW8TLH"
+      appId: "1:802452725516:web:ad50a3eef599a1af83b329",
+      measurementId: "G-T6PLYRGEYD",
     };
 
     const app = firebase.initializeApp(firebaseConfig);
 
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
-    
-    
-    /////// HELPERS
-
-    function getCookie(name) {
-      const v = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
-      return v ? v[2] : null;
-    }
-
-    const postIdTokenToSessionLogin = function (url, idToken, csrfToken) {
-      return fetch(url, {
-        type: "POST",
-        data: { idToken: idToken, csrfToken: csrfToken },
-      });
-    };
-
-   // Send IDtoken to SessionLogin
-    // async function postIdTokenToSessionLogin(data) {
-    //   const response = await fetch("/sessionLogin", {
-    //     method: 'POST',
-    //     body: JSON.stringify(data) 
-    //   });
-    //   console.log("response.json()", response.json())
-    //   return response.json(); 
-    // }
 
     // Handle login form
-    document
-      .getElementById("login-form")
-      .addEventListener("submit", (event) => {
-        event.preventDefault();
-        const login = event.target.login.value;
-        const password = event.target.password.value;
+    document.getElementById("login-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const login = event.target.login.value;
+      const password = event.target.password.value;
 
-        // DONE ✅
+      // DONE ✅
 
-        // CS5356 TODO #3
-        // Create a new user using the Firebase SDK for Web
+      // CS5356 TODO #3
+      // Create a new user using the Firebase SDK for Web
 
-        firebase.auth().createUserWithEmailAndPassword(login, password)
-        .then((userCredential) => {
-          // Signed in 
-
-          // Get the users ID token
-          let user = userCredential.user;
-          let userIdToken = user.getIdToken();
-
-          // Start a new session with the users ID token
-          return userIdToken.then(idToken => {
-
-            const csrfToken = getCookie('csrfToken')
-            return postIdTokenToSessionLogin('/sessionLogin', idToken, csrfToken)
-          });
-        }).then(() => {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(login, password)
+        .then(({ user }) => {
+          // Get the user's ID token as it is needed to exchange for a session cookie.
+          return user
+            .getIdToken()
+            .then((idToken) => {
+              // Post session to local API w/ custom function
+              return postUserId("/sessionLogin", idToken);
+            })
+            .catch((error) => {
+              // Log errors if they exist
+              console.log(error.code, error.message);
+            });
+        })
+        .then(() => {
           // Redirect the user to the /dashboard
-          window.location.assign('/dashboard');
+          window.location.assign("/dashboard");
         })
         .catch((error) => {
           let errorCode = error.code;
           let errorMessage = error.message;
-          
-          // PERSONAL TODO 
+
+          // PERSONAL TODO
           // Send data to error message field in DOM
-          console.log(errorCode, errorMessage)
+          console.log(errorCode, errorMessage);
         });
 
- 
-
-        return false;
-      });
+      return false;
+    });
   };
+
 </script>
 
 </html>

@@ -27,12 +27,29 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
 <script>
-
   window.onload = () => {
+    
+    // Helper function to post User ID to body
+    // PERSONAL TODO: move to shared function w/ sign-up
+    const postUserId = async function (url, idTokenUser) {
+      const data = { idToken: idTokenUser };
+
+      const response = await fetch(url, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      return response;
+    };
+
     const firebaseConfig = {
       // DONE ✅
-      
-      // CS5356 TODO #2 
+
+      // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
 
@@ -42,53 +59,58 @@
       storageBucket: "cs5356-22.appspot.com",
       messagingSenderId: "802452725516",
       appId: "1:802452725516:web:798e1cffa572327083b329",
-      measurementId: "G-PK7ELW8TLH"
+      measurementId: "G-PK7ELW8TLH",
     };
 
     const app = firebase.initializeApp(firebaseConfig);
 
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
+    document.getElementById("login-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const login = event.target.login.value;
+      const password = event.target.password.value;
 
+      // DONE ✅
 
-    document
-      .getElementById("login-form")
-      .addEventListener("submit", (event) => {
-        event.preventDefault();
-        const login = event.target.login.value;
-        const password = event.target.password.value;
+      // CS5356 TODO #3
+      // Sign in using the Firebase SDK for Web
 
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(login, password)
+        .then(({ user }) => {
+          // Signed in
 
-        // DONE ✅
-
-        // CS5356 TODO #3
-        // Sign in using the Firebase SDK for Web
-
-        firebase.auth().signInWithEmailAndPassword(login, password)
-        .then((userCredential) => {
-          // Signed in 
-
-          // Get the users ID token
-          let user = userCredential.user;
-          let userUid = user.uid;
-
-        
-          // Start a new session with the users ID token
+          // Get the user's ID token as it is needed to exchange for a session cookie.
+          return user
+            .getIdToken()
+            .then((idToken) => {
+              // Post session to local API w/ custom function
+              return postUserId("/sessionLogin", idToken);
+            })
+            .catch((error) => {
+              // Log errors if they exist
+              console.log(error.code, error.message);
+            });
+          
+        }).then(() => {
           // Redirect the user to the /dashboard
+          window.location.assign("/dashboard");
         })
         .catch((error) => {
           let errorCode = error.code;
           let errorMessage = error.message;
-          
-          // PERSONAL TODO 
+
+          // PERSONAL TODO
           // Send data to error message field in DOM
-          console.log(errorCode, errorMessage)
+          console.log(errorCode, errorMessage);
         });
 
-
-        return false;
-      });
+      return false;
+    });
   };
+
 </script>
 
 </html>

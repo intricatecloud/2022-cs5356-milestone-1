@@ -119,63 +119,57 @@ app.get("/dashboard", authMiddleware, async function (req, res) {
 });
 
 app.post("/sessionLogin", async (req, res) => {
+  // ✅ DONE
   // CS5356 TODO #4
-  // Get the ID token from the request body
-  // Create a session cookie using the Firebase Admin SDK
-  // Set that cookie with the name 'session'
 
-  // Get ID token and CSRF token.
+  // Get ID token from request body
   const idToken = req.body.idToken.toString();
-  const csrfToken = req.body.csrfToken.toString();
 
-  // Guard against CSRF attacks.
-  if (!req.cookies || csrfToken !== req.cookies.csrfToken) {
-    res.status(401).send("UNAUTHORIZED REQUEST!");
-    return;
-  }
   // Set session expiration to 5 days.
   const expiresIn = 60 * 60 * 24 * 5 * 1000;
-  // Create the session cookie. This will also verify the ID token in the process.
-  // The session cookie will have the same claims as the ID token.
-  // We could also choose to enforce that the ID token auth_time is recent.
+
+  //Create a session cookie using the Firebase Admin SDK
   admin
     .auth()
-    .verifyIdToken(idToken)
-    .then(function (decodedClaims) {
-      // In this case, we are enforcing that the user signed in in the last 5 minutes.
-      if (new Date().getTime() / 1000 - decodedClaims.auth_time < 5 * 60) {
-        return admin
-          .auth()
-          .createSessionCookie(idToken, { expiresIn: expiresIn });
+    .createSessionCookie(idToken, { expiresIn })
+    .then(
+      (sessionCookie) => {
+        // Set cookie policy for session cookie.
+        console.log("sessionCookie12", sessionCookie);
+        const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+        // Set that cookie with the name 'session'
+        res.cookie("session", sessionCookie, options);
+        res.end(JSON.stringify({ status: "success" }));
+      },
+      (error) => {
+        console.log("error", error);
+        res.status(401).send("UNAUTHORIZED REQUEST!");
       }
-      throw new Error("UNAUTHORIZED REQUEST!");
-    })
-    .then(function (sessionCookie) {
-      // Note httpOnly cookie will not be accessible from javascript.
-      // secure flag should be set to true in production.
-      const options = {
-        maxAge: expiresIn,
-        httpOnly: true,
-        secure: false /** to test in localhost */,
-      };
-      res.cookie("session", sessionCookie, options);
-      res.end(JSON.stringify({ status: "success" }));
-    })
-    .catch(function (error) {
-      res.status(401).send("UNAUTHORIZED REQUEST!");
-    });
+    );
 });
 
 app.get("/sessionLogout", (req, res) => {
   res.clearCookie("session");
-  res.redirect("/sign-in");
+  res.redirect("/sign-up");
 });
 
 app.post("/dog-messages", authMiddleware, async (req, res) => {
+  // ✅ DONE
   // CS5356 TODO #5
+
   // Get the message that was submitted from the request body
+  const userMessage = req.body.message.toString();
+  console.log("userMessage", userMessage);
+
   // Get the user object from the request body
+  const user = req.user;
+  console.log("user", user);
+
   // Add the message to the userFeed so its associated with the user
+  const feed = userFeed.add(user, userMessage);
+
+  // Reload dashboard to show new feed
+  res.redirect("/dashboard");
 });
 
 app.listen(port);
