@@ -12,8 +12,14 @@
 
 
   <form id="login-form">
-    <input type="text" name="login" placeholder="Your user name" />
-    <input type="password" name="password" id="password" />
+    Sign In
+    <br />
+    <label>Email</label>
+    <input type="email" name="email" placeholder="your email" />
+    <br />
+    <label>Password</label>
+    <input type="password" name="password" id="password" placeholder="your password" />
+    <br />
     <button>
       Sign In
     </button>
@@ -50,7 +56,7 @@
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
         event.preventDefault();
-        const login = event.target.login.value;
+        const email = event.target.email.value;
         const password = event.target.password.value;
 
         // CS5356 TODO #3
@@ -59,7 +65,26 @@
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
 
-        return false;
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            user.getIdToken().then((idToken) => {
+              fetch("/sessionLogin", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ idToken }),
+              }).then(() => {
+                window.location.href = "/dashboard";
+              });
+            });
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode);
+          });
       });
   };
 </script>
