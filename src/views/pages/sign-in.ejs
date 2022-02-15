@@ -11,9 +11,12 @@
   </header>
 
 
-  <form id="login-form">
-    <input type="text" name="login" placeholder="Your user name" />
-    <input type="password" name="password" id="password" />
+  <form id="login-form" method="POST">
+    <label for="email">Email</label>
+    <input required type="text" name="email" placeholder="Your user name" />
+    
+    <label for="password">Password</label>
+    <input required type="password" name="password" id="password" />
     <button>
       Sign In
     </button>
@@ -33,6 +36,13 @@
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
+      apiKey: "AIzaSyDJth8yhQoC1d6plkrszCnmO0KVNJqEx-I",
+      authDomain: "bss-milestone1.firebaseapp.com",
+      projectId: "bss-milestone1",
+      storageBucket: "bss-milestone1.appspot.com",
+      messagingSenderId: "83210385629",
+      appId: "1:83210385629:web:084424fb24f11995be0334",
+      measurementId: "G-55PCHCTT5J"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -43,7 +53,7 @@
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
         event.preventDefault();
-        const login = event.target.login.value;
+        const email = event.target.email.value;
         const password = event.target.password.value;
 
         // CS5356 TODO #3
@@ -51,7 +61,29 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+        
+        firebase.auth().signInWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            const user = userCredential.user;
 
+            // Get the user's ID token as it is needed to exchange for a session cookie.
+            user.getIdToken()
+              .then(idToken => {
+                fetch('/sessionLogin', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({idToken}) // add the users ID token here
+              }).then(() => {
+                window.location.href = '/dashboard';
+              })
+            })
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+          });
+        
         return false;
       });
   };
