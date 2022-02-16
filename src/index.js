@@ -6,6 +6,10 @@ const admin = require("firebase-admin");
 const app = express();
 const port = process.env.PORT || 8080;
 
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+
 // CS5356 TODO #2
 // Uncomment this next line after you've created
 // serviceAccountKey.json
