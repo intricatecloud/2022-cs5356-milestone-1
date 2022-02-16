@@ -17,22 +17,20 @@
   <section class="section">
     <div class="container">
       <div class="columns">
-        <form id="login-form" method="POST">
 
-
+        <form id="login-form">
           <lable for="username">Username</lable>
           <input type="text" name="username" placeholder="Your user name" />
-      
           <lable for="Password">Password</lable>
           <input required type="password" name="password" id="password" />
           <button>
             Sign In
           </button>
           <div id="login-error">
-      
           </div>
           </div>
         </form>
+
       </div>
     </div>
   </section>
@@ -61,31 +59,43 @@
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
     const auth = firebase.auth();
 
-    document
-      .getElementById("login-form")
+    const loginForm = document.querySelector('form');
+
+    loginForm
       .addEventListener("submit", (event) => {
         event.preventDefault();
         const username = event.target.username.value;
         const password = event.target.password.value;
-
+        console.log(username)
         // CS5356 TODO #3
         // Sign in using the Firebase SDK for Web
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
 
-        firebase.auth().createUserWithEmailAndPassword(username, password)
+        firebase.auth().signInWithEmailAndPassword(username, password)
         .then((userCredential) => {
-          // Signed in 
-          debugger
+          // Signed in
+          // debugger
+          userCredential.user.getIDToken().then(function(idToken){
+              // set cookie to store the idtoken
+              fetch('/sessionLogin',{
+                  method: 'POST', // want to make a change to server
+                  body: idToken
+              }).then(function(response){ debugger })
+              .catch(function(err){console.log(err)})
+          }).catch(function(err){console.log(err)})
           var user = userCredential.user;
+          console.log(username)
           window.location.href = "/dashboard";
+          // ...
         })
         .catch((error) => {
+          debugger
           var errorCode = error.code;
           var errorMessage = error.message;
-          // ..
         });
+        debugger
         return false;
       });
   };

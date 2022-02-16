@@ -63,12 +63,24 @@
         firebase.auth().createUserWithEmailAndPassword(username, password)
         .then((userCredential) => {
           // Signed in 
+          userCredential.user.getIDToken().then(function(idToken){
+              // set cookie to store the idtoken
+              fetch('/sessionLogin',{
+                  method: 'POST', // want to make a change to server
+                  body: idToken
+              }).then(function(response){ debugger })
+              .catch(function(err){console.log(err)})
+          })
+
           var user = userCredential.user;
+          console.log(username)
           window.location.href = "/dashboard";
+          // ...
         })
         .catch((error) => {
           var errorCode = error.code;
           var errorMessage = error.message;
+          console.log(errorMessage);
           // ..
         });
         return false;

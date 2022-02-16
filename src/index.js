@@ -36,6 +36,9 @@ app.use("/static", express.static("static/"));
 // use res.render to load up an ejs view file
 // index page
 app.get("/", function (req, res) {
+  // debugger
+  // cookies : managed by browsers
+  // res.cookie('chenran-cookie','123', {httpOnly:true})
   res.render("pages/index");
 });
 
