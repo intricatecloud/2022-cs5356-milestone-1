@@ -71,7 +71,6 @@ app.post("/sessionLogin", async (req, res) => {
       res.status(403).send("UNAUTHORIZED REQUEST!");
     }
   );
-  // And then return a 200 status code instead of a 501
   //res.status(200).send();
 });
 
@@ -82,9 +81,15 @@ app.get("/sessionLogout", (req, res) => {
 
 app.post("/dog-messages", authMiddleware, async (req, res) => {
   // CS5356 TODO #5
+  const message = req.body.message
+  const user = req.user
+  console.log(user.email)
   // Get the message that was submitted from the request body
   // Get the user object from the request body
   // Add the message to the userFeed so its associated with the user
+  const feed = await userFeed.get()
+  await userFeed.add(user, message);
+  res.render("pages/dashboard", {user:req.user, feed:feed});
 });
 
 app.listen(port);

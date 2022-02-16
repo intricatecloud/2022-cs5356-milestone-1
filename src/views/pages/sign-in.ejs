@@ -55,7 +55,7 @@
           .then((userCredential) => {
             // Signed in 
             var user = userCredential.user;
-            var token = userCredential.user.getIdToken()
+            //var token = userCredential.user.getIdToken()
             return userCredential.user.getIdToken().then(
               idToken => {
                 fetch('/sessionLogin', {
