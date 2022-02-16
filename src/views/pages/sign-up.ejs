@@ -17,7 +17,7 @@
       <input id="login" type="text" name="login" />
       <label>Password</label>
       <input type="password" name="password" />
-      <button>Log in</button>
+      <button>Sign Up</button>
     </form>
     <div id="login-error" style="display: none;">
     </div>
@@ -65,8 +65,19 @@
           .then((userCredential) => {
             // Signed in 
             var user = userCredential.user;
-            app.post('/sessionLogin', (req, res) => {
-              const idToken = user.idToken
+            // app.post('/sessionLogin', (req, res) => {
+            //   const idToken = user.idToken
+            // }).then(() => {
+            //   window.location.href = '/dashboard'
+            // })
+            user.getIdToken().then((idToken) => {
+              fetch('/sessionLogin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idToken })
+              }).then(() => {
+                window.location.href = '/dashboard'
+              })
             })
             // TODO: why doens't this automatically redirect to dashboard
             // ...

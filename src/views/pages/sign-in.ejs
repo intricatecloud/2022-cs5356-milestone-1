@@ -58,12 +58,6 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard - don't use redirect, use location.assign
-
-        debugger
-        // import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
-        // const auth = getAuth();
-        // app.auth().signInWithEmailAndPassword(login, password)
         app.auth().signInWithEmailAndPassword(login, password)
           .then((userCredential) => {
             // Signed in 
