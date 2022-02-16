@@ -57,7 +57,7 @@
         // Sign in using the Firebase SDK for Web
         // Get the users ID token
         // Start a new session with the users ID token
-        // Redirect the user to the /dashboard - don't use redirect, use location.assign
+
         app.auth().signInWithEmailAndPassword(login, password)
           .then((userCredential) => {
             // Signed in 

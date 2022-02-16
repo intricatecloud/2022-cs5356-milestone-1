@@ -65,11 +65,7 @@
           .then((userCredential) => {
             // Signed in 
             var user = userCredential.user;
-            // app.post('/sessionLogin', (req, res) => {
-            //   const idToken = user.idToken
-            // }).then(() => {
-            //   window.location.href = '/dashboard'
-            // })
+
             user.getIdToken().then((idToken) => {
               fetch('/sessionLogin', {
                 method: 'POST',
@@ -79,7 +75,6 @@
                 window.location.href = '/dashboard'
               })
             })
-            // TODO: why doens't this automatically redirect to dashboard
             // ...
           })
           .catch((error) => {
