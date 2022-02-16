@@ -9,19 +9,21 @@ const port = process.env.PORT || 8080;
 // CS5356 TODO #2
 // Uncomment this next line after you've created
 // serviceAccountKey.json
-// const serviceAccount = require("./../config/serviceAccountKey.json");
+const serviceAccount = require("./../config/serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
 
 // CS5356 TODO #2
 // Uncomment this next block after you've created serviceAccountKey.json
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-// });
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 // use cookies
 app.use(cookieParser());
+// content-type: text/plain
 app.use(bodyParser.json());
+// content-type: application/json
 app.use(
   bodyParser.urlencoded({
     extended: true,
@@ -38,8 +40,35 @@ app.use("/static", express.static("static/"));
 app.get("/", function (req, res) {
   // debugger
   // cookies : managed by browsers
-  // res.cookie('chenran-cookie','123', {httpOnly:true})
+  res.cookie('chenran-cookie','123', {httpOnly:true})
   res.render("pages/index");
+});
+
+// // 2 different function definations
+// // function(req, res, next){}
+// // verify the authorization before log in
+// const authMiddleware = (req, res, next) => {
+//   const cookies = req.cookies
+//   // idtoken is inside the cookies
+//   const sessionCookie = cookies.session;
+//   // next: verify the session cookies
+//   // if not login in just redirect
+//   if(sessionCookie){
+//     admin.auth().verifySessionCookie(sessionCookie)
+//     .then(function(user){
+//       next()
+//     })
+//     .catch(() => {
+//       res.redirect('/sign-in');
+//     })
+//   }
+//   else{
+//     res.redirect('/sign-in');
+//   }
+// }
+
+
+app.get('/about', authMiddleware, function(req, res){
 });
 
 app.get("/sign-in", function (req, res) {
@@ -61,7 +90,21 @@ app.post("/sessionLogin", async (req, res) => {
   // Create a session cookie using the Firebase Admin SDK
   // Set that cookie with the name 'session'
   // And then return a 200 status code instead of a 501
-  res.status(501).send();
+    const idToken = req.body.idToken;
+    // console.log(body);
+    const expiresIn = 3600 * 1000; // this is one hour
+    admin.auth().createSessionCookie(idToken, { expiresIn })
+    .then(
+      (sessionCookie) =>{
+        // Set cookie policy for sessiong cookie.
+        const options = { maxAge: expiresIn, httpOnly : true, secure: true};
+        res.cookie('session', sessionCookie, options);
+        res.status(201).send(JSON.stringify({status: 'success'}));
+      },
+      (error) => {
+        res.status(401).send(error.toString());
+      }
+    )
 });
 
 app.get("/sessionLogout", (req, res) => {

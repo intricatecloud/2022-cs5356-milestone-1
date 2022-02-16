@@ -66,7 +66,6 @@
         event.preventDefault();
         const username = event.target.username.value;
         const password = event.target.password.value;
-        console.log(username)
         // CS5356 TODO #3
         // Sign in using the Firebase SDK for Web
         // Get the users ID token
@@ -74,26 +73,43 @@
         // Redirect the user to the /dashboard
 
         firebase.auth().signInWithEmailAndPassword(username, password)
-        .then((userCredential) => {
+        .then((response) => {
           // Signed in
           // debugger
-          userCredential.user.getIDToken().then(function(idToken){
+          response.user.getIdToken().then(function(idToken){
               // set cookie to store the idtoken
               fetch('/sessionLogin',{
                   method: 'POST', // want to make a change to server
-                  body: idToken
-              }).then(function(response){ debugger })
-              .catch(function(err){console.log(err)})
-          }).catch(function(err){console.log(err)})
-          var user = userCredential.user;
+                  headers: {
+                    'Content-Type':'application/json' //automatically use json parson
+                  },
+                  body: JSON.stringify({
+                    idToken: idToken,
+                    plan: 'free'
+                  }) // turning into stringify json
+              }).then(function (responseBody){
+                // window.location.assign('/dashboard')
+                window.location.href = '/dashboard'
+              })
+              .catch(function(err){
+
+                console.log(err)
+              })
+
+          }).catch(function(err){
+            console.log(err)})
+
+          var user = response.user;
           console.log(username)
-          window.location.href = "/dashboard";
+          debugger
+          // window.location.href = "/dashboard";
           // ...
         })
         .catch((error) => {
           debugger
           var errorCode = error.code;
           var errorMessage = error.message;
+          console.log(errorMessage)
         });
         debugger
         return false;
