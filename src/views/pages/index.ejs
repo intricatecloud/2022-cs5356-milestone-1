@@ -2,10 +2,11 @@
 <html lang="en">
 
 <head>
-  <%- include('../partials/head') %>
+    <!-- the %- include % tag works by inserting the corresponding partial. -->
+    <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
     <style>
-
+        .material-icons.md-88 { font-size: 88px; }
     </style>
 </head>
 
@@ -14,8 +15,70 @@
     <%- include('../partials/nav') %>
   </header>
 
-  Fill me in!
-  <!-- CS5356 TODO #1 Add your landing page here -->
+  <section class="hero is-primary is-medium is-bold">
+      <div class="hero-body">
+          <h1 class="title">RuffHouse</h1>
+          <h2 class="subtitle">Who let the dogs out?</h2>
+          <h4>This social network for dogs will allow to share photos of your favorite pet to
+           other members of the community. Don't worry for privacy: only signed up members may
+          have access to the dashboard, where all photos are shared.</h4>
+          <div class="container mt-6">
+              <div class="columns is-multiline is-centered">
+
+                  <div class="column is-4 has-text-centered">
+                      <span class="material-icons md-88">pets</span>
+                      <p class="title is-5">Your dog is probably</p>
+                      <p class="subtitle is-5">more social than you</p>
+
+                      <div class="content">
+                          <p>
+                              They feel the need for peer validation<br />
+                              just as much as we do.
+                          </p>
+                      </div>
+                  </div>
+
+                  <div class="column is-4 has-text-centered">
+                      <span class="material-icons md-88">auto_awesome</span>
+                      <p class="title is-5">Dogs are so fabulous</p>
+                      <p class="subtitle is-5">they could catwalk</p>
+
+                      <div class="content">
+                          <p>
+                              Try to capture the essence of<br />
+                              their awesomeness in pictures.
+                          </p>
+                      </div>
+                  </div>
+
+                  <div class="column is-4 has-text-centered">
+                      <span class="material-icons md-88">add_a_photo</span>
+                      <p class="title is-5">Rebark their pictures</p>
+                      <p class="subtitle is-5">to spread love worldwide</p>
+
+                      <div class="content">
+                          <p>
+                              And connect with other influencing dogs,<br />
+                              set your own trends, radiate joy.
+                          </p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="container">
+              .
+          </div>
+          <div class="container has-text-centered mt-6">
+            <a href="/sign-up" class="button is-large is-warning">Join now!</a>
+          </div>
+      </div>
+  </section>
+
+  <section>
+      <figure class="image is-fullwidth">
+          <img src="static/hero-bg.jpg">
+      </figure>
+  </section>
 
 </body>
 
