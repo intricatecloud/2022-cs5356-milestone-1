@@ -5,6 +5,72 @@
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
     <style>
+      body {
+        margin:0 auto;
+      }
+
+      #title {
+        font-size: 50px;
+        text-align: center;
+        padding-bottom: 0px;
+        border-bottom: 0px;
+        margin-bottom: 0px;
+        padding-top: 7em;
+        color: white;
+        font-family: "Roboto";
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      .sTitle {
+        font-size: 40px;
+        color: white;
+        text-align: center;
+        padding-top: 0px;
+        padding-left: 10px;
+        border-top: 0px;
+        margin-top:0px;
+        font-family: "Roboto";
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      #bg {
+        margin-top: 0px;
+        height: 50rem;
+        vertical-align: middle;
+        background-image: url("./../../../static/dogfriends.png");
+        background-size: cover;
+      }
+
+      .intro .content{
+        font-size: 30px;
+        background-color: burlywood;
+        color: white;
+        text-align: center;
+        padding: 50px 20px;
+        border-top: 0px;
+        height: 280px;
+        margin: 100px 0px;
+        font-family: "Roboto";
+        border-radius: 25px;
+      }
+
+      .intro {
+        text-align: center;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .signupsection {
+        background-color: rgb(252, 245, 237);
+        height: 20rem;
+        text-align: center;
+      }
+
+      .signupbtn {
+        margin-top: 8rem;
+      }
 
     </style>
 </head>
@@ -14,9 +80,25 @@
     <%- include('../partials/nav') %>
   </header>
 
-  Fill me in!
+  
   <!-- CS5356 TODO #1 Add your landing page here -->
-
+  <div id='bg'>
+      <h1 id='title'>RUFFHOUSE</h1>
+      <p class="sTitle">A community for your dog </p>
+  </div>
+  <div class="columns intro">
+    <div class="column">
+      <img src="./../../../static/dogpost.jpg" />
+    </div>
+    <div class="column">
+      <p class="content">
+      Sign up today and share your dog's cute photos and posts to the greater community and make more friends!!!
+      </p>
+    </div>
+  </div>
+  <div class="signupsection">
+    <a href="/sign-up"  class="button is-large is-primary signupbtn" style="background-color: #c58d46">Click Here to Sign Up!</a>
+  </div>
 </body>
 
 <%- include('../partials/footer') %>

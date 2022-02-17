@@ -30,9 +30,13 @@
 
   window.onload = () => {
     const firebaseConfig = {
-      // CS5356 TODO #2
-      // Create your own Firebase project. See the assignment for
-      // where you can get the Firebase config
+      apiKey: "AIzaSyCzqAolVTWnaRkNm-0pPPJikRnWk6z6NGY",
+      authDomain: "dogfriends-4a67a.firebaseapp.com",
+      projectId: "dogfriends-4a67a",
+      storageBucket: "dogfriends-4a67a.appspot.com",
+      messagingSenderId: "1083199046331",
+      appId: "1:1083199046331:web:d89026ce209157421edf9e",
+      measurementId: "G-D5EZPG2Z8F"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -46,15 +50,21 @@
         const login = event.target.login.value;
         const password = event.target.password.value;
 
-        // CS5356 TODO #3
-        // Sign in using the Firebase SDK for Web
-        // Get the users ID token
-        // Start a new session with the users ID token
-        // Redirect the user to the /dashboard
-
-        return false;
+        firebase.auth().signInWithEmailAndPassword(login, password)
+        .then((userCredential) => {
+          // Signed in
+          console.log(userCredential);
+          var user = userCredential.user;
+          window.location.href = '/dashboard';
+          // ...
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(message);
+        });
       });
-  };
+  }
 </script>
 
 </html>
