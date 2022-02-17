@@ -54,6 +54,26 @@
         const login = event.target.login.value;
         const password = event.target.password.value;
 
+        app.auth().createUserWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            user.getIdToken().then(function(idToken) {
+              fetch("/sessionLogin", {
+                method: "POST",
+                body: idToken
+              }).then(function(response) {
+                debugger
+                // console.log("success!")
+              }).catch(function(err) { debugger })
+            })
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+          });
+
         // CS5356 TODO #3
         // Create a new user using the Firebase SDK for Web
         // Get the users ID token
