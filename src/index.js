@@ -6,18 +6,24 @@ const admin = require("firebase-admin");
 const app = express();
 const port = process.env.PORT || 8080;
 
+
+
+
+
+
 // CS5356 TODO #2
 // Uncomment this next line after you've created
 // serviceAccountKey.json
-// const serviceAccount = require("./../config/serviceAccountKey.json");
+const serviceAccount = require("../serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
+const { nextTick } = require("process");
 
 // CS5356 TODO #2
 // Uncomment this next block after you've created serviceAccountKey.json
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-// });
+admin.initializeApp({
+   credential: admin.credential.cert(serviceAccount),
+ });
 
 // use cookies
 app.use(cookieParser());
@@ -58,7 +64,37 @@ app.post("/sessionLogin", async (req, res) => {
   // Create a session cookie using the Firebase Admin SDK
   // Set that cookie with the name 'session'
   // And then return a 200 status code instead of a 501
-  res.status(501).send();
+
+  const idToken = req.body.idToken.toString();
+  // const csrfToken = req.body.csrfToken.toString();
+
+  // if (csrfToken !== req.cookies.csrfToken) {
+  //  res.status(401).send('UNAUTHORIZED REQUEST!');
+  //  return;
+  // }
+
+  const expiresIn = 60 * 60 * 24 * 5 * 1000;
+
+  admin
+    .auth()
+    .createSessionCookie(idToken, { expiresIn })
+    .then(
+      (sessionCookie) => {
+        
+        const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+        res.cookie('session', sessionCookie, options);
+        res.status(200).send(JSON.stringify({status: "success"}))
+        // res.end(JSON.stringify({ status: 'success' }));
+      },
+      (error) => {
+        res.status(401).send('UNAUTHORIZED REQUEST!');
+      }
+    );
+
+    
+
+
+  // res.status(200).send();
 });
 
 app.get("/sessionLogout", (req, res) => {
@@ -71,6 +107,19 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   // Get the message that was submitted from the request body
   // Get the user object from the request body
   // Add the message to the userFeed so its associated with the user
+
+  // Get the message that was submitted from the request body
+  const userMessage = req.body.message.toString();
+
+  // Get the user object from the request body
+  const user = req.user;
+
+  // Add the message to the userFeed so its associated with the user
+  await userFeed.add(user, userMessage);
+
+  res.redirect("/dashboard");
+
+  // userFeed.get()
 });
 
 app.listen(port);
