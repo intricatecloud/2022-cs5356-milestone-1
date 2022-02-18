@@ -1,0 +1,23 @@
+/* body {
+    background-color: rgb(168, 23, 23);
+} */
+
+#landing-header {
+    z-index: 1;
+    position: relative;
+    text-align: center;
+    padding-top: 40vh;
+}
+
+#landing-header h1 {
+    color: #fff;
+}
+
+.hero {
+    background-image: url('https://images.unsplash.com/photo-1578133507770-a35cc3c786e6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80');
+}
+
+/* .hero.container{
+    flex-direction: column;
+    justify-content: center;
+} */
