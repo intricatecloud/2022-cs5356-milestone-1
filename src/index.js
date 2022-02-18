@@ -59,7 +59,7 @@ app.get("/dashboard", authMiddleware, async function (req, res) {
 });
 
 
-// What is the difference here?
+// What is the difference here between function and async?
 
 // app.post("/sessionLogin", function(req, res) {
 app.post("/sessionLogin", async (req, res) => {
@@ -100,6 +100,14 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   // Get the message that was submitted from the request body
   // Get the user object from the request body
   // Add the message to the userFeed so its associated with the user
+  const body = req.body;
+  const message = body.message;
+  const user = req.user;
+
+
+  await userFeed.add(user, message);
+
+  res.redirect("/dashboard");
 });
 
 app.listen(port);
