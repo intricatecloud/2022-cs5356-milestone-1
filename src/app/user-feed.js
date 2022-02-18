@@ -25,8 +25,10 @@ const get = async () => {
 const add = async (user, message) => {
   const response = await fetch("https://dog.ceo/api/breeds/image/random/1");
   const body = await response.json();
+  const nameExtractor = user.email.split("@");
   userFeed.unshift({
-    name: user.name,
+    // name: user.name,
+    name: nameExtractor[0],
     nameHandle: user.email,
     message: message,
     imageSource: body.message,
