@@ -17,6 +17,161 @@
   Fill me in!
   <!-- CS5356 TODO #1 Add your landing page here -->
 
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Ketchapp</title>
+    <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="Le16vuXeo8+PKkuya51bGpbFJEpMx/BRqDmx1qNKcn0OWtd1PVetJq707AxYRPap0oiMTplEv8RRj9vK0Vwltg==" />
+    <meta name="action-cable-url" content="/cable" />
+    <link rel="stylesheet" media="all" href="/assets/application-2ee8fb4f8bae03987ba3b418b022b2a22a502b2e49fc50bdc2d924ab1bf156f4.css" />
+    <link rel="stylesheet" media="all" href="/packs/css/application-6ede3073.css" /> <!-- Uncomment if you import CSS in app/javascript/packs/application.js -->
+  </head>
+  <body>
+    <div class="navbar navbar-expand-md navbar-ketchup">
+  <a class="navbar-brand" href="/">
+    <!-- <img src="https://img.talkandroid.com/uploads/2014/03/ketchup.png" alt="logo"> -->
+    KetchUp
+</a>  <button class="navbar-toggler" type="button" id="open-btn">&#9776;</button>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/users/sign_up">Sign Up</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/sign_in">Login</a>
+        </li>
+    </ul>
+  </div>
+</div>
+  <div id="mySidenav" class="sidenav">
+    <a class="closebtn" id="close-btn">&times;</a>
+    <a href="/users/sign_in">Login</a>
+    <a href="/users/sign_up">Sign Up</a>
+  </div>
+<script>
+  const open = document.getElementById("open-btn");
+  const close = document.getElementById("close-btn");
+  open.addEventListener('click', e => {
+    document.getElementById("mySidenav").style.width = "70vw";
+  })
+  close.addEventListener('click', e => {
+    document.getElementById("mySidenav").style.width = "0";
+  })
+</script>
+
+    
+    <!-- temporary background image for banner -->
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(/assets/banner-c961e1124e655a90dfa068897c1a18b051eebf2814144edadf61bb1ce2b35186.jpg);">
+  <div class="container">
+    <h1>Travel, Meet & KetchUp</h1>
+    <p>Connect, plan trips, and arrange meetups with your connections around the world.</p>
+    
+<form class="simple_form new_trip" id="new_trip" novalidate="novalidate" action="/trips" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="72igQGbqynGmPNSKMqh0o1pFbbxodO0YabMCK/Jruf5+6eq8THBw1cH3NWFuJqKeYcusKl2vhicYpQeF//Glyw==" />
+  <div class="trip-form col-xs-12 col-md-8 offset-md-2">
+    <div style="flex: 0 0 35%;">
+      <input class="daterange form-control" type="text" name="trip[dates]" id="trip_dates">
+    </div>
+    <div style="flex: 0 0 35%;">
+      <div class="form-group string required trip_location"><input class="form-control string required" placeholder="Enter a city" type="text" name="trip[location]" id="trip_location" /></div>
+      <div class="form-group hidden trip_latitude"><input class="form-control hidden" type="hidden" name="trip[latitude]" id="trip_latitude" /></div>
+      <div class="form-group hidden trip_longitude"><input class="form-control hidden" type="hidden" name="trip[longitude]" id="trip_longitude" /></div>
+      <div class="form-group hidden trip_country_code"><input class="form-control hidden" type="hidden" name="trip[country_code]" id="trip_country_code" /></div>
+    </div>
+    <div class="actions" style="flex: 0 0 30%;">
+      <input type="submit" name="commit" value="Search connections" class="btn btn-flat mt-0 select-btn" data-disable-with="Search connections" />
+    </div>
+
+  </div>
+</form>
+  </div>
+</div>
+
+<div class="stripe">
+  <h2>How KetchUp works</h2>
+  <div class="home-info text-center">
+   <div class="info">
+    <i class="fas fa-users"></i>
+     <h3>Find, connect & chat</h3>
+     <p>Import contacts & invite connections.</p>
+   </div>
+   <div class="info">
+     <i class="fas fa-plane-departure"></i>
+     <h3>Plan trips</h3>
+     <p>Let your connections know when you're in town.</p>
+   </div>
+   <div class="info">
+     <i class="far fa-calendar-check"></i>
+     <h3>Organize a ketchup</h3>
+     <p>Meet & catch up!</p>
+   </div>
+ </div>
+</div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7aAaCPz08_MdnSxDfalo75eMgw5vKntQ&libraries=places&callback=initMap" async defer></script>
+<script>
+  function initMap() {
+    let input = document.getElementById('trip_location');
+    let autocomplete = new google.maps.places.Autocomplete(input, {types: ['(cities)']});
+    autocomplete.setFields(['address_components', 'geometry', 'name']);
+    function fillInForm() {
+      let place = autocomplete.getPlace();
+      if (!place.geometry) {
+        // User entered the name of a Place that was not suggested and
+        // pressed the Enter key, or the Place Details request failed.
+        window.alert("No details available for input: '" + place.name + "'");
+        return;
+      };
+      console.log(place.address_components);
+      for (var i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+        // get the country code (the "short name")
+        if (addressType == "country") {
+          document.getElementById('trip_country_code').value = place.address_components[i].short_name;
+        }
+      }
+      document.getElementById('trip_latitude').value = place.geometry.location.lat();
+      document.getElementById('trip_longitude').value = place.geometry.location.lng();
+    }
+    autocomplete.addListener('place_changed', fillInForm);
+  }
+  document.addEventListener("DOMContentLoaded", function() {
+    $('#trip_dates').daterangepicker({
+      autoApply: true,
+      minDate: 'Feb 18, 2022',
+      startDate: 'Feb 18, 2022',
+      endDate: 'Feb 18, 2022',
+      opens: "center",
+      locale: {
+        format: 'MMM DD, YYYY'
+      }
+    });
+  });
+</script>
+
+
+    <!-- need more design and maybe change contents for footer -->
+<div class="footer">
+  <div class="footer-links">
+    <a href="#"><i class="fab fa-github"></i></a>
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-facebook"></i></a>
+    <a href="#"><i class="fab fa-twitter"></i></a>
+    <a href="#"><i class="fab fa-linkedin"></i></a>
+  </div>
+  <div class="footer-copyright">
+    © 2020 KetchUp, Inc. All rights reserved
+  </div>
+</div>
+
+    <script src="/assets/application-8fbe001fc4d86e26b229ab8262f81c0c5499d113fb22bf70ae0161706234489f.js"></script>
+    <script src="/packs/js/application-7eeea287ec178011b411.js"></script>
+  </body>
+
+</html>
+
+
   
 
 </body>
