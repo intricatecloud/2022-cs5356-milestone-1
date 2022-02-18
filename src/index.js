@@ -27,6 +27,12 @@ app.use(
     extended: true,
   })
 );
+
+//content-type: text/plain
+app.use(express.text())
+// content-type: application/json
+app.use(express.json())
+
 // set the view engine to ejs
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -52,14 +58,37 @@ app.get("/dashboard", authMiddleware, async function (req, res) {
   res.render("pages/dashboard", { user: req.user, feed });
 });
 
+
+// What is the difference here?
+
+// app.post("/sessionLogin", function(req, res) {
 app.post("/sessionLogin", async (req, res) => {
   // CS5356 TODO #4
   // Get the ID token from the request body
   // Create a session cookie using the Firebase Admin SDK
   // Set that cookie with the name 'session'
   // And then return a 200 status code instead of a 501
-  res.status(501).send();
-});
+//   res.status(501).send();
+
+  const body = req.body;
+  const idToken = body.idToken;
+  // debugger
+
+  const expiresIn = 60 * 60 * 1000;
+  admin.auth().createSessionCookie(idToken, { expiresIn })
+  .then(
+    (sessionCookie) => {
+      // Set cookie policy for session cookie
+      const options = { maxAge: expiresIn, httpOnly: true, secure: true};
+      res.cookie("session", sessionCookie, options);
+      res.status(200).send(JSON.stringify({ "status": "success"}));
+    },
+    (error) => {
+      debugger
+      res.status(401).send(error.toString());
+    }
+  );
+})
 
 app.get("/sessionLogout", (req, res) => {
   res.clearCookie("session");
