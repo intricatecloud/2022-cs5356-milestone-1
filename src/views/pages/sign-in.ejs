@@ -12,7 +12,7 @@
 
 
   <form id="login-form">
-    <input type="text" name="login" placeholder="Your user name" />
+    <input type="text" name="email" placeholder="Your user name" />
     <input type="password" name="password" id="password" />
     <button>
       Sign In
@@ -33,6 +33,12 @@
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
+      apiKey: "AIzaSyAKs6XaESlLAhlaIoDwTKvgRqMDId0-fHc",
+      authDomain: "cs5356-assignment1.firebaseapp.com",
+      projectId: "cs5356-assignment1",
+      storageBucket: "cs5356-assignment1.appspot.com",
+      messagingSenderId: "309800655988",
+      appId: "1:309800655988:web:d23ab3dceecf5907b44521"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -43,7 +49,7 @@
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
         event.preventDefault();
-        const login = event.target.login.value;
+        const email = event.target.email.value;
         const password = event.target.password.value;
 
         // CS5356 TODO #3
@@ -52,7 +58,34 @@
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
 
-        return false;
+        // sign in using the Firebase SDK for web
+        app.auth().signInWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+
+            // set the user as a const
+            const user = userCredential.user;
+            console.log("user signed in", user);
+
+            // Get the Users ID token and post to /sessionLogin API
+            return user.getIdToken().then((idToken) => {
+              console.log("userId", idToken);
+              return fetch('/sessionLogin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idToken: idToken, plan: 'free' })
+              });
+            //Redirect the user to the /dashboard
+            }).then(() => {
+                window.location.href = '/dashboard'
+            // throw potential errors
+            }).catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.log("ERROR ", errorCode, ": ", errorMessage)
+            })
+          });
+
+        // return false;
       });
   };
 </script>
