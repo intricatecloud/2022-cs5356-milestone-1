@@ -58,8 +58,6 @@ app.post("/sessionLogin", async (req, res) => {
   // CS5356 TODO #4
   // Get the ID token from the request body
   const idToken = req.body.idToken;
-  // console.log("idToken Received at /sessionLogin", idToken);
-  debugger;
 
   // Create a session cookie using the Firebase Admin SDK
   // Set that cookie with the name 'session'
@@ -98,8 +96,6 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   // Add the message to the userFeed so its associated with the user
   const user = req.user;
   const message = req.body.message.toString();
-  // console.log(user);
-  // console.log(message);
   userFeed.add(user, message);
   res.redirect("/dashboard");
 });

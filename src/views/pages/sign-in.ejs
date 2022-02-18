@@ -64,11 +64,9 @@
 
             // set the user as a const
             const user = userCredential.user;
-            console.log("user signed in", user);
 
             // Get the Users ID token and post to /sessionLogin API
             return user.getIdToken().then((idToken) => {
-              console.log("userId", idToken);
               return fetch('/sessionLogin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

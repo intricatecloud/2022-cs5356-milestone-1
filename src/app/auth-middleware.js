@@ -11,7 +11,6 @@ module.exports = (req, res, next) => {
       .auth()
       .verifySessionCookie(sessionCookie, true /** checkRevoked */)
       .then(userData => {
-        // console.log("Logged in:", userData.email);
         req.user = userData;
         next();
       })
