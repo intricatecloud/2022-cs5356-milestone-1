@@ -9,11 +9,6 @@
     <%- include('../partials/nav') %>
   </header>
   <div class="container">
-    <% if (message.length > 0) { %>
-       <div class="alert alert-warning" role="alert">
-         <strong>Warning!</strong> <%= message %>.
-       </div>
-     <% } %>
      <form class="form-signin" action="/signup" method="post">
        <h2 class="form-signin-heading">Please signup</h2>
        <label for="inputName" class="sr-only">Name</label>
