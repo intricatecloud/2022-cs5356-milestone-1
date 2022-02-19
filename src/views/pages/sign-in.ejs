@@ -67,8 +67,18 @@
         firebase.auth().signInWithEmailAndPassword(login, password)
         .then((userCredential) => {
           // Signed in
-          var user = userCredential.user;
-          window.location.href = "/dashboard";
+          const user = userCredential.user;
+          user.getIdToken()
+            .then((idToken) => {
+              fetch('/sessionLogin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify({ idToken })
+              }).then(() => {
+                window.location.href = '/dashboard'
+                console.log('success!')
+              })
+          })
         })
         .catch((error) => {
           var errorCode = error.code;

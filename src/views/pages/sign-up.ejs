@@ -67,8 +67,18 @@
           .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
+            user.getIdToken()
+            .then((idToken) => {
+              fetch('/sessionLogin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify({ idToken })
+              }).then(() => {
+                window.location.href = '/dashboard'
+                console.log('success!')
+              })
+            })
             //document.getElementById("demo").innerHTML = "Successful Sign Up";
-            window.location.href = "/dashboard";
           })
           .catch((error) => {
             const errorCode = error.code;
