@@ -6,18 +6,18 @@ const admin = require("firebase-admin");
 const app = express();
 const port = process.env.PORT || 8080;
 
-// CS5356 TODO #2
+// CS5356 TODO #2 DONE
 // Uncomment this next line after you've created
 // serviceAccountKey.json
-// const serviceAccount = require("./../config/serviceAccountKey.json");
+const serviceAccount = require("/Users/seanjpeng/Desktop/CornellStudy/Spring/Startup/serviceAccount/milestone1-cf7cd-firebase-adminsdk-3ckgj-974450757a.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
 
-// CS5356 TODO #2
+// CS5356 TODO #2 DONE
 // Uncomment this next block after you've created serviceAccountKey.json
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-// });
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 // use cookies
 app.use(cookieParser());
@@ -53,12 +53,30 @@ app.get("/dashboard", authMiddleware, async function (req, res) {
 });
 
 app.post("/sessionLogin", async (req, res) => {
-  // CS5356 TODO #4
+  // CS5356 TODO #4 DONE
   // Get the ID token from the request body
   // Create a session cookie using the Firebase Admin SDK
   // Set that cookie with the name 'session'
   // And then return a 200 status code instead of a 501
-  res.status(501).send();
+
+  const idToken = req.body.idToken.toString();
+  const expiresIn = 60 * 60 * 24 * 5 * 1000;
+
+  admin.auth()
+    .createSessionCookie(idToken, { expiresIn })
+    .then(
+      (sessionCookie) => {
+        // Set cookie policy for session cookie.
+        const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+        res.cookie('session', sessionCookie, options);
+        res.end(JSON.stringify({ status: 'success' }));
+        res.status(200).send();
+      },
+      (error) => {
+        res.status(401).send('UNAUTHORIZED REQUEST!');
+      }
+    );
+
 });
 
 app.get("/sessionLogout", (req, res) => {
@@ -67,10 +85,13 @@ app.get("/sessionLogout", (req, res) => {
 });
 
 app.post("/dog-messages", authMiddleware, async (req, res) => {
-  // CS5356 TODO #5
+  // CS5356 TODO #5 DONE
   // Get the message that was submitted from the request body
   // Get the user object from the request body
   // Add the message to the userFeed so its associated with the user
+
+  await userFeed.add(req.user, req.body.message);
+  return res.redirect("/dashboard");
 });
 
 app.listen(port);
