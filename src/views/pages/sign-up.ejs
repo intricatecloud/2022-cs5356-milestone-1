@@ -32,6 +32,19 @@
   window.onload = () => {
     console.log('Running onload')
 
+    const postUserId = async function (url, idTokenUser) {
+      const data = { idToken: idTokenUser };
+      const response = await fetch(url, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      return response;
+    };
+
     const firebaseConfig = {
       // CS5356 TODO #2
       // Copy your Firebase config here too
@@ -43,8 +56,6 @@
     appId: "1:969441945643:web:5d367ab182084ba9d9a26e",
     measurementId: "G-7DXR04KVMK"
 }
-;
-
     const app = firebase.initializeApp(firebaseConfig);
 
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
