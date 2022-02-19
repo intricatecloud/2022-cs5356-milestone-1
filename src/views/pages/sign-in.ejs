@@ -29,11 +29,31 @@
 <script>
 
   window.onload = () => {
-    const firebaseConfig = {
+  const firebaseConfig = {
+    apiKey: "AIzaSyCIFrqTU3R20-jOkT1JyXhEUDCM_V2JN3E",
+    authDomain: "cs5356-milestone-1-jd782.firebaseapp.com",
+    projectId: "cs5356-milestone-1-jd782",
+    storageBucket: "cs5356-milestone-1-jd782.appspot.com",
+    messagingSenderId: "969441945643",
+    appId: "1:969441945643:web:5d367ab182084ba9d9a26e",
+    measurementId: "G-7DXR04KVMK"
+  } 
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
-    };
 
     const app = firebase.initializeApp(firebaseConfig);
 
