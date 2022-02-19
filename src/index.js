@@ -11,6 +11,7 @@ const port = process.env.PORT || 8080;
 // CS5356 TODO #2
 // Uncomment this next line after you've created
 // serviceAccountKey.json
+
 const serviceAccount = require("./../config/serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
@@ -163,7 +164,7 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   const user = req.user;
 
   // Add the message to the userFeed so its associated with the user
-  userFeed.add(user, userMessage);
+  await userFeed.add(user, userMessage);
 
   // Reload dashboard to show new feed
   res.redirect("/dashboard");
