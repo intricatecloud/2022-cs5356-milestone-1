@@ -18,12 +18,23 @@
     <nav>
     <%- include('../partials/nav') %>
     </nav>
-  <div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(src/app/images/banner.jpeg);">
+  <style>
+    .body {
+      width: 100%;
+      align-items : center;
+      height: 100%;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      background-color: green;
+      overflow: hidden;
+      background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('src/app/images/banner.jpeg');
+}  </style>
     <div class="container">
       <h1>Ruffhouse</h1>
       <p>Your one-stop-shop for your digital canine therapy. Woof woof!</p>
     </div>
-  </div>
   <!-- CS5356 TODO #1 Add your landing page here -->
   </header> 
 </body>
