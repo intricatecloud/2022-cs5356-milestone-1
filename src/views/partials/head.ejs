@@ -100,30 +100,49 @@ div.pac-container {
   width: 100%;
 }
 
-@media screen and (max-width: 767.98px) {
-  .banner {
-    padding: 3rem 1.25rem;
-  }
-  .trip-form {
-    display: block;
-  }
-  .actions {
-    text-align: center;
-  }
-  .select-btn {
-    width: auto;
-  }
+.stripe {
+  width: 100%;
+  background-color: #0F1721;
+  padding: 4.5rem;
 }
 
-@media screen and (min-width: 768px) and (max-width: 991.98px) {
-  .trip-form {
-    display: block;
+.home-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 2rem;
+}
+
+.home-info > .info {
+  color: white;
+  padding: 3rem 0;
+}
+
+.stripe > h2 {
+  text-align: center;
+  font-family: 'Permanent Marker';
+  color: white;
+  font-size: 3rem;
+}
+
+h3, p {
+  font-family: 'Overpass';
+}
+
+.info > i {
+  font-size: 3rem;
+  justify-content: center;
+  padding: 1rem;
+}
+
+@media screen and (max-width: 991.98px) {
+  .home-info {
+    grid-template-columns: 1fr;
   }
-  .actions {
-    text-align: center;
+  .stripe {
+    padding: 2rem;
   }
-  .select-btn {
-    width: auto;
+  .home-info > .info {
+    padding: 2rem 0 0 0;
   }
 }
 
