@@ -29,12 +29,18 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
 <script>
-
   window.onload = () => {
     console.log('Running onload')
     const firebaseConfig = {
       // CS5356 TODO #2
       // Copy your Firebase config here too
+      apiKey: "AIzaSyC-PTJnNJneTbtgJSo8A2gFt5XIx1J6BdA",
+      authDomain: "ruffhouse-f536e.firebaseapp.com",
+      projectId: "ruffhouse-f536e",
+      storageBucket: "ruffhouse-f536e.appspot.com",
+      messagingSenderId: "448119311869",
+      appId: "1:448119311869:web:faceb106f6a09239fadd94",
+      measurementId: "G-FYRL4N2MGQ"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -53,7 +59,18 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
-
+        // import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+        firebase.auth().createUserWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+            // Signed in
+            window.location.href("/dashboard");
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+          });
         return false;
       });
   };
