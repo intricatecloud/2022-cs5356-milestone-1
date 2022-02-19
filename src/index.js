@@ -6,18 +6,20 @@ const admin = require("firebase-admin");
 const app = express();
 const port = process.env.PORT || 8080;
 
+
+
 // CS5356 TODO #2
 // Uncomment this next line after you've created
 // serviceAccountKey.json
-// const serviceAccount = require("./../config/serviceAccountKey.json");
+const serviceAccount = require("./../config/serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
 
 // CS5356 TODO #2
 // Uncomment this next block after you've created serviceAccountKey.json
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-// });
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 // use cookies
 app.use(cookieParser());
@@ -58,7 +60,35 @@ app.post("/sessionLogin", async (req, res) => {
   // Create a session cookie using the Firebase Admin SDK
   // Set that cookie with the name 'session'
   // And then return a 200 status code instead of a 501
-  res.status(501).send();
+  const idToken = req.body.idToken;
+  // const csrfToken = ""+req.body.csrfToken;
+  // // Guard against CSRF attacks.
+  // if (csrfToken !== req.cookies.csrfToken) {
+  //   res.status(401).send('UNAUTHORIZED REQUEST!');
+  //   return;
+  // }
+  // Set session expiration to 5 days.
+  const expiresIn = 60 * 60 * 1000;
+  // Create the session cookie. This will also verify the ID token in the process.
+  // The session cookie will have the same claims as the ID token.
+  // To only allow session cookie setting on recent sign-in, auth_time in ID token
+  // can be checked to ensure user was recently signed in before creating a session cookie.
+  admin.auth().createSessionCookie(idToken, { expiresIn })
+    .then(
+      (sessionCookie) => {
+        // Set cookie policy for session cookie.
+        const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+        res.cookie('session', sessionCookie, options);
+        res.status(201).send(JSON.stringify({ status: 'success'}));
+        // res.end(JSON.stringify({ status: 'success' }));
+      },
+      (error) => {
+        res.status(401).send(error.toSring());
+      }
+    );
+
+
+  // res.status(501).send();
 });
 
 app.get("/sessionLogout", (req, res) => {
@@ -71,6 +101,10 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   // Get the message that was submitted from the request body
   // Get the user object from the request body
   // Add the message to the userFeed so its associated with the user
+  message = req.body.message;
+  user = req.user;
+  userFeed.add(user, message);
+  res.redirect('/dashboard');
 });
 
 app.listen(port);

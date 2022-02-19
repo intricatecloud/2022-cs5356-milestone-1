@@ -5,7 +5,20 @@
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
     <style>
-
+      .hero.has-background {
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-background {
+        position: absolute;
+        object-fit: cover;
+        object-position: center center;
+        width: 100%;
+        height: 100%;
+      }
+      .hero-background.is-transparent {
+        opacity: 0.3;
+      }
     </style>
 </head>
 
@@ -14,9 +27,94 @@
     <%- include('../partials/nav') %>
   </header>
 
-  Fill me in!
   <!-- CS5356 TODO #1 Add your landing page here -->
+  <section class="hero is-fullheight has-background">
+    <img alt="Fill Murray" class="hero-background" src="../../../static/hero-bg.jpg" />
+      <div class="container">
+        <div class="title is-2">
+          Who let the dogs out?
+        </div>
+        <div class="subtitle">
+          Dogs want to be on social media too. Plus they always get themselves into ruff situations.
+        </div>
+        <a class="button is-primary">Learn how</a>
+      </div>
+  </section>
+  <div class="container">
+    <div class="title is-2 has-text-centered">This is what you're missing out on</div>
+  </div>
+  <section>
+    <div class="columns is-variable is-6">
+      <div class="column">
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="https://www.chagougou.com/uploads/200317/1-20031GA21W60.jpg" alt="Placeholder image">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4">single dog happy dog</p>
+              </div>
+            </div>
+            <div class="content">
+              You are my sunshine, my only sunshine
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="https://www.chagougou.com/uploads/200317/1-20031GA21W60.jpg" alt="Placeholder image">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4">single dog happy dog</p>
+              </div>
+            </div>
+            <div class="content">
+              You are my sunshine, my only sunshine
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="https://www.chagougou.com/uploads/200317/1-20031GA21W60.jpg" alt="Placeholder image">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4">single dog happy dog</p>
+              </div>
+            </div>
+            <div class="content">
+              You are my sunshine, my only sunshine
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="container">
+    <div class="title is-2 has-text-centered">Ready to give it a spin</div>
+    <div class="subtitle is-5 has-text-centered">Yes, SIGN ME UP!!!!!!</div>
+  </div>
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-half">
+      <a href="/sign-up" class="button is-primary">Sign up now!</a>
+    </div>
+  </div>
 
+  
 </body>
 
 <%- include('../partials/footer') %>
