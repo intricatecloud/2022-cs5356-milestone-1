@@ -3,26 +3,33 @@
 
 <head>
   <%- include('../partials/head') %>
+  <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.0/css/bulma.min.css">
+	<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 </head>
 
 <body>
   <header>
-    <%- include('../partials/nav') %>
+    <%- include('../partials/nav',{ hideSignIn: true }) %>
   </header>
 
-  <div class="container">
-    Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
-    <form id="login-form">
-      <label>Login</label>
-      <input id="login" type="text" name="login" />
-      <label>Password</label>
-      <input type="password" name="password" />
-      <button>Log in</button>
-    </form>
-    <div id="login-error" style="display: none;">
+  <section class="section">
+    <div class="container">
+      Sign Up for a new account or click <a href="/sign-in">here</a> to sign in with an existing account
+      <form id="login-form">
+        <label>Username</label>
+        <input id="login" type="text" name="username" placeholder="Your user name" />
+        <label>Password</label>
+        <input type="password" name="password" />
+        <button>Log in</button>
+      </form>
+      <div id="login-error" style="display: none;">
+      </div>
+      <a href="/dashboard">Dashboard</a>
     </div>
-    <a href="/dashboard">Dashboard</a>
-  </div>
+  </section>
+
+  
 </body>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
@@ -48,43 +55,57 @@
 
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
-    document
-      .getElementById("login-form")
+    const loginForm = document.querySelector('form');
+
+    // submit the login form
+    // Done
+    loginForm
       .addEventListener("submit", (event) => {
         event.preventDefault();
-        const login = event.target.login.value;
+        // prevent reload
+        const username = event.target.username.value;
         const password = event.target.password.value;
-
+        // Done
         // CS5356 TODO #3
-        // Create a new user using the Firebase SDK for Web
+        // Sign in using the Firebase SDK for Web
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+
         firebase.auth().createUserWithEmailAndPassword(username, password)
-        .then((userCredential) => {
-          // Signed in 
-          userCredential.user.getIDToken().then(function(idToken){
+        .then((response) => {
+          response.user.getIdToken().then(function(idToken){
+
               // set cookie to store the idtoken
               fetch('/sessionLogin',{
                   method: 'POST', // want to make a change to server
-                  body: idToken
-              }).then(function(response){ debugger })
-              .catch(function(err){console.log(err)})
+                  headers: {
+                    'Content-Type':'application/json' //automatically use json parson
+                  },
+                  body: JSON.stringify({
+                    idToken: idToken,
+                    plan: 'free'
+                  }) // turning into stringify json
+              }).then(function (responseBody){
+                // window.location.assign('/dashboard')
+                window.location.href = '/dashboard'
+              })
+              .catch(function(err){
+                console.log(err)
+              })
+          }).catch(function(err){
+            console.log(err)
           })
 
-          var user = userCredential.user;
-          console.log(username)
-          window.location.href = "/dashboard";
-          // ...
+        var user = response.user;
         })
         .catch((error) => {
           var errorCode = error.code;
           var errorMessage = error.message;
-          console.log(errorMessage);
-          // ..
+          console.log(errorMessage)
         });
-        return false;
       });
+    
     
   };
 </script>

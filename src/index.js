@@ -84,12 +84,17 @@ app.get("/dashboard", authMiddleware, async function (req, res) {
   res.render("pages/dashboard", { user: req.user, feed });
 });
 
+
+/*
+SessionLogin is a post request, not rendering a page.
+*/
 app.post("/sessionLogin", async (req, res) => {
   // CS5356 TODO #4
   // Get the ID token from the request body
   // Create a session cookie using the Firebase Admin SDK
   // Set that cookie with the name 'session'
   // And then return a 200 status code instead of a 501
+
     const idToken = req.body.idToken;
     // console.log(body);
     const expiresIn = 3600 * 1000; // this is one hour
@@ -98,14 +103,17 @@ app.post("/sessionLogin", async (req, res) => {
       (sessionCookie) =>{
         // Set cookie policy for sessiong cookie.
         const options = { maxAge: expiresIn, httpOnly : true, secure: true};
+        // Set that cookie with the name 'session'
         res.cookie('session', sessionCookie, options);
         res.status(201).send(JSON.stringify({status: 'success'}));
       },
       (error) => {
-        res.status(401).send(error.toString());
+        res.status(501).send(error.toString());
       }
     )
 });
+
+
 
 app.get("/sessionLogout", (req, res) => {
   res.clearCookie("session");
@@ -117,6 +125,9 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   // Get the message that was submitted from the request body
   // Get the user object from the request body
   // Add the message to the userFeed so its associated with the user
+  await userFeed.add(req.user, req.body['message']);
+  const feed = await userFeed.get();
+  res.render("pages/dashboard", { user: req.user, feed });
 });
 
 app.listen(port);

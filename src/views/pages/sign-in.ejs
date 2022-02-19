@@ -16,7 +16,7 @@
 
   <section class="section">
     <div class="container">
-      <div class="columns">
+      Sign Up for a new account or click <a href="/sign-up">here</a> to sign up
 
         <form id="login-form">
           <lable for="username">Username</lable>
@@ -26,12 +26,9 @@
           <button>
             Sign In
           </button>
-          <div id="login-error">
-          </div>
-          </div>
+          <div id="login-error"></div>
         </form>
 
-      </div>
     </div>
   </section>
 
@@ -43,6 +40,7 @@
 <script>
   window.onload = () => {
     const firebaseConfig = {
+      // Done
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
@@ -61,11 +59,15 @@
 
     const loginForm = document.querySelector('form');
 
+    // submit the login form
+    // Done
     loginForm
       .addEventListener("submit", (event) => {
         event.preventDefault();
+        // prevent reload
         const username = event.target.username.value;
         const password = event.target.password.value;
+        // Done
         // CS5356 TODO #3
         // Sign in using the Firebase SDK for Web
         // Get the users ID token
@@ -74,9 +76,8 @@
 
         firebase.auth().signInWithEmailAndPassword(username, password)
         .then((response) => {
-          // Signed in
-          // debugger
           response.user.getIdToken().then(function(idToken){
+
               // set cookie to store the idtoken
               fetch('/sessionLogin',{
                   method: 'POST', // want to make a change to server
@@ -92,27 +93,19 @@
                 window.location.href = '/dashboard'
               })
               .catch(function(err){
-
                 console.log(err)
               })
-
           }).catch(function(err){
-            console.log(err)})
+            console.log(err)
+          })
 
-          var user = response.user;
-          console.log(username)
-          debugger
-          // window.location.href = "/dashboard";
-          // ...
+        var user = response.user;
         })
         .catch((error) => {
-          debugger
           var errorCode = error.code;
           var errorMessage = error.message;
           console.log(errorMessage)
         });
-        debugger
-        return false;
       });
   };
 </script>
