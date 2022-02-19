@@ -2,18 +2,21 @@
 <html lang="en">
 <head>
   <%- include('../partials/head') %>
+  <link rel="stylesheet" 
+  href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.0/css/bulma.min.css">
+<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 </head>
 
 <body>
   <header>
-    <%- include('../partials/nav') %>
+    <%- include('../partials/nav',{ hideSignIn: true }) %>
   </header>
   <div class="container">
     <h2>Create an account</h2>
     <p>Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a></p>
     <form id="login-form">
-      <label>Login</label>
-      <input id="login" type="text" name="login" />
+      <label>Username</label>
+      <input id="login" type="text" name="username" placeholder="Your username" />
       <label>Password</label>
       <input type="password" name="password" />
       <button>Log in</button>
@@ -49,15 +52,12 @@ app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
     document
       .getElementById("login-form")
+      const loginForm = document.querySelector('form');
+      loginForm
       .addEventListener("submit", (event) => {
         event.preventDefault();
-        const login = event.target.login.value;
+        const username = event.target.username.value;
         const password = event.target.password.value;
-
-    document.querySelector('form').addEventListener("submit", (event) => {
-      event.preventDefault();
-      const login = event.target.login.value;
-      const password = event.target.password.value;
 
         // CS5356 TODO #3
         // Create a new user using the Firebase SDK for Web
@@ -70,25 +70,28 @@ app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
         import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
-        app.auth().createUserWithEmailAndPassword(login, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          user.getIdToken().then((idToken) => {
-            fetch('/sessionLogin', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ idToken })
-            }).then(() => {
-              window.location.href = '/dashboard'
-              console.log('success!')
-            }).catch((error) => {
-              console.log(error.message)
-            })
+        firebase.auth().createUserWithEmailAndPassword(username, password)
+        .then((response) => {
+          response.user.getIdToken().then(function(idToken){
+              // set cookie
+              fetch('/sessionLogin',{
+                  method: 'POST', 
+                  headers: {
+                    'Content-Type':'application/json'
+                  },
+                  body: JSON.stringify({
+                    idToken: idToken,
+                    plan: 'free'
+                  }) 
+              }).then(function (responseBody){
+                window.location.href = '/dashboard'
+              })
+              .catch(function(err){
+                console.log(err)
+              })
+          }).catch(function(err){
+            console.log(err)
           })
-        }).catch(function (error) {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-        });
       return false;
     });
   };
