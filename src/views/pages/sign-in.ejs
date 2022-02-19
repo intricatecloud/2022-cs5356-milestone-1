@@ -61,9 +61,10 @@
 
         // When the user signs in with email and password.
         app.auth().signInWithEmailAndPassword(login, password).then(({
-          user
+          userCredential
         }) => {
           // Get the user's ID token as it is needed to exchange for a session cookie.
+          const user = userCredential.user;
           user.getIdToken().then(idToken => {
             fetch('/sessionLogin',{
               method: 'POST',

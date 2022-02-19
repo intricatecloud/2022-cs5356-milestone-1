@@ -60,17 +60,20 @@
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
         // import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-        firebase.auth().createUserWithEmailAndPassword(login, password)
-          .then((userCredential) => {
+        app.auth().createUserWithEmailAndPassword(login, password)
+          .then(({user}) => {
             // Signed in
-            window.location.href("/dashboard");
-            // ...
+            user.getIdToken().then(idToken => {
+              fetch('/sessionLogin',{
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({idToken})
+              }).then(() => {
+                window.location.href='/dashboard'
+            })
+
+            })
           })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // ..
-          });
         return false;
       });
   };
