@@ -67,7 +67,7 @@ app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
         return false;
       });
-
+        import { initializeApp } from "firebase/app";
         import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
         firebase.auth().createUserWithEmailAndPassword(username, password)
