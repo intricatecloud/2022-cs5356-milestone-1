@@ -60,6 +60,74 @@ div.pac-container {
 .modal.fade.show {
   opacity: 1 !important;
 }
+.banner {
+  background-size: cover;
+  background-position: center;
+  padding: 9.5rem 1.25rem;
+}
+
+.banner h1 {
+  margin: 0;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  font-size: 3rem;
+  text-align: center;
+  font-family: 'Permanent Marker';
+  margin-bottom: 2rem;
+}
+
+.banner p {
+  font-size: 1.5rem;
+  color: white;
+  opacity: .75;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  text-align: center;
+  margin-bottom: 4rem !important
+}
+
+.banner > .container {
+  min-height: 0px;
+}
+
+.trip-form {
+  display: flex;
+}
+
+.actions > .btn-flat {
+  padding: 6px 18px;
+}
+
+.select-btn {
+  width: 100%;
+}
+
+@media screen and (max-width: 767.98px) {
+  .banner {
+    padding: 3rem 1.25rem;
+  }
+  .trip-form {
+    display: block;
+  }
+  .actions {
+    text-align: center;
+  }
+  .select-btn {
+    width: auto;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991.98px) {
+  .trip-form {
+    display: block;
+  }
+  .actions {
+    text-align: center;
+  }
+  .select-btn {
+    width: auto;
+  }
+}
 
   </style>
 </head>
+
