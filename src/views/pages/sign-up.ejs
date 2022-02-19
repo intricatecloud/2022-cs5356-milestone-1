@@ -1,5 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+  <style>
+    .flash {
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  box-shadow: 0 0 8px rgba(0,0,0,0.2);
+  border-radius: 4px;
+  margin: 8px;
+}
+
+.flash-success {
+  border: 2px solid #1EDD88;
+}
+
+.flash-warning {
+  border: 2px solid #FFC65A;
+}
+
+.flash-danger {
+  border: 2px solid #FD1015;
+}
+  </style>
 
 <head>
   <%- include('../partials/head') %>
@@ -62,6 +86,26 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+
+        import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+        const auth = getAuth();
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            <div class="flash flash-danger alert alert-dismissible fade show" role="alert">
+            <span><strong>Oops!</strong> 😱 a problem has occurred. Please check your login credentials.</span>
+            <a data-bs-dismiss="alert" aria-label="Close">
+            <i class="fas fa-times"></i>
+  </a>
+</div>
+  });
 
         return false;
       });
