@@ -12,6 +12,8 @@
     <%- include('../partials/nav',{ hideSignIn: true }) %>
   </header>
   <div class="container">
+    <div class="row">
+      <div class="col-10 offset-1 col col-md-6 offset-md-3">
     <h2>Create an account</h2>
     <p>Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a></p>
     <form id="login-form">
@@ -24,7 +26,9 @@
     <div id="login-error" style="display: none;">
     </div>
     <a href="/dashboard">Dashboard</a>
+      </div>
   </div>
+</div>
 </body>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
