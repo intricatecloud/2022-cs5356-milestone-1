@@ -11,6 +11,10 @@
       .my-hero {
         margin-bottom: 2em;
       }
+      .my-level p {
+        color: white;
+        padding-bottom: 1em;
+      }
 
     </style>
 </head>
@@ -19,11 +23,11 @@
   <header>
     <%- include('../partials/nav') %>
   </header>
-  <section class="hero is-warning is-halfheight">
+  <section class="hero my-hero is-warning is-halfheight">
     <div class="hero-body">
       <div class="container">
         <p class="title">
-          Pawwy
+          RuffHouse
         </p>
         <p class="subtitle">
           A social site for your furry family!
@@ -31,11 +35,31 @@
       </div>
     </div>
   </section>
+  <nav class="level my-level container">
+    <div class="level-item has-text-centered">
+      <div>
+        <p class="title">Share</p>
+        <p class="subtitle">Post pictures of your pets!</p>
+      </div>
+    </div>
+    <div class="level-item has-text-centered">
+      <div>
+        <p class="title">Socialize</p>
+        <p class="subtitle">Connect with other pet owners!</p>
+      </div>
+    </div>
+    <div class="level-item has-text-centered">
+      <div>
+        <p class="title">Smile</p>
+        <p class="subtitle">Give them a thumbs up!</p>
+      </div>
+    </div>
+  </nav>
   <section class="hero is-success is-halfheight">
     <div class="hero-body">
       <div class="container">
         <p class="subtitle">
-          Pawwy is a social site where you can create and share profiles for your pets. You can also find friends for
+          RuffHouse is a social site where you can create and share profiles for your pets. You can also find friends for
           them!
         </p>
       </div>
