@@ -71,7 +71,7 @@
                 body: JSON.stringify({idToken: idToken})
             }).then(() => {
               console.log('success!');
-              // window.location.href = '/dashboard';
+              window.location.assign('/dashboard');
             })
           })
           .catch((error) => {
