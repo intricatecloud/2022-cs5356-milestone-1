@@ -3,8 +3,9 @@
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
         <figure class="image">
-          <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png" alt="Logo">
+          <img class="is-rounded is-large" src="static/icons8-dog-64.png" alt="Logo" height="128">
         </figure>
+        &nbsp; Ruffhouse
       </a>
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
         <span aria-hidden="true"></span>
@@ -19,6 +20,9 @@
             <%= email %>
               <i class="material-icons">person_outline</i>
           </a>
+          <a href="/sessionLogout" class="navbar-item">
+              <i class="material-icons">logout</i>
+          </a>
         </div>
       </div>
       <% } else if(locals.hideSignIn) { %>
@@ -26,7 +30,7 @@
         <div id="navbarMenu" class="navbar-menu">
           <div class="navbar-end">
             <div class="navbar-item">
-              <a href="/sign-in" class="button is-primary">Sign In
+              <a href="/sign-in" class="button is-primary is-small">Sign In
               </a>
             </div>
           </div>
