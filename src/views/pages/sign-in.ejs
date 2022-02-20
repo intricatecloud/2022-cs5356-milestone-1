@@ -28,6 +28,8 @@
 
 <script>
 
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
   window.onload = () => {
     const firebaseConfig = {
       apiKey: "AIzaSyCIFrqTU3R20-jOkT1JyXhEUDCM_V2JN3E",
@@ -43,8 +45,6 @@
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
-
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for

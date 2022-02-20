@@ -38,6 +38,8 @@
 
 <script>
 
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
   window.onload = () => {
     console.log('Running onload')
 
@@ -53,7 +55,6 @@
     measurementId: "G-7DXR04KVMK"
     };
 
-    import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
     
     const app = firebase.initializeApp(firebaseConfig);
 
