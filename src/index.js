@@ -39,6 +39,31 @@ app.get("/", function (req, res) {
   res.render("pages/index");
 });
 
+app.post("/sessionLogin", async (req, res) => {
+  // CS5356 TODO #4
+  // Get the ID token from the request body
+  const idToken = req.body.idToken;
+  // Create a session cookie using the Firebase Admin SDK
+  const expiresIn = 60 * 60 * 24 * 5 * 1000;
+  // Set that cookie with the name 'session'
+  // And then return a 200 status code instead of a 501
+  admin
+    .auth()
+    .createSessionCookie(idToken, { expiresIn })
+    .then(
+      (sessionCookie) => {
+        // Set cookie policy for session cookie.
+        const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+        console.log("set session");
+        res.cookie('session', sessionCookie, options);
+        res.status(200).send(JSON.stringify({ status: "success" }));
+      },
+      (error) => {
+        res.status(401).send('UNAUTHORIZED REQUEST!');
+      }
+  );
+});
+
 app.get("/sign-in", function (req, res) {
   res.render("pages/sign-in");
 });
@@ -50,29 +75,6 @@ app.get("/sign-up", function (req, res) {
 app.get("/dashboard", authMiddleware, async function (req, res) {
   const feed = await userFeed.get();
   res.render("pages/dashboard", { user: req.user, feed });
-});
-
-app.post("/sessionLogin", async (req, res) => {
-  // CS5356 TODO #4
-  // Get the ID token from the request body
-  const idToken = req.body.idToken;
-  // Create a session cookie using the Firebase Admin SDK
-  const expiresIn = 60 * 60 * 24 * 5 * 1000;
-  // Set that cookie with the name 'session'
-  // And then return a 200 status code instead of a 501
-  getAuth()
-  .createSessionCookie(idToken, { expiresIn })
-  .then(
-    (sessionCookie) => {
-      // Set cookie policy for session cookie.
-      const options = { maxAge: expiresIn, httpOnly: true, secure: true };
-      res.cookie('session', sessionCookie, options);
-      res.end(JSON.stringify({ status: 'success' }));
-    },
-    (error) => {
-      res.status(401).send('UNAUTHORIZED REQUEST!');
-    }
-  );
 });
 
 app.get("/sessionLogout", (req, res) => {
