@@ -37,8 +37,6 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
 <script>
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
 
   window.onload = () => {
     console.log('Running onload')
@@ -55,6 +53,8 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
     measurementId: "G-7DXR04KVMK"
     };
 
+    import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+    
     const app = firebase.initializeApp(firebaseConfig);
 
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
@@ -65,8 +65,7 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
         event.preventDefault();
         const login = event.target.login.value;
         const password = event.target.password.value;
-
-
+        
         app.auth().createUserWithEmailAndPassword(login, password)
           .then((userCredential) => {
             // Create a new user using the Firebase SDK for Web
