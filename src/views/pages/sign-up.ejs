@@ -21,7 +21,7 @@
       <input id="login" type="text" name="username" placeholder="Your username" />
       <label>Password</label>
       <input type="password" name="password" />
-      <button>Log in</button>
+      <button>Sign Up</button>
     </form>
     <div id="login-error" style="display: none;">
     </div>
@@ -50,7 +50,9 @@
     appId: "1:969441945643:web:5d367ab182084ba9d9a26e",
     measurementId: "G-7DXR04KVMK"
     };
-
+    
+    import { initializeApp } from "firebase/app";
+    import { getAnalytics } from "firebase/analytics";
     const app = firebase.initializeApp(firebaseConfig);
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
