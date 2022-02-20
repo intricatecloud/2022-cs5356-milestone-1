@@ -10,18 +10,34 @@
     <%- include('../partials/nav', { hideSignIn: true }) %>
   </header>
 
+  <form id="login-form" class="box mx-6 my-6">
+    <div class = "field">
+      <label class="label">Email</label>
+      <div class="control">
+        <input class="input" type="text" name="email" placeholder="Your email, e.g., example@gmail.com" />
+      </div>
+    </div>
 
-  <form id="login-form">
-    <input type="text" name="email" placeholder="Your user name" />
-    <input type="password" name="password" id="password" />
-    <button>
-      Sign In
+    <div class = "field">
+      <label class="label">Password</label>
+      <div class="control">
+        <input class="input" type="password" name="password" id="password" placeholder="********"/>
+      </div>
+    </div>
+    
+    <button class="button is-primary">
+      Log in
     </button>
-    <div id="login-error">
+    <div id="login-error"></div>
 
+    <div class="content mt-6">
+      <p style="text-align:center">
+        <strong>Don't have an account yet?</strong> <a href="/sign-up">Sign up now!</a>
+      </p>
     </div>
-    </div>
+  
   </form>
+  
 </body>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
@@ -80,7 +96,12 @@
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            alert("<" + errorCode + "> " + errorMessage);
+            if(errorCode == "auth/user-not-found"){
+              alert("User not found. ");
+            }
+            else{
+              alert("<" + errorCode + "> " + errorMessage);
+            }
           });
 
         return false;

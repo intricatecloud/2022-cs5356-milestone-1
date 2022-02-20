@@ -11,18 +11,42 @@
     </header>
 
     <div class="container">
-      Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
-      <form id="login-form">
-        <label>Email</label>
-        <input id="email" type="text" name="email" />
-        <label>Password</label>
-        <input type="password" name="password" />
-        <button>Sign Up</button>
-      </form>
-      <div id="login-error" style="display: none;">
+      <div class="content">        
+        <h1 style="text-align:center">
+          Sign up for a new account now!
+        </h1>
       </div>
-      <a href="/dashboard">Dashboard</a>
+      <form id="login-form" class="box mx-6 mt-6">
+        <div class = "field">
+          <label class="label">Email</label>
+          <div class="control">
+            <input class="input" type="text" name="email" id="email" placeholder="Your email, e.g., example@gmail.com" />
+          </div>
+        </div>
+    
+        <div class = "field">
+          <label class="label">Password</label>
+          <div class="control">
+            <input class="input" type="password" name="password" id="password" placeholder="********"/>
+          </div>
+        </div>
+        
+        <button class="button is-danger">
+          Sign up
+        </button>
+
+        <div class="content">
+          <p style="text-align:center">
+            <a href="/sign-in">Or click here to sign in with an existing account</a>
+          </p>
+        </div>
+      </form>
+      <div id="login-error" style="display: none;"></div>
+      <p style="text-align:center">
+        <a href="/dashboard" class="button is-info">Dashboard</a>
+      </p>
     </div>
+
   </body>
 
   <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
