@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <%- include('../partials/head') %>
   <link rel="stylesheet" 
@@ -11,6 +12,7 @@
   <header>
     <%- include('../partials/nav',{ hideSignIn: true }) %>
   </header>
+
   <div class="container">
     <div class="row">
       <div class="col-10 offset-1 col col-md-6 offset-md-3">
@@ -18,7 +20,7 @@
     <p>Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a></p>
     <form id="login-form">
       <label>Username</label>
-      <input id="login" type="text" name="username" placeholder="Your username" />
+      <input id="login" type="text" name="login" placeholder="Your username" />
       <label>Password</label>
       <input type="password" name="password" />
       <button>Sign Up</button>
@@ -27,8 +29,8 @@
     </div>
     <a href="/dashboard">Dashboard</a>
       </div>
+    </div>
   </div>
-</div>
 </body>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
@@ -50,52 +52,51 @@
     appId: "1:969441945643:web:5d367ab182084ba9d9a26e",
     measurementId: "G-7DXR04KVMK"
     };
-    
-    import { initializeApp } from "firebase/app";
-    import { getAnalytics } from "firebase/analytics";
+
     const app = firebase.initializeApp(firebaseConfig);
+
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
-    document.getElementById("login-form").addEventListener("submit", (event) => {
-      event.preventDefault();
-      const login = event.target.login.value;
-      const password = event.target.password.value;
+    document
+      .getElementById("login-form")
+      .addEventListener("submit", (event) => {
+        event.preventDefault();
+        const login = event.target.login.value;
+        const password = event.target.password.value;
 
+        
+        app.auth().createUserWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+            // Create a new user using the Firebase SDK for Web
+            const user = userCredential.user;
+            // Get the users ID token
+            user.getIdToken().then(idToken => {
+              // Start a new session with the users ID token
+              fetch('/sessionLogin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                  idToken: idToken,
+                  plan: 'free' 
+                })
+              }).then(() => {
+                console.log('success!')
+                // Redirect the user to the /dashboard
+                window.location.replace("/dashboard")
+              })
+            });
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+          });
         // CS5356 TODO #3
         // Create a new user using the Firebase SDK for Web
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
         return false;
-      });
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(login, password)
-        .then(({ user }) => {
-          // Get the user's ID token as it is needed to exchange for a session cookie.
-          return user
-            .getIdToken()
-            .then((idToken) => {
-              // Post session to local API w/ custom function
-              return postUserId("/sessionLogin", idToken);
-            })
-            .catch((error) => {
-              // Log errors if they exist
-              console.log(error.code, error.message);
-            });
-        })
-        .then(() => {
-          // Redirect the user to the /dashboard
-          window.location.assign("/dashboard");
-        })
-        .catch((error) => {
-          let errorCode = error.code;
-          let errorMessage = error.message;
-          // PERSONAL TODO
-          // Send data to error message field in DOM
-          console.log(errorCode, errorMessage);
-        });
-      return false;
     });
   };
 </script>
