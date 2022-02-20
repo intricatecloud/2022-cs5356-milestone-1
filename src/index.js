@@ -84,6 +84,11 @@ app.get("/sessionLogout", (req, res) => {
 });
 
 app.post("/dog-messages", authMiddleware, async (req, res) => {
+
+  const userMessage = req.body.message.toString();
+  const user = req.user;
+  const feed = await userFeed.add(user, userMessage);
+  res.redirect("/dashboard");
   // CS5356 TODO #5
   // Get the message that was submitted from the request body
   // Get the user object from the request body
