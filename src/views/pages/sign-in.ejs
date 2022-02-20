@@ -42,8 +42,7 @@
   };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const app = firebase.initializeApp(firebaseConfig);
 app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
       // CS5356 TODO #2
