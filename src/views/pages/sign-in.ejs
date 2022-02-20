@@ -97,7 +97,10 @@
             const errorCode = error.code;
             const errorMessage = error.message;
             if(errorCode == "auth/user-not-found"){
-              alert("User not found. ");
+              alert("User not found");
+            }
+            else if(errorCode == "auth/wrong-password"){
+              alert("Wrong password");
             }
             else{
               alert("<" + errorCode + "> " + errorMessage);
