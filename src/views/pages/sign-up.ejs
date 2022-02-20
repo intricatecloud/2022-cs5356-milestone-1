@@ -38,6 +38,8 @@
 
 <script>
 
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
   window.onload = () => {
     console.log('Running onload')
 
@@ -64,7 +66,7 @@
         const login = event.target.login.value;
         const password = event.target.password.value;
 
-        
+
         app.auth().createUserWithEmailAndPassword(login, password)
           .then((userCredential) => {
             // Create a new user using the Firebase SDK for Web
