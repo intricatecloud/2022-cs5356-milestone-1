@@ -59,6 +59,7 @@ app.post("/sessionLogin", async (req, res) => {
         res.status(200).send(JSON.stringify({ status: "success" }));
       },
       (error) => {
+        console.log("error", error);
         res.status(401).send('UNAUTHORIZED REQUEST!');
       }
   );
