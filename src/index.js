@@ -9,15 +9,15 @@ const port = process.env.PORT || 8080;
 // CS5356 TODO #2
 // Uncomment this next line after you've created
 // serviceAccountKey.json
-// const serviceAccount = require("./../config/serviceAccountKey.json");
+const serviceAccount = require("./../config/serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
 
 // CS5356 TODO #2
 // Uncomment this next block after you've created serviceAccountKey.json
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-// });
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 // use cookies
 app.use(cookieParser());
@@ -47,10 +47,10 @@ app.get("/sign-up", function (req, res) {
   res.render("pages/sign-up");
 });
 
-// app.get("/dashboard", authMiddleware, async function (req, res) {
-//   const feed = await userFeed.get();
-//   res.render("pages/dashboard", { user: req.user, feed });
-// });
+app.get("/dashboard", authMiddleware, async function (req, res) {
+  const feed = await userFeed.get();
+  res.render("pages/dashboard", { user: req.user, feed });
+});
 
 app.post("/sessionLogin", async (req, res) => {
   // CS5356 TODO #4
@@ -71,7 +71,34 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   // Get the message that was submitted from the request body
   // Get the user object from the request body
   // Add the message to the userFeed so its associated with the user
+  // try{
+  //   const dogMessage = req.body;
+
+  //   req.user = user;
+  //   await userFeed.add()
+  // }
 });
 
 app.listen(port);
 console.log("Server started at http://localhost:" + port);
+
+
+// const authMiddleware = (req, res, next) => {
+//   // req.headers['cookie'].split(';')
+//  //const cookie = req.headers.cookie
+
+//  const cookies = req.cookies
+//  // session cookie would be cookies.sessionCookie
+
+//  const sessionCookie = cookies.sessionCookie
+//  if (sessionCookie) {
+//      admin.auth().verifySessionCookie(verifySessionCookie)
+//          .then(function (user) {
+//              next()
+//          }).catch(() => {
+//              res.redirect('/sign-in')
+//          })
+//  } else {
+//      res.redirect('/sign-in')
+//  }
+// }
