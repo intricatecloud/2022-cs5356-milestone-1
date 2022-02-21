@@ -104,10 +104,16 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   const message = body.message;
   const user = req.user;
 
+  userFeed.add(user, message)
+    .then(function(response) {
+      console.log("Message posted!");
+      res.redirect("/dashboard");
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
 
-  await userFeed.add(user, message);
-
-  res.redirect("/dashboard");
 });
 
 app.listen(port);
