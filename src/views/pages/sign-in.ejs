@@ -12,7 +12,7 @@
 
 
   <form id="login-form">
-    <input type="text" name="login" placeholder="Your user name" />
+    <input type="text" name="email" placeholder="Your email" />
     <input type="password" name="password" id="password" />
     <button>
       Sign In
@@ -28,22 +28,38 @@
 
 <script>
 
+// // Import the functions you need from the SDKs you need
+// import { initializeApp } from "firebase/app";
+// import { getAnalytics } from "firebase/analytics";
+// // TODO: Add SDKs for Firebase products that you want to use
+// // https://firebase.google.com/docs/web/setup#available-libraries
+
+
   window.onload = () => {
     const firebaseConfig = {
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
+      apiKey: "AIzaSyBacx5qFa3V-QvODpe2Qp0CNtjgkatcVs8",
+      authDomain: "milestone-1-ruffhouse.firebaseapp.com",
+      projectId: "milestone-1-ruffhouse",
+      storageBucket: "milestone-1-ruffhouse.appspot.com",
+      messagingSenderId: "36453483162",
+      appId: "1:36453483162:web:e6a5d482d175d7f7b21523",
+      measurementId: "G-164EJKEZEE"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
+    // import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+
 
     document
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
         event.preventDefault();
-        const login = event.target.login.value;
+        const email = event.target.email.value;
         const password = event.target.password.value;
 
         // CS5356 TODO #3
@@ -51,10 +67,21 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
-
-        return false;
+        firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Signed in
+          // console.log(userCredential);
+          var user = userCredential.user;
+          //redirect to dashboard
+          window.location.href = '/dashboard';
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(message);
+        });
       });
-  };
+  }
 </script>
 
 </html>

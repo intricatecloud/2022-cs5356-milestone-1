@@ -4,6 +4,7 @@ module.exports = (req, res, next) => {
   const sessionCookie = req.cookies.session || "";
 
   if (sessionCookie === "") {
+
     res.redirect("/sign-in");
   } else {
     admin

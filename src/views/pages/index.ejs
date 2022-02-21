@@ -4,21 +4,65 @@
 <head>
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
-    <style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content=#ffffff>
+    <!-- <link rel="stylesheet" href="/bulma-clean-theme/assets/css/app.css"> -->
+    <link rel="shortcut icon" type="image/png" href="/bulma-clean-theme/favicon.png" />
+   <style src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></style>
 
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-social@1/bin/bulma-social.min.css">
 </head>
+
 
 <body>
   <header>
     <%- include('../partials/nav') %>
   </header>
 
-  Fill me in!
   <!-- CS5356 TODO #1 Add your landing page here -->
+  <section class="hero  is-large  is-bold is-primary" >
+    <div class="hero-body ">
+        <div class="container">
+            <h1 class="title is-2">Ruffhouse</h1>
+            <p class="subtitle is-3">Your virtual dog park</p>
+            
+            
+                <!-- <a href="/bulma-clean-theme/page-1/" class="button is-info is-large">Example Call To Action</a> -->
+            
+        </div>
+    </div>
+</section>
+
+
 
 </body>
 
 <%- include('../partials/footer') %>
 
 </html>
+
+<!-- // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBacx5qFa3V-QvODpe2Qp0CNtjgkatcVs8",
+  authDomain: "milestone-1-ruffhouse.firebaseapp.com",
+  projectId: "milestone-1-ruffhouse",
+  storageBucket: "milestone-1-ruffhouse.appspot.com",
+  messagingSenderId: "36453483162",
+  appId: "1:36453483162:web:e6a5d482d175d7f7b21523",
+  measurementId: "G-164EJKEZEE"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app); -->
