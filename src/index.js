@@ -47,10 +47,10 @@ app.get("/sign-up", function (req, res) {
   res.render("pages/sign-up");
 });
 
-app.get("/dashboard", authMiddleware, async function (req, res) {
-  const feed = await userFeed.get();
-  res.render("pages/dashboard", { user: req.user, feed });
-});
+// app.get("/dashboard", authMiddleware, async function (req, res) {
+//   const feed = await userFeed.get();
+//   res.render("pages/dashboard", { user: req.user, feed });
+// });
 
 app.post("/sessionLogin", async (req, res) => {
   // CS5356 TODO #4
