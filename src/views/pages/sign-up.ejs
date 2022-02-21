@@ -67,10 +67,10 @@
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ idToken })
-                }).then(() => console.log('success!'))
+                }).then(() => console.log('success!')).then(()=>window.location.assign('/dashboard'))
               }
             );
-          }).then(() => window.location.assign('/dashboard'))
+          })
           .catch((error) => {
             var errorCode = error.code;
             var errorMessage = error.message;
