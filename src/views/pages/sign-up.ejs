@@ -7,21 +7,52 @@
 
 <body>
   <header>
-    <%- include('../partials/nav') %>
+    <%- include('../partials/nav', { hideSignIn: true }) %>
   </header>
 
   <div class="container">
-    Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
-    <form id="login-form">
-      <label>Login</label>
-      <input id="login" type="text" name="login" />
+    <div class="columns">
+      <div class="column is-two-fifths">
+        <form id="login-form">
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input class="input" type="text" name="email">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Password</label>
+            <div class="control">
+              <input class="input" type="text" name="password" id="password">
+            </div>
+          </div>
+          <div class="field is-grouped">
+            <div class="control">
+              <button class="button is-link">
+                Sign Up
+              </button>
+              
+            </div>
+            <p>
+               Click here to <a href="/sign-in"> sign in with an existing account</a>.
+            </p>
+            
+          </div>
+          <div id="login-error">
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- <form id="login-form">
+      <label>Email</label>
+      <input id="email" type="text" name="email" />
       <label>Password</label>
       <input type="password" name="password" />
       <button>Log in</button>
-    </form>
+    </form> -->
     <div id="login-error" style="display: none;">
     </div>
-    <a href="/dashboard">Dashboard</a>
+    <!-- <a href="/dashboard">Dashboard</a> -->
   </div>
 </body>
 
@@ -35,6 +66,13 @@
     const firebaseConfig = {
       // CS5356 TODO #2
       // Copy your Firebase config here too
+      apiKey: "AIzaSyAryv9A4VQl5J7ZKwv_iHMT1EPE4Tx1SG4",
+      authDomain: "huffhouse-a4359.firebaseapp.com",
+      projectId: "huffhouse-a4359",
+      storageBucket: "huffhouse-a4359.appspot.com",
+      messagingSenderId: "925614023073",
+      appId: "1:925614023073:web:5bb56797a051925a19ebe0",
+      measurementId: "G-VDVV1MMSMN"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -45,7 +83,7 @@
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
         event.preventDefault();
-        const login = event.target.login.value;
+        const login = event.target.email.value;
         const password = event.target.password.value;
 
         // CS5356 TODO #3
@@ -53,6 +91,34 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+        app.auth().createUserWithEmailAndPassword(login, password)
+          .then(userCredential => userCredential.user.getIdToken())
+          .then((idToken) => {
+            fetch('/sessionLogin', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                idToken,
+              })
+            }).then((response) => {
+              window.location.assign('/dashboard');
+            }).catch((error) => {
+              console.log(error)
+              const loginErrorElem = document.getElementById("login-error");
+              loginErrorElem.innerHTML = error.message;
+              loginErrorElem.style.display = 'block';
+            })
+          })
+          .catch((error) => {
+            console.log(error)
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            const loginErrorElem = document.getElementById("login-error");
+            loginErrorElem.innerHTML = errorMessage;
+            loginErrorElem.style.display = 'block';
+          });
 
         return false;
       });
