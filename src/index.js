@@ -82,6 +82,8 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   const user = req.user 
   console.log(msg)
   userFeed.add(user,msg)
+  res.redirect("/dashboard");
+
 });
 
 app.listen(port);

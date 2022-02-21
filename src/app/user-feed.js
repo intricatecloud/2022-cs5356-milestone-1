@@ -31,7 +31,6 @@ const add = async (user, message) => {
     message: message,
     imageSource: body.message,
   });
-  return userFeed;
 };
 
 module.exports = {
