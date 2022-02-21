@@ -125,9 +125,26 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   // Get the message that was submitted from the request body
   // Get the user object from the request body
   // Add the message to the userFeed so its associated with the user
-  await userFeed.add(req.user, req.body['message']);
-  const feed = await userFeed.get();
-  res.render("pages/dashboard", { user: req.user, feed });
+  try{
+    const dogMessage = req.body;
+    await userFeed.add(req.user, dogMessage.message); //synchronize
+    res.redirect("/dashboard");
+  }
+  catch(err){
+    res.status(500).send({message: err});
+  }
+
+  // another way
+  // userFeed.add(req.user, dogMessage.message).then( () => {
+  //   res.redirect('/dashboard');
+  // }).catch(err => {
+  //   res.status(500).send(JSON.stringify({message: err}))
+  // })
+
+  // My method:
+  // await userFeed.add(req.user, req.body['message']);
+  // const feed = await userFeed.get();
+  // res.render("pages/dashboard", { user: req.user, feed });
 });
 
 app.listen(port);
