@@ -8,16 +8,24 @@
 <body>
   <header>
     <%- include('../partials/nav') %>
+    <style>
+      .button {
+        font-family: 'Balsamiq Sans', cursive;
+      }
+      .label{
+        font-family: 'Balsamiq Sans', cursive;
+      }
+    </style>
   </header>
 
   <div class="container">
     Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
     <form id="login-form">
-      <label>Login</label>
-      <input id="login" type="text" name="login" />
-      <label>Password</label>
-      <input type="password" name="password" />
-      <button>Log in</button>
+      <label class="label">Login</label>
+      <input class="input is-rounded" style="width: 33%; margin-left: 5px;" id="login" type="text" name="login" />
+      <label class="label">Password</label>
+      <input type="password" class="input is-rounded" style="width: 33%; margin-left: 5px;" name="password" />
+      <button class="button is-rounded">Log in</button>
     </form>
     <div id="login-error" style="display: none;">
     </div>
@@ -34,7 +42,6 @@
     console.log('Running onload')
     const firebaseConfig = {
       // CS5356 TODO #2
-      // Copy your Firebase config here too
       apiKey: "AIzaSyAL3Kpw3UjhROUgRQpnmV0m9NDDoZQw7D0",
       authDomain: "milestone-1-gl.firebaseapp.com",
       projectId: "milestone-1-gl",
@@ -59,7 +66,6 @@
         // Create a new user using the Firebase SDK for Web
         firebase.auth().createUserWithEmailAndPassword(login, password)
           .then((userCredential) => {
-            // Signed in 
             var user = userCredential.user;
             return userCredential.user.getIdToken().then(
               idToken => {
@@ -74,12 +80,7 @@
           .catch((error) => {
             var errorCode = error.code;
             var errorMessage = error.message;
-            // ..
           });
-        // Get the users ID token
-        // Start a new session with the users ID token
-        //window.location.assign('/dashboard'));
-        // Redirect the user to the /dashboard
         return false;
       });
   };

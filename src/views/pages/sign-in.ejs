@@ -8,13 +8,18 @@
 <body>
   <header>
     <%- include('../partials/nav', { hideSignIn: true }) %>
+    <style>
+      .button {
+        font-family: 'Balsamiq Sans', cursive;
+      }
+    </style>
   </header>
 
 
   <form id="login-form">
-    <input type="text" name="login" placeholder="Your user name" />
-    <input type="password" name="password" id="password" />
-    <button>
+    <input class="input is-rounded" style="width: 33%; margin-top: 15px; margin-left: 10px;" type="text" name="login" placeholder="Your user name" />
+    <input class="input is-rounded" style="width: 33%; margin-top: 15px;" type="password" name="password" id="password" />
+    <button class="button is-rounded" style="margin-top: 15px;">
       Sign In
     </button>
     <div id="login-error">
@@ -53,9 +58,7 @@
         // Sign in using the Firebase SDK for Web
         firebase.auth().signInWithEmailAndPassword(login, password)
           .then((userCredential) => {
-            // Signed in 
             var user = userCredential.user;
-            //var token = userCredential.user.getIdToken()
             return userCredential.user.getIdToken().then(
               idToken => {
                 fetch('/sessionLogin', {
