@@ -21,7 +21,8 @@ admin.initializeApp({
 
 // use cookies
 app.use(cookieParser());
-app.use(bodyParser.json());
+app.use(express.text())
+app.use(express.json());
 app.use(
   bodyParser.urlencoded({
     extended: true,
@@ -54,7 +55,6 @@ app.get("/dashboard", authMiddleware, async function (req, res) {
 
 app.post("/sessionLogin", async(req, res) => {
   const idToken = req.body.idToken.toString();
-  console.log(idToken)
   const expiresIn = 60 * 60 * 24 * 5 * 1000;  
 
   admin.auth().createSessionCookie(idToken, { expiresIn }).then( (sessionCookie) => {
@@ -74,9 +74,14 @@ app.get("/sessionLogout", (req, res) => {
 
 app.post("/dog-messages", authMiddleware, async (req, res) => {
   // CS5356 TODO #5
-  // Get the message that was submitted from the request body
+
+  // Get the message that was submitted from the r   equest body
   // Get the user object from the request body
   // Add the message to the userFeed so its associated with the user
+  const msg = req.body.message
+  const user = req.user 
+  console.log(msg)
+  userFeed.add(user,msg)
 });
 
 app.listen(port);

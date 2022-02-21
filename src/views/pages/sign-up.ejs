@@ -54,11 +54,8 @@
           .then((userCredential) => {
             var user = userCredential.user;
             window.location.href("/sign-in");  
-            console.log('sign up success');
           })
           .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
             console.log('sign up fail');
           });
       });
