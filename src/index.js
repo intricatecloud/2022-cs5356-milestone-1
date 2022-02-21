@@ -76,11 +76,16 @@ app.get("/sessionLogout", (req, res) => {
 
 app.post("/dog-messages", authMiddleware, async (req, res) => {
   // CS5356 TODO #5
-  const message = req.body.message
-  const user = req.user
-  const feed = await userFeed.get()
-  await userFeed.add(user, message);
-  res.render("pages/dashboard", {user:req.user, feed:feed});
+  try{
+    const dogMessage = req.body.message
+    const user = req.user
+    await userFeed.add(user, dogMessage).then(()=>{
+      res.redirect("/dashboard")
+    })
+  }
+  catch(err){
+      res.status(500).send(JSON.stringify({message: err}));
+  }
 });
 
 app.listen(port);
