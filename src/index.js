@@ -59,9 +59,9 @@ app.get("/dashboard", authMiddleware, async function (req, res) {
 });
 
 
-// What is the difference here between function and async?
+// async is required here if you want to use "syntactic sugar" with promises
+// I think we can remove here, since we're not using syntactic sugar... but I'll leave it
 
-// app.post("/sessionLogin", function(req, res) {
 app.post("/sessionLogin", async (req, res) => {
   // CS5356 TODO #4
   // Get the ID token from the request body
@@ -72,7 +72,6 @@ app.post("/sessionLogin", async (req, res) => {
 
   const body = req.body;
   const idToken = body.idToken;
-  // debugger
 
   const expiresIn = 60 * 60 * 1000;
   admin.auth().createSessionCookie(idToken, { expiresIn })
