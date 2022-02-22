@@ -106,7 +106,15 @@
             .catch((error) => {
               const errorCode = error.code;
               const errorMessage = error.message;
-              alert("<" + errorCode + "> " + errorMessage);
+              if(errorCode === "auth/email-already-in-use"){
+                alert("An account with this email has already been registered");
+              }
+              else if(errorCode === "auth/weak-password"){
+                alert("Password should be at least 6 characters");
+              }
+              else{
+                alert("<" + errorCode + "> " + errorMessage);
+              }
             });
 
           return false;

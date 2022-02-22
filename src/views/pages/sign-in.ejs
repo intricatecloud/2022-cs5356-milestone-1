@@ -96,10 +96,10 @@
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            if(errorCode == "auth/user-not-found"){
+            if(errorCode === "auth/user-not-found"){
               alert("User not found");
             }
-            else if(errorCode == "auth/wrong-password"){
+            else if(errorCode === "auth/wrong-password"){
               alert("Wrong password");
             }
             else{

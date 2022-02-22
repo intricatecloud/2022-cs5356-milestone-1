@@ -85,11 +85,16 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   // Get the message that was submitted from the request body
   // Get the user object from the request body
   // Add the message to the userFeed so its associated with the user
-  const message = req.body.message.toString();
-  const user = req.user;
+  try{
+    const message = req.body.message;
 
-  await userFeed.add(user, message);
-  res.redirect("/dashboard");
+    await userFeed.add(req.user, message);
+    res.redirect("/dashboard");
+  }
+  catch(err){
+    res.status(500).send(JSON.stringify({ message: err }));
+  }
+  
 });
 
 app.listen(port);
