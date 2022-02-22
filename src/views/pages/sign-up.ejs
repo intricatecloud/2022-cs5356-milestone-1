@@ -35,24 +35,59 @@
     const firebaseConfig = {
       // CS5356 TODO #2
       // Copy your Firebase config here too
+      apiKey: "AIzaSyBu7YI3s81obNYuFUpSNe4Sb-3Mv5eCJI4",
+      authDomain: "bss-m1.firebaseapp.com",
+      projectId: "bss-m1",
+      storageBucket: "bss-m1.appspot.com",
+      messagingSenderId: "713963140724",
+      appId: "1:713963140724:web:4012443a901b171e9f0321",
+      measurementId: "G-5GERCMHFB7"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
-
+    
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
-
+    // firebase.auth().createUserWithEmailAndPassword("nodeuser@firebaeui.com", "firebase")
+    // .then(user => console.log(user))
+    // .catch(error => console.error(error));
     document
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
         event.preventDefault();
-        const login = event.target.login.value;
+        const email = event.target.login.value;
         const password = event.target.password.value;
+
+        //console.log(userCredential,password)
 
         // CS5356 TODO #3
         // Create a new user using the Firebase SDK for Web
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+
+         firebase.auth().createUserWithEmailAndPassword(email, password)
+          //.then(user => console.log(user))
+          .then((userCredential)=>{
+              const user = userCredential.user;
+              const idtoken = userCredential.user.getIdToken()
+
+              userCredential.user.getIdToken().then(function(idToken) {
+                fetch('/sessionLogin', {
+                method: 'POST',
+                body: idToken // add the users ID token here
+                }).then(() => console.log('success!'))
+                
+              })
+              //console.log(user)
+              //console.log(user.getIdToken())
+          })
+          .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          });
+        
+
+
 
         return false;
       });

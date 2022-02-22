@@ -33,8 +33,15 @@
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
+      apiKey: "AIzaSyBu7YI3s81obNYuFUpSNe4Sb-3Mv5eCJI4",
+      authDomain: "bss-m1.firebaseapp.com",
+      projectId: "bss-m1",
+      storageBucket: "bss-m1.appspot.com",
+      messagingSenderId: "713963140724",
+      appId: "1:713963140724:web:4012443a901b171e9f0321",
+      measurementId: "G-5GERCMHFB7"
     };
-
+    //Initialize Firebase
     const app = firebase.initializeApp(firebaseConfig);
 
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
@@ -43,7 +50,7 @@
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
         event.preventDefault();
-        const login = event.target.login.value;
+        const email = event.target.login.value;
         const password = event.target.password.value;
 
         // CS5356 TODO #3
@@ -51,6 +58,46 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+
+        // When the user signs in with email and password.
+        // When the user signs in with email and password.
+        firebase.auth().signInWithEmailAndPassword(email , password).then(userCredential => {
+          // Get the user's ID token as it is needed to exchange for a session cookie.
+          console.log(userCredential.user.getIdToken())
+
+          //Signed In
+          const user = userCredential.user
+          //idToken = user.getIdToken()
+          
+            console.log('success!')
+
+            user.getIdToken().then(function(idToken) {
+              
+            fetch('/sessionLogin', {
+              method: 'POST',
+              headers: {
+                'Content-Type':'application/json'
+              },
+              body: JSON.stringify({
+                idToken
+              })
+            }).then((response) => {
+              debugger
+              console.log(response.body)
+              //window.location.href = "/dashboard"
+            })
+          })
+        })
+        // .then(() => {
+        //   // A page redirect would suffice as the persistence is set to NONE.
+        //   //return firebase.auth().signOut();
+        //   window.location.href = "/dashboard"
+        // });
+
+
+
+
+        
 
         return false;
       });
