@@ -96,17 +96,16 @@
         event.preventDefault();
         const login = event.target.email.value;
         const password = event.target.password.value;
-        
+
         firebase.auth().signInWithEmailAndPassword(login, password)
           .then((userCredential) => {
             // CS5356 TODO #3
-            const user = userCredential.user;
-            
-            res.redirect('/dashboard')
+            sessionLogin(userCredential.user);
           })
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
+            alert(errorMessage)
           });
 
         return false;
@@ -127,9 +126,7 @@
           // CS5356 TODO #3
           firebase.auth().createUserWithEmailAndPassword(login, password)
             .then((userCredential) => {
-              const user = userCredential.user;
-
-              res.redirect('/dashboard')
+              sessionLogin(userCredential.user);
             })
             .catch((error) => {
               const errorCode = error.code;
@@ -139,6 +136,29 @@
 
         return false;
       });
+
+      const sessionLogin = (userToken) => {
+
+        return userToken.getIdToken().then(idToken => {
+          fetch('/sessionLogin', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({idToken}) // add the users ID token here
+          }).then((res) => {
+            // res.redirect('/dashboard')
+            if (res.status==200) { 
+              window.location.assign('/dashboard');
+              console.log('Session started!'); 
+            }
+            else {
+              console.log('Failed to start session.')
+              alert('Internal Server Error')
+            }
+          });
+        });
+        
+      }
+
   };
 </script>
 

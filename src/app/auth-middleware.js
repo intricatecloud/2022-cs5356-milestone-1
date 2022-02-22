@@ -15,6 +15,7 @@ module.exports = (req, res, next) => {
         next();
       })
       .catch(error => {
+        alert('You are being redirected by AuthMiddleWare')
         res.redirect("/sign-in");
       });
   }
