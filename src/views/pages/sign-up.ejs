@@ -32,9 +32,30 @@
 
   window.onload = () => {
     console.log('Running onload')
+
+const postUserId = async function (url, idTokenUser) {
+  const response = await fetch(url, {
+    method: "POST",
+    ceredentials: "same-origin",
+    headers: {
+      "Contemnt-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  return response;
+};
+
+
     const firebaseConfig = {
       // CS5356 TODO #2
       // Copy your Firebase config here too
+      apiKey: "AIzaSyCInJCl7_INc7ePHM9eAQ_GqfIKo7VsR78",
+      authDomain: "jsp285-ruffhouse.firebaseapp.com",
+      projectId: "jsp285-ruffhouse",
+      storageBucket: "jsp285-ruffhouse.appspot.com",
+      messagingSenderId: "807882837846",
+      appId: "1:807882837846:web:d26950361e5743c6ad50f7",
+      measurementId: "G-S1MP2KNT8J"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -54,9 +75,27 @@
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
 
-        return false;
-      });
-  };
+        app.auth().createUserWithEmailAndPassword(login, password)
+          .then((user) => {
+            // Signed in 
+            //console.log('userCredential',userCredential)
+            var user = userCredential.user;
+
+            return user.getIdToken().the((idToken) => {
+              return postUserId("/sessionLogin", idToken);
+            }).catch((error) => {
+              console.log(error.code, error.message);
+            }).then(() => {
+              window.location.assign("/dashboard");
+            }).catch((error) => {
+              let errorCode = error.code;
+              let errorMessage = error.message;
+            })
+
+            return false;
+          });
+      })
+  }
 </script>
 
 </html>

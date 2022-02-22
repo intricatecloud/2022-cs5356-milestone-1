@@ -29,6 +29,9 @@
 <script>
 
   window.onload = () => {
+
+
+
     const firebaseConfig = {
       // CS5356 TODO #2
 
@@ -44,53 +47,65 @@
       // where you can get the Firebase config
     };
 
-    const app = firebase.initializeApp(firebaseConfig);
+    const response = await fetch(url, {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return response;
+  };
 
-    app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+  const app = firebase.initializeApp(firebaseConfig);
 
-    document
-      .getElementById("login-form")
-      .addEventListener("submit", (event) => {
-        event.preventDefault();
-        const login = event.target.login.value;
-        const password = event.target.password.value;
+  app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
-        // CS5356 TODO #3
-        // Sign in using the Firebase SDK for Web
-        // Get the users ID token
-        // Start a new session with the users ID token
-        // Redirect the user to the /dashboard
+  document
+    .getElementById("login-form")
+    .addEventListener("submit", (event) => {
+      event.preventDefault();
+      const login = event.target.login.value;
+      const password = event.target.password.value;
 
-        app.auth().createUserWithEmailAndPassword(email, password)
-          .then((userCredential) => {
-            // Signed in 
-            //console.log('userCredential',userCredential)
-            var user = userCredential.user;
+      // CS5356 TODO #3
+      // Sign in using the Firebase SDK for Web
+      // Get the users ID token
+      // Start a new session with the users ID token
+      // Redirect the user to the /dashboard
 
-            user.getIdToken().then()((idToken) => {
-              // manage it server side
-              fetch('/sessionLogin', {
-                method: 'POST',
-                // body: idToken,
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ idToken })
-              }).then(() => {
-                //window.location.href = '/dashboard'
-                window.location.assign('/dashboard')
-              })
-            })
+      app.auth().signInWithEmailAndPassword(login, password)
+        .then((user) => {
+          // Signed in 
+          //console.log('userCredential',userCredential)
 
-            // ...
-          })
-          .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // ..
+          var user = userCredential.user;
+
+          return user.getIdToken().then()((idToken) => {
+
+            return postUserId("sessionLogin", idToken);
+          }).catch((error) => {
+            console.log(error.code, error.message);
           });
 
+        }).then(() => {
+          //window.location.href = '/dashboard'
+          window.location.assign('/dashboard');
+        }).catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+        });
 
-      });
-  };
+      // ...
+      return false;
+    })
+    
+
+  
+
+
+
 </script>
 
 </html>
