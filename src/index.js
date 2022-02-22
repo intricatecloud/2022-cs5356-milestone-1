@@ -64,10 +64,7 @@ app.post("/sessionLogin", async (req, res) => {
   const idToken = req.body.idToken;
 
   const expiresIn = 60 * 60 * 1000;
-  // Create the session cookie. This will also verify the ID token in the process.
-  // The session cookie will have the same claims as the ID token.
-  // To only allow session cookie setting on recent sign-in, auth_time in ID token
-  // can be checked to ensure user was recently signed in before creating a session cookie.
+
   admin.auth().createSessionCookie(idToken, {
       expiresIn
     })
@@ -100,6 +97,16 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   // Get the message that was submitted from the request body
   // Get the user object from the request body
   // Add the message to the userFeed so its associated with the user
+  try {
+    const message = req.body.message;
+    const user = req.user;
+    await userFeed.add(user, message);
+    res.redirect("/dashboard");
+  } catch (err) {
+    res.status(500).send({
+      message: err
+    });
+  }
 });
 
 app.listen(port);
