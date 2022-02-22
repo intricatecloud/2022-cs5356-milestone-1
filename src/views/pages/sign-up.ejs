@@ -34,7 +34,13 @@
     console.log('Running onload')
     const firebaseConfig = {
       // CS5356 TODO #2
-      // Copy your Firebase config here too
+      // Copy your Firebase config here tooconst firebaseConfig = {
+      apiKey: "AIzaSyCqty35CPuE3aHmMbM7YextEwW89P0NSDo",
+      authDomain: "cs5356-m1.firebaseapp.com",
+      projectId: "cs5356-m1",
+      storageBucket: "cs5356-m1.appspot.com",
+      messagingSenderId: "488009925971",
+      appId: "1:488009925971:web:8635d9d56e04f006b68da6"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -44,7 +50,7 @@
     document
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
-        event.preventDefault();
+        event.preventDefault(); // defaultPrevented =true, will not automatically refresh
         const login = event.target.login.value;
         const password = event.target.password.value;
 
@@ -53,10 +59,28 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+        app.auth().createUserWithEmailAndPassword(login, password)
+          .then(function(userCredential) {
+            const user = userCredential.user; 
+            user.getIdToken().then((idToken) => {
+              fetch('/sessionLogin', {
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify({'idToken': idToken})
+              })
+          
+            }
+            ) 
+           }).then ( () => {
+             window.location.assign('/dashboard');
+          }).catch(error => {console.log(error);}
+          ); 
+      
 
         return false;
       });
   };
+
 </script>
 
 </html>
