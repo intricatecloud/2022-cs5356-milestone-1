@@ -3,26 +3,71 @@
 
 <head>
   <%- include('../partials/head') %>
+  <link rel="stylesheet" href="/static/css/sign-in.css">
 </head>
 
 <body>
-  <header>
+  
+  <div class="container-one" id="container-one">
+    <div class="form-container sign-up-container">
+
+      <form id="sign-up-form" action="#">
+        <h1>Create Account</h1>
+        <div class="social-container">
+          <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+          <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <span>or use your email for registration</span>
+        <input name="email" type="email" placeholder="Email" required />
+        <input name="password" type="password" placeholder="Password" required/>
+        <input name="confirm_password" type="password" placeholder="Confirm Password" required/>
+        <button>Sign Up</button>
+      </form>
+
+    </div>
+    <div class="form-container sign-in-container">
+
+      <form id="login-form" action="#">
+        <h1>Sign in</h1>
+        <div class="social-container">
+          <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+          <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <span>or use your account</span>
+        <input name="email" type="email" placeholder="Email" />
+        <input name="password" type="password" placeholder="Password" />
+        <a href="#">Forgot your password?</a>
+        <button>Sign In</button>
+        <div id="login-error">
+        </div>
+      </form>
+
+    </div>
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Welcome Back!</h1>
+          <p>To keep connected with us please login with your personal info</p>
+          <button class="ghost" id="signIn">Sign In</button>
+        </div>
+        <div class="overlay-panel overlay-right">
+          <h1>Hello!</h1>
+          <p>Enter your personal details and start journey with us</p>
+          <button class="ghost" id="signUp">Sign Up</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <header>
     <%- include('../partials/nav', { hideSignIn: true }) %>
-  </header>
+  </header> -->
 
+<script src="/static/css/style-js/sign-in.js"></script>
 
-  <form id="login-form">
-    <input type="text" name="login" placeholder="Your user name" />
-    <input type="password" name="password" id="password" />
-    <button>
-      Sign In
-    </button>
-    <div id="login-error">
-
-    </div>
-    </div>
-  </form>
-</body>
+<script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
@@ -31,26 +76,66 @@
   window.onload = () => {
     const firebaseConfig = {
       // CS5356 TODO #2
-      // Create your own Firebase project. See the assignment for
-      // where you can get the Firebase config
+      apiKey: "AIzaSyD8DQrczLE2AQe2-jWVgFIuPMxllo-aZfY",
+      authDomain: "string-36db2.firebaseapp.com",
+      databaseURL: "https://string-36db2-default-rtdb.firebaseio.com",
+      projectId: "string-36db2",
+      storageBucket: "string-36db2.appspot.com",
+      messagingSenderId: "166998522268",
+      appId: "1:166998522268:web:1dbd207c78f845f6bf3059"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
 
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
+    // CS5356 TODO #2: Sign IN Form
     document
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
         event.preventDefault();
-        const login = event.target.login.value;
+        const login = event.target.email.value;
         const password = event.target.password.value;
+        
+        firebase.auth().signInWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+            // CS5356 TODO #3
+            const user = userCredential.user;
+            
+            res.redirect('/dashboard')
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+          });
 
-        // CS5356 TODO #3
-        // Sign in using the Firebase SDK for Web
-        // Get the users ID token
-        // Start a new session with the users ID token
-        // Redirect the user to the /dashboard
+        return false;
+      });
+
+      // CS5356 TODO #2 : Sign Up Form
+      document
+        .getElementById("sign-up-form")
+        .addEventListener("submit", (event) => {
+          event.preventDefault();
+          const login = event.target.email.value;
+          const password = event.target.password.value;
+          const c_pass = event.target.confirm_password.value;
+          if (password !== c_pass) {
+            alert("Password fields not matching!");
+            return;
+          }
+          // CS5356 TODO #3
+          firebase.auth().createUserWithEmailAndPassword(login, password)
+            .then((userCredential) => {
+              const user = userCredential.user;
+
+              res.redirect('/dashboard')
+            })
+            .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              alert(errorMessage)
+            });
 
         return false;
       });
