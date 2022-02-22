@@ -4,12 +4,6 @@
 <head>
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
-    <style>
-  .Landing_Page_Requirements{
-    margin: 0 auto;
-    text-align: center;
-    }
-    </style>
 </head>
 
 <body>
@@ -17,13 +11,96 @@
     <%- include('../partials/nav') %>
   </header>
   <!-- CS5356 TODO #1 Add your landing page here -->
-  <p class="Landing_Page_Requirements">A place where you can see the following:</p>
-  <ul class="Landing_Page_Requirements">
-    <li>Product overview</li>
-    <li>Feature sets</li>
-    <li>How to sign up</li>
-  </ul>
 
+  <section>
+    <div class="hero-body">
+      <div class="container has-text-centered">
+          <h1 class="title">
+          Welcome to WoofMedia
+          </h1>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <div class="notification is-primary is-widescreen">
+        <p class="subtitle">
+          <strong>
+            Connect with Dog-Lovers around the world, build influence, and create compelling content that's distinctly yours.
+          </strong> 
+        </p>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="columns features">
+        <div class="column is-4">
+            <div class="card is-shady">
+                <div class="card-image">
+                    <i class="fa fa-paw"></i>
+                </div>
+                <div class="card-content">
+                    <div class="content">
+                      <div class="columns is-mobile is-centered is-vcentered">
+                        <div class="column">
+                          <img src="static/dog1.jpg" alt="">
+                        </div>
+                        <div class="column">
+                          <span class="title">Share with the community</span><br>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-4">
+            <div class="card is-shady">
+                <div class="card-image has-text-centered">
+                    <i class="fa fa-empire"></i>
+                </div>
+                <div class="card-content">
+                    <div class="content">
+                      <div class="columns is-mobile is-centered is-vcentered">
+                        <div class="column">
+                          <img src="static/dog2.jpg" alt="">
+                        </div>
+                        <div class="column">
+                          <span class="title">Secure Content</span><br>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-4">
+            <div class="card is-shady">
+                <div class="card-image has-text-centered">
+                    <i class="fa fa-apple"></i>
+                </div>
+                <div class="card-content">
+                  <div class="columns is-mobile is-centered is-vcentered">
+                    <div class="column">
+                      <img src="static/dog3.jpg" alt="">
+                    </div>
+                    <div class="column">
+                      <span class="title">Sign up today</span><br>
+                      <div class="navbar-item">
+                        <a href="/sign-up" class="button is-link">Sign Up
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  
 </body>
 
 <%- include('../partials/footer') %>
