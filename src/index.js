@@ -7,17 +7,48 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 // CS5356 TODO #2
+// Import the functions you need from the SDKs you need
+
+// import { initializeApp } from "firebase/app";
+
+// import { getAnalytics } from "firebase/analytics";
+
+// TODO: Add SDKs for Firebase products that you want to use
+
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+
+// Your web app's Firebase configuration
+
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAe5vodwTIAelIo3YR7Vtya_pPRal9vnIQ",
+  authDomain: "cs5356-m1-5b256.firebaseapp.com",
+  projectId: "cs5356-m1-5b256",
+  storageBucket: "cs5356-m1-5b256.appspot.com",
+  messagingSenderId: "121009787652",
+  appId: "1:121009787652:web:b0f32916dcd5c56a5b3651",
+  measurementId: "G-EG8J08NZD6"
+  };
+
+
+// Initialize Firebase
+
+// const app = initializeApp(firebaseConfig);
+
+// const analytics = getAnalytics(app);
 // Uncomment this next line after you've created
 // serviceAccountKey.json
-// const serviceAccount = require("./../config/serviceAccountKey.json");
+const serviceAccount = require("./../config/serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
 
 // CS5356 TODO #2
 // Uncomment this next block after you've created serviceAccountKey.json
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-// });
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 // use cookies
 app.use(cookieParser());
@@ -58,7 +89,29 @@ app.post("/sessionLogin", async (req, res) => {
   // Create a session cookie using the Firebase Admin SDK
   // Set that cookie with the name 'session'
   // And then return a 200 status code instead of a 501
-  res.status(501).send();
+
+  // Get the ID token passed and the CSRF token.
+  const idToken = req.body.idToken;
+  // Set session expiration to 5 days.
+  const expiresIn = 60 * 60 * 24 * 5 * 1000;
+  // Create the session cookie. This will also verify the ID token in the process.
+  // The session cookie will have the same claims as the ID token.
+  // To only allow session cookie setting on recent sign-in, auth_time in ID token
+  // can be checked to ensure user was recently signed in before creating a session cookie.
+  admin
+    .auth()
+    .createSessionCookie(idToken, { expiresIn })
+    .then(
+      (sessionCookie) => {
+        // Set cookie policy for session cookie.
+        const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+        res.cookie('session', sessionCookie, options);
+        res.status(200).send(JSON.stringify({ status: 'success' }));
+      },
+      (error) => {
+        res.status(401).send('UNAUTHORIZED REQUEST!');
+      }
+    );
 });
 
 app.get("/sessionLogout", (req, res) => {

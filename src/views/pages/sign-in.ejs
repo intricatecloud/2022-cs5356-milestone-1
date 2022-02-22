@@ -33,6 +33,13 @@
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
+      apiKey: "AIzaSyAe5vodwTIAelIo3YR7Vtya_pPRal9vnIQ",
+      authDomain: "cs5356-m1-5b256.firebaseapp.com",
+      projectId: "cs5356-m1-5b256",
+      storageBucket: "cs5356-m1-5b256.appspot.com",
+      messagingSenderId: "121009787652",
+      appId: "1:121009787652:web:b0f32916dcd5c56a5b3651",
+      measurementId: "G-EG8J08NZD6"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -51,7 +58,21 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
-
+        firebase.auth().signInWithEmailAndPassword(login, password).then(user => {
+        // Get the user's ID token as it is needed to exchange for a session cookie.
+        return user.user.getIdToken().then((idToken) => {
+            // Session login endpoint is queried and the session cookie is set.
+            // CSRF protection should be taken into account.
+            // ...
+            fetch('/sessionLogin', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({ idToken })
+            }).then(() => {
+              window.location.href = '/dashboard'
+            })
+          })
+        })
         return false;
       });
   };
