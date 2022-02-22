@@ -4,18 +4,76 @@
 <head>
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RuffHouse Landing Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <style>
-
+      
     </style>
 </head>
 
 <body>
   <header>
     <%- include('../partials/nav') %>
+    
   </header>
 
-  Fill me in!
   <!-- CS5356 TODO #1 Add your landing page here -->
+  <!-- Title-->
+  <section class="hero is-large is-info">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title is-1">
+          RuffHouse
+        </h1>
+        <p class="subtitle is-3">
+          Because dogs deserve friends, too
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- columns-->
+  <div class="columns">
+    <div class="column">
+      <div class="card has-background-danger">
+        <div class="card-content">
+          <h2 class="title">Connect</h2>
+          <h3 class="subtitle">With dog lovers around your community</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="card has-background-primary">
+        <div class="card-content">
+          <h2 class="title">Post</h2>
+          <h3 class="subtitle">Show off your dog and stay updated with others</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="card has-background-info">
+        <div class="card-content">
+          <h2 class="title">Schedule</h2>
+          <h3 class="subtitle">Organize your dog's social schedule!</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="hero is-medium is-small">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <h1 class="title is-3">
+          Click "Sign Up" in the top right to start finding friends for your dog today!
+        </h1>
+      </div>
+    </div>
+  </section>
+
 
 </body>
 
