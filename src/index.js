@@ -36,6 +36,7 @@ app.use("/static", express.static("static/"));
 // use res.render to load up an ejs view file
 // index page
 app.get("/", function (req, res) {
+  //res.cookie('session','123')
   res.render("pages/index");
 });
 
@@ -58,8 +59,35 @@ app.post("/sessionLogin", async (req, res) => {
   // Create a session cookie using the Firebase Admin SDK
   // Set that cookie with the name 'session'
   // And then return a 200 status code instead of a 501
-  const idToken = req.body;
-  // res.sendStatus(501)
+  console.log("in sessionLogin")
+  console.log(req.body)
+  //res.sendStatus(501)
+
+  const idToken = req.body.idToken.toString();
+
+  // Set session expiration to 1 hr.
+  const expiresIn = 60 * 60  * 1000;
+  // Create the session cookie. This will also verify the ID token in the process.
+  // The session cookie will have the same claims as the ID token.
+  // To only allow session cookie setting on recent sign-in, auth_time in ID token
+  // can be checked to ensure user was recently signed in before creating a session cookie.
+
+  admin.auth().createSessionCookie(idToken, { expiresIn })
+    .then(
+      (sessionCookie) => {
+        // Set cookie policy for session cookie.
+        const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+        res.cookie('session', sessionCookie, options);
+        //res.sendStatus(200).send(JSON.stringify({ status: 'success' }));
+        res.sendStatus(200)
+      },
+      (error) => {
+        res.status(401).send('UNAUTHORIZED REQUEST!');
+      }
+  );
+  
+  
+  
 });
 
 app.get("/sessionLogout", (req, res) => {
