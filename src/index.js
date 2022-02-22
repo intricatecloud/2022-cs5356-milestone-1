@@ -103,8 +103,12 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   // Add the message to the userFeed so its associated with the user
   message = req.body.message;
   user = req.user;
-  userFeed.add(user, message);
-  res.redirect('/dashboard');
+  userFeed.add(user, message).then(()=>{
+    res.redirect('/dashboard')
+  }).catch (err => {
+    res.status(500).send(JSON.stringify({message: err}))
+  });
+  
 });
 
 app.listen(port);
