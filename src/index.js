@@ -7,17 +7,16 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 // CS5356 TODO #2
-// Uncomment this next line after you've created
-// serviceAccountKey.json
-// const serviceAccount = require("./../config/serviceAccountKey.json");
+
+const serviceAccount = require("./../config/serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
 
 // CS5356 TODO #2
-// Uncomment this next block after you've created serviceAccountKey.json
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-// });
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://string-36db2-default-rtdb.firebaseio.com"
+});
 
 // use cookies
 app.use(cookieParser());
@@ -36,7 +35,8 @@ app.use("/static", express.static("static/"));
 // use res.render to load up an ejs view file
 // index page
 app.get("/", function (req, res) {
-  res.render("pages/index");
+  // res.render("pages/index");
+  res.redirect("/sign-in")
 });
 
 app.get("/sign-in", function (req, res) {
