@@ -4,9 +4,11 @@
 <head>
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
-    <style>
 
-    </style>
+  <link rel="stylesheet" href = "./landing.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"
+      async></script>
+
 </head>
 
 <body>
@@ -14,11 +16,27 @@
     <%- include('../partials/nav') %>
   </header>
 
-  Fill me in!
   <!-- CS5356 TODO #1 Add your landing page here -->
 
-</body>
+  <section class="hero is-fullheight">
+    <div class="hero-body container">
+      <div>
+        <h1 class="title has-text-white">
+          Welcome to RuffPlanet
+        </h1>
+        <!-- <button class="button is-primary is-rounded">Start Exploring</button> -->
+        <a href="/sign-in" class="button is-block is-primary is-fullwidth is-medium">Sign In</a>
+        <br/>
+        <a href="/sign-up" class="button is-block is-primary is-fullwidth is-medium">Sign Up</a>
+        
+        </a >
+      </div>
+        
+    </div>
+  </section>
 
+</body>
 <%- include('../partials/footer') %>
+
 
 </html>
