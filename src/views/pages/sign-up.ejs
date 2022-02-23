@@ -11,6 +11,7 @@
   </header>
 
   <div class="container">
+    <b>Version 2</b>
     Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
     <form id="login-form">
       <label>Login</label>
@@ -33,8 +34,13 @@
   window.onload = () => {
     console.log('Running onload')
     const firebaseConfig = {
-      // CS5356 TODO #2
-      // Copy your Firebase config here too
+      apiKey: "AIzaSyB-aKt9miX0iPmj8DpN0SZ2ilKX26lsm3s",
+      authDomain: "ruffhouse-511e0.firebaseapp.com",
+      projectId: "ruffhouse-511e0",
+      storageBucket: "ruffhouse-511e0.appspot.com",
+      messagingSenderId: "141768514614",
+      appId: "1:141768514614:web:2fd9edaa781339cd5ecc97",
+      measurementId: "G-LM1RSY4LGC"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -54,9 +60,31 @@
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
 
-        return false;
-      });
-  };
+        app.auth().createUserWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+
+            user.getIdToken().then((idToken) => {
+              // Manage it Server Side
+              fetch('/sessionLogin', {
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idToken })
+              }).then(() => {
+                window.location.href = '/dashboard'
+            })
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+            // ..
+          });
+        //return false;
+        });
+    });
+  }
 </script>
 
 </html>
