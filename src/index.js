@@ -68,7 +68,7 @@ app.post("/sessionLogin", async (req, res) => {
         res.status(200).send(JSON.stringify({ status: 'success' }));
       },
       (error) => {
-        res.status(401).send('UNAUTHORIZED REQUEST!');
+        res.status(401).send('Unauthorized');
       }
     );
   // res.status(501).send();
@@ -82,8 +82,20 @@ app.get("/sessionLogout", (req, res) => {
 app.post("/dog-messages", authMiddleware, async (req, res) => {
   // CS5356 TODO #5
   // Get the message that was submitted from the request body
+  const message = req.body.message;
   // Get the user object from the request body
+  const user = req.user;
   // Add the message to the userFeed so its associated with the user
+  userFeed.add(user, message)
+    .then(()=>{
+      userFeed.get()
+        .then((feed)=>{
+          res.redirect("/dashboard", user, feed)
+        })
+    })
+    .catch((error) => {
+      res.status(500).send({ message: error });
+    })
 });
 
 app.listen(port);
