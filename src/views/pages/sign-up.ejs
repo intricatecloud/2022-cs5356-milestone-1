@@ -3,26 +3,43 @@
 
 <head>
   <%- include('../partials/head') %>
+  <style>
+    .sign-form {
+      width: 400px;
+    }
+  </style>
 </head>
 
 <body>
   <header>
-    <%- include('../partials/nav') %>
+    <%- include('../partials/nav', { hideSignIn: true }) %>
   </header>
 
-  <div class="container">
-    Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
-    <form id="login-form">
-      <label>Login</label>
-      <input id="login" type="text" name="login" />
-      <label>Password</label>
-      <input type="password" name="password" />
-      <button>Log in</button>
+  <section class="container sign-form"> 
+    <h1 class="title"> Sign Up </h1>
+    <form class="box" id="login-form">
+      <div class="field">
+        <label class="label">Email</label>
+        <div class="control">
+          <input class="input" name="login" type="email" placeholder="e.g. alex@example.com">
+        </div>
+      </div>
+    
+      <div class="field">
+        <label class="label">Password</label>
+        <div class="control">
+          <input class="input" name="password" id="password" type="password" placeholder="********">
+        </div>
+      </div>
+    
+      <button class="button is-primary">Sign in</button>
+      <div id="login-error" style="display: none;"></div>
+      
     </form>
-    <div id="login-error" style="display: none;">
-    </div>
-    <a href="/dashboard">Dashboard</a>
-  </div>
+    or <a href="/sign-in">click here to sign in with an existing account</a>
+   </section>
+
+ 
 </body>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
@@ -33,8 +50,13 @@
   window.onload = () => {
     console.log('Running onload')
     const firebaseConfig = {
-      // CS5356 TODO #2
-      // Copy your Firebase config here too
+      apiKey: "AIzaSyD2q5H0BQbTfZ9KI9HlhEt4in1v68UV8P0",
+      authDomain: "ruffhouse-ba476.firebaseapp.com",
+      projectId: "ruffhouse-ba476",
+      storageBucket: "ruffhouse-ba476.appspot.com",
+      messagingSenderId: "817332458736",
+      appId: "1:817332458736:web:50f7e8fb5f7cd4be709e35",
+      measurementId: "G-DWF4TB2ZJJ"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -53,6 +75,29 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+
+        app.auth().createUserWithEmailAndPassword(login, password)
+        .then((userCredential) => {
+          // Signed in 
+      
+          const user = userCredential.user;
+          user.getIdToken().then((idToken) => {
+
+            fetch('/sessionLogin', {
+              method: 'POST',
+              headers: { 'Content-Type' : 'application/json'},
+              body: JSON.stringify({ idToken })
+            }).then(() => {
+              window.location.href = '/dashboard'
+            })
+          })
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+        });
 
         return false;
       });

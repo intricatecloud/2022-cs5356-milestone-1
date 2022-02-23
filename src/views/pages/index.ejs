@@ -5,7 +5,19 @@
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
     <style>
-
+      .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .hero {
+        background-image: url(/static/bg.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .rounded {
+        border-radius: 15px;
+      }
     </style>
 </head>
 
@@ -14,11 +26,89 @@
     <%- include('../partials/nav') %>
   </header>
 
-  Fill me in!
-  <!-- CS5356 TODO #1 Add your landing page here -->
+  <!-- Hero -->
+  <section class="hero is-fullheight">
+    <div class="hero-body">
+      <div class="">
+        <p class="title has-text-white">
+          Ruffhouse
+        </p>
+        <p class="subtitle has-text-white">
+          Connect with your dog friends
+        </p>
+      </div>
+    </div>
+  </section>
 
+   <!-- Info -->
+  <section class="section ">
+    <div class="content ">
+      <h1>Hello Dog</h1>
+      <p>Socializing with other dogs has never been easier. With ruffhouse you can find nearby dogs, share your adventures and connect with friends. Schedule play time and go to the same park to meet your new buddies. woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof woof.</p>
+    </div>
+  </section>
+
+  <!-- Cards -->
+<section class="section">
+  <div class="columns">
+      <div class="column is-4">
+          <div class="card is-shady rounded">
+            <div class="card-image">
+              <figure class="image is-4by3">
+                <img src="./../../../static/dog1.jpg" alt="Placeholder image">
+              </figure>
+            </div>
+              <div class="card-content">
+                  <div class="content">
+                      <h4>Share your photos with other dogs </h4>
+                      <p>Purus semper eget duis at tellus at urna condimentum mattis. Non blandit massa enim nec. Integer enim neque volutpat ac tincidunt vitae semper quis. Accumsan tortor posuere ac ut consequat semper viverra nam.</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="column is-4">
+          <div class="card is-shady rounded">
+            <div class="card-image">
+              <figure class="image is-4by3">
+                <img src="./../../../static/dog2.jpg" alt="Placeholder image">
+              </figure>
+            </div>
+              <div class="card-content">
+                  <div class="content">
+                      <h4>Filter by location and interests</h4>
+                      <p>Ut venenatis tellus in metus vulputate. Amet consectetur adipiscing elit pellentesque. Sed arcu non odio euismod lacinia at quis risus. Faucibus turpis in eu mi bibendum neque egestas cmonsu songue. Phasellus vestibulum lorem
+                      sed risus.</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="column is-4">
+          <div class="card is-shady rounded">
+            <div class="card-image">
+              <figure class="image is-4by3">
+                <img src="./../../../static/dog3.jpg" alt="Placeholder image">
+              </figure>
+            </div>
+              <div class="card-content">
+                  <div class="content">
+                      <h4> Schedule play time! </h4>
+                      <p>Imperdiet dui accumsan sit amet nulla facilisi morbi. Fusce ut placerat orci nulla pellentesque dignissim enim. Libero id faucibus nisl tincidunt eget nullam. Commodo viverra maecenas accumsan lacus vel facilisis.</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+  <!-- Call to action -->
+  <div class="section is-primary has-text-centered ">
+    <h2 class="subtitle has-text-centered has-text-weight-bold mt-4">
+      Are you ready to live your best dog life?.
+    </h2>
+      <a href="/sign-up" class="button is-primary mt-4">Sign Up
+      </a>
+    
+</div>
 </body>
-
 <%- include('../partials/footer') %>
-
 </html>
