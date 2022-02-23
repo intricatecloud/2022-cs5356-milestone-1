@@ -1,11 +1,12 @@
-<nav class="navbar">
-  <div class="container">
+<nav class="navbar is-dark">
+  <div class="container ">
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
-        <figure class="image">
-          <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png" alt="Logo">
-        </figure>
+        
+          <img src="./../../../static/hero-landing.svg" alt="Logo">
+          <p>Website.org</p>
       </a>
+      <div class="navbar-item is-centered"><p>My Website</p> </div>
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -19,6 +20,7 @@
             <%= email %>
               <i class="material-icons">person_outline</i>
           </a>
+          <a href="/sessionLogout" class="button is-primary">Log Out</a>
         </div>
       </div>
       <% } else if(locals.hideSignIn) { %>
@@ -26,8 +28,10 @@
         <div id="navbarMenu" class="navbar-menu">
           <div class="navbar-end">
             <div class="navbar-item">
-              <a href="/sign-in" class="button is-primary">Sign In
-              </a>
+              <a href="/sign-in" class="button is-primary">Sign In</a> 
+            </div>
+            <div class="navbar-item">
+              <a href="/sign-up" class="button is-primary">Sign Up</a> 
             </div>
           </div>
         </div>

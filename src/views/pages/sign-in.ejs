@@ -2,59 +2,114 @@
 <html lang="en">
 
 <head>
-  <%- include('../partials/head') %>
+<%- include('../partials/head') %>
 </head>
 
 <body>
-  <header>
-    <%- include('../partials/nav', { hideSignIn: true }) %>
-  </header>
+<header>
+<%- include('../partials/nav', { hideSignIn: true }) %>
+</header>
 
+<section class="hero is-fullheight">
+<div class="hero-body">
 
-  <form id="login-form">
-    <input type="text" name="login" placeholder="Your user name" />
-    <input type="password" name="password" id="password" />
-    <button>
-      Sign In
-    </button>
-    <div id="login-error">
+<div class="columns is-centered">
+<div class="column is-half has-text-centered">
 
-    </div>
-    </div>
-  </form>
+<div class="container is-size-5 has-text-white">
+Sign In for an existing account or <a href="/sign-up">click here to sign up with a new account</a>
+
+<form id="login-form">
+<label>Email:</label>
+<input type="text" name="login" /> <br>
+<label>Password:</label>
+<input type="password" name="password" id="password" /> <br>
+<button>
+Sign In
+</button>
+<div id="login-error">
+
+</div>
+</div>
+</form>
+
+</div>
+</div>
+
+</div>
+</section>
+
 </body>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
 <script>
 
-  window.onload = () => {
-    const firebaseConfig = {
-      // CS5356 TODO #2
-      // Create your own Firebase project. See the assignment for
-      // where you can get the Firebase config
-    };
+window.onload = () => {
+const firebaseConfig = {
+// CS5356 DONE #2
+// Create your own Firebase project. See the assignment for
+// where you can get the Firebase config
+apiKey: "AIzaSyAek01WXCuCNpIdCto7ifNH8Wt6CyZZtaA",
+authDomain: "project-1-cs5356.firebaseapp.com",
+projectId: "project-1-cs5356",
+storageBucket: "project-1-cs5356.appspot.com",
+messagingSenderId: "198485585013",
+appId: "1:198485585013:web:591ac3247b26c13594dc3c"
+};
 
-    const app = firebase.initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
 
-    app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
-    document
-      .getElementById("login-form")
-      .addEventListener("submit", (event) => {
-        event.preventDefault();
-        const login = event.target.login.value;
-        const password = event.target.password.value;
+document
+.getElementById("login-form")
+.addEventListener("submit", (event) => {
+event.preventDefault();
+const login = event.target.login.value;
+const password = event.target.password.value;
 
-        // CS5356 TODO #3
-        // Sign in using the Firebase SDK for Web
-        // Get the users ID token
-        // Start a new session with the users ID token
-        // Redirect the user to the /dashboard
+// CS5356 DONE #3
+// Sign in using the Firebase SDK for Web
+// Get the users ID token
+// Start a new session with the users ID token
+// Redirect the user to the /dashboard
 
-        return false;
-      });
-  };
+firebase.auth().signInWithEmailAndPassword(login, password)
+.then((userCredential) => {
+// Signed in
+var user = userCredential.user;
+// ...
+user.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+// Send token to your backend via HTTPS
+// ...
+
+var data = {
+id: idToken
+};
+console.log(JSON.stringify(data));
+fetch('/sessionLogin', {
+method: 'POST',
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify(data) // add the users ID token here
+}).then(() => {
+console.log('success!');
+
+window.location.replace("/dashboard");
+});
+}).catch(function(error) {
+// Handle error
+});
+
+}).catch((error) => {
+var errorCode = error.code;
+var errorMessage = error.message;
+window.alert(errorMessage);
+});
+
+return false;
+});
+};
 </script>
 
-</html>
+</html> 

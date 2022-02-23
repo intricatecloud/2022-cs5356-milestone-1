@@ -2,27 +2,40 @@
 <html lang="en">
 
 <head>
-  <%- include('../partials/head') %>
+<%- include('../partials/head') %>
 </head>
 
 <body>
-  <header>
-    <%- include('../partials/nav') %>
-  </header>
+<header>
+<%- include('../partials/nav', { hideSignIn: true }) %>
+</header>
 
-  <div class="container">
-    Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
-    <form id="login-form">
-      <label>Login</label>
-      <input id="login" type="text" name="login" />
-      <label>Password</label>
-      <input type="password" name="password" />
-      <button>Log in</button>
-    </form>
-    <div id="login-error" style="display: none;">
-    </div>
-    <a href="/dashboard">Dashboard</a>
-  </div>
+<section class="hero is-fullheight">
+<div class="hero-body">
+
+<div class="columns is-centered">
+<div class="column is-half has-text-centered">
+
+<div class="container is-size-5 has-text-white">
+Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
+<form id="login-form">
+<label class="is-size-5 has-text-white">Email:</label>
+<input id="login" type="text" name="login" /> <br>
+<label class="is-size-5 has-text-white">Password:</label>
+<input type="password" name="password" /> <br>
+<button >Sign Up</button>
+</form>
+<div id="login-error" style="display: none;">
+</div>
+<a href="/dashboard">Dashboard</a>
+</div>
+
+</div>
+</div>
+
+</div>
+</section>
+
 </body>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
@@ -30,33 +43,72 @@
 
 <script>
 
-  window.onload = () => {
-    console.log('Running onload')
-    const firebaseConfig = {
-      // CS5356 TODO #2
-      // Copy your Firebase config here too
-    };
+window.onload = () => {
+console.log('Running onload')
+const firebaseConfig = {
+// CS5356 DONE #2
+// Copy your Firebase config here too
+apiKey: "AIzaSyAek01WXCuCNpIdCto7ifNH8Wt6CyZZtaA",
+authDomain: "project-1-cs5356.firebaseapp.com",
+projectId: "project-1-cs5356",
+storageBucket: "project-1-cs5356.appspot.com",
+messagingSenderId: "198485585013",
+appId: "1:198485585013:web:591ac3247b26c13594dc3c"
+};
 
-    const app = firebase.initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
 
-    app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
-    document
-      .getElementById("login-form")
-      .addEventListener("submit", (event) => {
-        event.preventDefault();
-        const login = event.target.login.value;
-        const password = event.target.password.value;
+document
+.getElementById("login-form")
+.addEventListener("submit", (event) => {
+event.preventDefault();
+const login = event.target.login.value;
+const password = event.target.password.value;
 
-        // CS5356 TODO #3
-        // Create a new user using the Firebase SDK for Web
-        // Get the users ID token
-        // Start a new session with the users ID token
-        // Redirect the user to the /dashboard
+// CS5356 DONE #3
+// Create a new user using the Firebase SDK for Web
+// Get the users ID token
+// Start a new session with the users ID token
+// Redirect the user to the /dashboard
 
-        return false;
-      });
-  };
+app.auth().createUserWithEmailAndPassword(login, password)
+.then((userCredential) => {
+// Signed in
+const user = userCredential.user;
+// ...
+
+user.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+// Send token to your backend via HTTPS
+// ...
+
+var data = {
+id: idToken
+};
+console.log(JSON.stringify(data));
+fetch('/sessionLogin', {
+method: 'POST',
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify(data) // add the users ID token here
+}).then(() => {
+console.log('success!');
+
+window.location.replace("/dashboard");
+});
+}).catch(function(error) {
+// Handle error
+});
+
+}).catch((error) => {
+const errorCode = error.code;
+const errorMessage = error.message;
+window.alert(errorMessage);
+});
+
+return false;
+});
+};
 </script>
 
 </html>
