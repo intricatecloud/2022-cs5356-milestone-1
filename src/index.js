@@ -80,8 +80,7 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   // Add the message to the userFeed so its associated with the user
   const msg = req.body.message
   const user = req.user 
-  console.log(msg)
-  userFeed.add(user,msg)
+  await userFeed.add(user,msg)
   res.redirect("/dashboard");
 
 });
