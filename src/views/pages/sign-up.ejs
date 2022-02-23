@@ -21,7 +21,6 @@
     </form>
     <div id="login-error" style="display: none;">
     </div>
-    <a href="/dashboard">Dashboard</a>
   </div>
 </body>
 
@@ -35,6 +34,13 @@
     const firebaseConfig = {
       // CS5356 TODO #2
       // Copy your Firebase config here too
+      apiKey: "AIzaSyD69u8jHOoTE0-FEH8j_oExo1QnhcjVAmY",
+      authDomain: "milestone-1-360bd.firebaseapp.com",
+      projectId: "milestone-1-360bd",
+      storageBucket: "milestone-1-360bd.appspot.com",
+      messagingSenderId: "230171200710",
+      appId: "1:230171200710:web:f22f1d7840db7a7ebd1bc7",
+      measurementId: "G-QCJ6DMDB40"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -53,7 +59,20 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
-
+        const auth = firebase.auth();
+      
+        auth.createUserWithEmailAndPassword(login, password)
+          .then((function(response) {
+            // Signed in 
+            response.user.getIdToken().then(function(idToken) {
+              
+            }).then(() => {
+              window.location.assign('/dashboard')
+                }).catch(function(err){
+              debugger
+            })
+          })
+          )
         return false;
       });
   };

@@ -6,6 +6,11 @@
 </head>
 
 <body>
+  <h1 class = "title">Please sign in</h1>
+  <div class="container">
+    Sign In or <a href="/sign-up">click here to sign up</a>
+    </div>
+  </div>
   <header>
     <%- include('../partials/nav', { hideSignIn: true }) %>
   </header>
@@ -30,9 +35,13 @@
 
   window.onload = () => {
     const firebaseConfig = {
-      // CS5356 TODO #2
-      // Create your own Firebase project. See the assignment for
-      // where you can get the Firebase config
+      apiKey: "AIzaSyD69u8jHOoTE0-FEH8j_oExo1QnhcjVAmY",
+      authDomain: "milestone-1-360bd.firebaseapp.com",
+      projectId: "milestone-1-360bd",
+      storageBucket: "milestone-1-360bd.appspot.com",
+      messagingSenderId: "230171200710",
+      appId: "1:230171200710:web:f22f1d7840db7a7ebd1bc7",
+      measurementId: "G-QCJ6DMDB40"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -51,10 +60,28 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+        const auth = firebase.auth();
 
+        auth.signInWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+
+            user.getIdToken().then((idToken) => {
+              fetch('/sessionLogin', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ 
+                idToken
+                })
+              }).then(() => {
+              window.location.assign('/dashboard')
+                })
+            })
+          })
         return false;
-      });
-  };
+        });
+      };
 </script>
-
+        
 </html>
