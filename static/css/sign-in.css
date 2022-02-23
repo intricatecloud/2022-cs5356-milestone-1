@@ -6,7 +6,11 @@
 }
 
 body {
-	background: #f6f5f7;
+
+	background: linear-gradient(to bottom, rgba(0,0,0,0.66) 100%, transparent), url(https://media.istockphoto.com/photos/dog-plays-with-soccer-ball-picture-id595753978);
+	background-size: cover, cover;
+	background-position: center, center;
+
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -15,7 +19,8 @@ body {
 
 	position: relative;
 	height: 100vh;
-	margin: -20px 0 50px;
+	justify-content: center;
+	align-items: center;
 }
 
 h1 {

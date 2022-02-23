@@ -35,8 +35,8 @@ app.use("/static", express.static("static/"));
 // use res.render to load up an ejs view file
 // index page
 app.get("/", function (req, res) {
-  // res.render("pages/index");
-  res.redirect("/sign-in")
+  res.render("pages/index");
+  // res.redirect("/sign-in")
 });
 
 app.get("/sign-in", function (req, res) {
@@ -44,7 +44,7 @@ app.get("/sign-in", function (req, res) {
 });
 
 app.get("/sign-up", function (req, res) {
-  res.render("pages/sign-up");
+  res.render("pages/sign-in");
 });
 
 app.get("/dashboard", authMiddleware, async function (req, res) {
@@ -91,7 +91,8 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   }
   message = req.body.message
   userFeed.add(user, message)
-  res.status(200).send({status: 'Success'})
+  res.redirect('/dashboard');
+  // res.status(200).send({status: 'Success'})
 });
 
 app.listen(port);
