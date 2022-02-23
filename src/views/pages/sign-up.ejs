@@ -16,7 +16,7 @@
       <label>Login</label>
       <input id="login" type="text" name="login" />
       <label>Password</label>
-      <input type="password" name="password" />
+      <input id="password" type="password" name="password" />
       <button>Log in</button>
     </form>
     <div id="login-error" style="display: none;">
@@ -28,14 +28,17 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
-<script>
-
+<script type="module">
   window.onload = () => {
     console.log('Running onload')
-    const firebaseConfig = {
-      // CS5356 TODO #2
-      // Copy your Firebase config here too
-    };
+        const firebaseConfig = {
+          apiKey: "AIzaSyD-ajVdaBp6vkU1wSEr7iNVS3AB0rO1e8Q",
+          authDomain: "milestone1-cs5356.firebaseapp.com",
+          projectId: "milestone1-cs5356",
+          storageBucket: "milestone1-cs5356.appspot.com",
+          messagingSenderId: "135794064009",
+          appId: "1:135794064009:web:481be346290c826ba52458"
+        };
 
     const app = firebase.initializeApp(firebaseConfig);
 
@@ -47,12 +50,24 @@
         event.preventDefault();
         const login = event.target.login.value;
         const password = event.target.password.value;
-
+        console.log("Form dadi")
         // CS5356 TODO #3
         // Create a new user using the Firebase SDK for Web
+        app.auth().createUserWithEmailAndPassword(login, password)
+                    .then((userCredential) => {
+                        // Signed in
+                        const user = userCredential.user;
+                        console.log("SUCCESS")
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        console.log("Fail")
+                    });
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+
 
         return false;
       });

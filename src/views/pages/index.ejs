@@ -1,24 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <%- include('../partials/head') %>
-    <!-- Include any custom css classes that you want available on this page here -->
-    <style>
-
-    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Landing - Free Bulma template</title>
+    <link rel="shortcut icon" href="../images/fav_icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <!-- Bulma Version 0.9.0-->
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/landing.css">
 </head>
 
 <body>
-  <header>
-    <%- include('../partials/nav') %>
-  </header>
+    <section class="hero has-background-link-dark is-fullheight ">
+        <div class="top_portion">
+            <nav class="navbar ">
+                   <div class="hero-body is-family-monospace ">
+                       <p class="title has-text-black-bis is-3 is-spaced ">Milestone 1</p>
+                       <p class="subtitle is-5">CS 5356</p>
+                     </div>
 
-  Fill me in!
-  <!-- CS5356 TODO #1 Add your landing page here -->
-
+                    <div id="navbarMenu" class="navbar-menu">
+                        <div class="navbar-end">
+                            <span class="navbar-item">
+                                <a class="button is-white is-outlined" href="/dashboard">
+                                    <span class="icon">
+                                        <i class="fa fa-home"></i>
+                                    </span>
+                                    <span>Home</span>
+                                </a>
+                            </span>
+                            <span class="navbar-item">
+                                <a class="button is-white is-outlined" href="/sign-in">
+                                    <span class="icon">
+                                        <i class="fa fa-superpowers"></i>
+                                    </span>
+                                    <span>Sign In</span>
+                                </a>
+                            </span>
+                            <span class="navbar-item">
+                                <a class="button is-white is-outlined" href="sign-up">
+                                    <span class="icon">
+                                        <i class="fa fa-book"></i>
+                                    </span>
+                                    <span>Sign Up</span>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="hero-body has-text-centered">
+                    <div class="login">
+                      <img src="https://logoipsum.com/logo/logo-1.svg" width="325px" />
+                      <form>
+                        <div class="field">
+                          <div class="control">
+                            <input class="input is-medium is-rounded" type="email" placeholder="hello@example.com" autocomplete="username" required />
+                          </div>
+                        </div>
+                        <div class="field">
+                          <div class="control">
+                            <input class="input is-medium is-rounded" type="password" placeholder="**********" autocomplete="current-password" required />
+                          </div>
+                        </div>
+                        <br />
+                        <button class="button is-block is-fullwidth is-primary is-medium is-rounded" type="submit">
+                          Login
+                        </button>
+                      </form>
+                      <br>
+                      <nav class="level">
+                        <div class="level-item has-text-centered">
+                          <div>
+                            <a href="#">Create an Account</a>
+                          </div>
+                        </div>
+                      </nav>
+                    </div>
+                  </div>
+            </div>
 </body>
-
-<%- include('../partials/footer') %>
 
 </html>
