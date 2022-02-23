@@ -68,6 +68,7 @@ app.post("/sessionLogin", function(req, res) {
         res.cookie('session', seessionCookie, options);
         res.status(200).send(JSON.stringify({ statue: 'success'}));
       },
+
       (error) => {
         res.status(401).send('Unauthorized request')
       }
