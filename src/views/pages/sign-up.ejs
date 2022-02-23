@@ -33,8 +33,13 @@
   window.onload = () => {
     console.log('Running onload')
     const firebaseConfig = {
-      // CS5356 TODO #2
-      // Copy your Firebase config here too
+      apiKey: "AIzaSyBZkmvEZ5tj8GxQmThlmI09Qw1EF4SIdeA",
+      authDomain: "startup-systems-4f1d8.firebaseapp.com",
+      projectId: "startup-systems-4f1d8",
+      storageBucket: "startup-systems-4f1d8.appspot.com",
+      messagingSenderId: "477788686794",
+      appId: "1:477788686794:web:f7b6b512819f3735576733",
+      measurementId: "G-F0RX4MJK6E"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -53,6 +58,38 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+        firebase.auth().createUserWithEmailAndPassword(login, password)
+                .then((response) => {
+                  // Signed in
+                  const user = response.user;
+                  user.getIdToken().then((idToken) => {
+
+                    // set a session cookie to store the user's ID token
+                    fetch('/sessionLogin', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({
+                        idToken
+                      })
+                    }).then(() => {
+                      console.log('Session token success!');
+                      window.location.href = '/dashboard';
+                    }).catch((error) => {
+                      console.log(error);
+                    });
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              })                    
+
+              .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                debugger
+              });
 
         return false;
       });
