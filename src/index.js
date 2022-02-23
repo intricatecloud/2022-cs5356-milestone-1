@@ -86,9 +86,12 @@ app.get("/sessionLogout", (req, res) => {
 
 app.post("/dog-messages", authMiddleware, async (req, res) => {
   // CS5356 TODO #5
-  // Get the message that was submitted from the request body
-  // Get the user object from the request body
-  // Add the message to the userFeed so its associated with the user
+  user = {
+    'email': req.user.email, 
+  }
+  message = req.body.message
+  userFeed.add(user, message)
+  res.status(200).send({status: 'Success'})
 });
 
 app.listen(port);
