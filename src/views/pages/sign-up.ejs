@@ -57,6 +57,9 @@
 
         // CS5356 TODO #3
         // Create a new user using the Firebase SDK for Web
+        // Get the users ID token
+        // Start a new session with the users ID token
+        // Redirect the user to the /dashboard
         firebase.auth().createUserWithEmailAndPassword(login, password)
         .then(function (response) {
             // Signed in

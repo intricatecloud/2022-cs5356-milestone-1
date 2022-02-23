@@ -55,6 +55,9 @@
 
         // CS5356 TODO #3
         // Sign in using the Firebase SDK for Web
+        // Get the users ID token
+        // Start a new session with the users ID token
+        // Redirect the user to the /dashboard
         firebase.auth().signInWithEmailAndPassword(login, password)
           .then(function (response) {
             // Signed in

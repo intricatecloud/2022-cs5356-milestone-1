@@ -61,19 +61,20 @@ app.post("/sessionLogin", async (req, res) => {
   const idToken = req.body.idToken;
 
   const expiresIn = 3600 * 1000;
-  admin.auth().createSessionCookie(idToken, { expiresIn })
+  admin
+    .auth()
+    .createSessionCookie(idToken, { expiresIn })
     .then(
       (sessionCookie) => {
         const options = { maxAge: expiresIn, httpOnly: true, secure: true };
-        res.cookie('session', sessionCookie, options);
-        res.status(201).send(JSON.stringify({ status: 'success' }))
+        res.cookie("session", sessionCookie, options);
+        res.status(201).send(JSON.stringify({ status: "success" }));
       },
       (error) => {
-        debugger
+        debugger;
         res.status(401).send(error.toSting());
       }
-    )
-  debugger
+    );
 });
 
 app.get("/sessionLogout", (req, res) => {
@@ -86,6 +87,13 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   // Get the message that was submitted from the request body
   // Get the user object from the request body
   // Add the message to the userFeed so its associated with the user
+  try {
+    const dogMessage = req.body
+    await userFeed.add(req.user, dogMessage.message)
+    res.redirect('/dashboard')
+    } catch (err) {
+      res.status(500).send(JSON.stringify({message: err}))
+    }
 });
 
 app.listen(port);
