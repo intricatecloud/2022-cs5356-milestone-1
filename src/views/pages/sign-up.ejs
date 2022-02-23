@@ -10,7 +10,7 @@
     <%- include('../partials/nav') %>
   </header>
 
-  <div class="container">
+  <!-- <div class="container">
     Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
     <form id="login-form">
       <label>Login</label>
@@ -22,9 +22,9 @@
     <div id="login-error" style="display: none;">
     </div>
     <a href="/dashboard">Dashboard</a>
-  </div>
+  </div> -->
 
-  <!-- <section class="hero is-info is-fullheight">
+  <section class="hero is-info is-fullheight">
     <div class="hero-body">
       <div class="container">
         <div class="columns is-centered">
@@ -34,13 +34,13 @@
               <div class="field">
                 <label for="" class="label">Email</label>
                 <div class="control has-icons-left">
-                  <input type="email" placeholder="e.g. bobsmith@gmail.com" class="input" required>
+                  <input type="email" name="login" placeholder="e.g. bobsmith@gmail.com" class="input" required>
                 </div>
               </div>
               <div class="field">
                 <label for="" class="label">Password</label>
                 <div class="control has-icons-left">
-                  <input type="password" placeholder="*******" class="input" required>
+                  <input type="password" name="password" placeholder="*******" class="input" required>
                 </div>
               </div>
               <div class="field">
@@ -49,13 +49,13 @@
                 </button>
               </div>
             </form>
-            <div id="signup-error" style="display: none;"></div>
+            <div id="signup-error" style="color: red;"></div>
             <a href="/dashboard">Dashboard</a>
           </div>
         </div>
       </div>
     </div>
-  </section> -->
+  </section>
 
 </body>
 
@@ -82,7 +82,7 @@
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
     document
-      .getElementById("login-form")
+      .getElementById("signup-form")
       .addEventListener("submit", (event) => {
         event.preventDefault();
         const login = event.target.login.value;
@@ -90,7 +90,7 @@
 
         // CS5356 TODO #3
         // Create a new user using the Firebase SDK for Web
-        createUserWithEmailAndPassword(auth, email, password)
+        firebase.auth().createUserWithEmailAndPassword(login, password)
           .then((userCredential) => {
             // Signed in 
             // Get the users ID token
