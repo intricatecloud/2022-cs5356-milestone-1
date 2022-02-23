@@ -9,24 +9,25 @@ const port = process.env.PORT || 8080;
 // CS5356 TODO #2
 // Uncomment this next line after you've created
 // serviceAccountKey.json
-// const serviceAccount = require("./../config/serviceAccountKey.json");
+const serviceAccount = require("./../config/serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
+const { execPath } = require("process");
 
 // CS5356 TODO #2
 // Uncomment this next block after you've created serviceAccountKey.json
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-// });
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+
 
 // use cookies
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 // set the view engine to ejs
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -35,30 +36,48 @@ app.use("/static", express.static("static/"));
 
 // use res.render to load up an ejs view file
 // index page
-app.get("/", function (req, res) {
+app.get("/", function(req, res) {
   res.render("pages/index");
 });
 
-app.get("/sign-in", function (req, res) {
+app.get("/sign-in", function(req, res) {
+  debugger
   res.render("pages/sign-in");
 });
 
-app.get("/sign-up", function (req, res) {
+app.get("/sign-up", function(req, res) {
+  debugger
   res.render("pages/sign-up");
 });
 
-app.get("/dashboard", authMiddleware, async function (req, res) {
+app.get("/dashboard", authMiddleware, async function(req, res) {
   const feed = await userFeed.get();
+  debugger
   res.render("pages/dashboard", { user: req.user, feed });
 });
 
-app.post("/sessionLogin", async (req, res) => {
+app.post("/sessionLogin", function(req, res) {
+  const idToken = req.body.idToken;
+  debugger
+  const expiresIn = 60 * 60 * 24 * 5 * 1000;
+  admin.auth()
+    .createSessionCookie(idToken, {expiresIn})
+    .then(
+      (seessionCookie) => {
+        const option = {maxAge: expiresIn, httpOnly: true, secure: true };
+        res.cookie('session', seessionCookie, options);
+        res.status(200).send(JSON.stringify({ statue: 'success'}));
+      },
+      (error) => {
+        res.status(401).send('Unauthorized request')
+      }
+    )
   // CS5356 TODO #4
   // Get the ID token from the request body
   // Create a session cookie using the Firebase Admin SDK
   // Set that cookie with the name 'session'
   // And then return a 200 status code instead of a 501
-  res.status(501).send();
+  // res.status(501).send();
 });
 
 app.get("/sessionLogout", (req, res) => {
@@ -75,3 +94,5 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
 
 app.listen(port);
 console.log("Server started at http://localhost:" + port);
+
+

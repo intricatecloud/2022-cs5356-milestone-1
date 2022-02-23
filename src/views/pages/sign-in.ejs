@@ -1,60 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="./static/css/customized.css">
 
 <head>
-  <%- include('../partials/head') %>
+    <%- include('../partials/head') %>
 </head>
 
 <body>
-  <header>
-    <%- include('../partials/nav', { hideSignIn: true }) %>
-  </header>
+    <section class="hero is-fullheight has-background-black">
+        <header>
+            <%- include('../partials/nav') %>
+        </header>
+        <div class="hero-body">
+            <div class="container" style="max-width: 450px">
+                <div class="welcome">
+                    Welcome Back!
+                </div>
+                <form>
+                    <div class="field">
+                        <label class="label">Username</label>
+                        <div class="control has-icons-left has-icons-right">
+                            <input class="input is-success" type="text" name='login' placeholder="Text input"
+                                value="bulma">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <span class="icon is-small is-right">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </div>
+                    </div>
 
+                    <div class="field">
+                        <label class="label">Email</label>
+                        <div class="control has-icons-left has-icons-right">
+                            <input class="input is-danger" type="email" name="password" placeholder="Email input"
+                                value="hello@">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                            <span class="icon is-small is-right">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
 
-  <form id="login-form">
-    <input type="text" name="login" placeholder="Your user name" />
-    <input type="password" name="password" id="password" />
-    <button>
-      Sign In
-    </button>
-    <div id="login-error">
+    <form id="login-form">
+        <!--    <input type="text" name="login" placeholder="Your user name" />-->
+        <!--    <input type="password" name="password" id="password" />-->
 
-    </div>
-    </div>
-  </form>
+        <button>
+            Sign In
+        </button>
+        <div id="login-error">
+
+        </div>
+        </div>
+    </form>
 </body>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
 <script>
+    window.onload = () => {
+        // CS5356 TODO #2
+        const firebaseConfig = {
+            apiKey: "AIzaSyAd5EVip-eDS1xZHSW-ajpPNzsBEpnSbbg",
+            authDomain: "cs-5356-assignment.firebaseapp.com",
+            projectId: "cs-5356-assignment",
+            storageBucket: "cs-5356-assignment.appspot.com",
+            messagingSenderId: "198332129631",
+            appId: "1:198332129631:web:5d21197f2fb59d3bfbd6ea",
+            measurementId: "G-NNKDXHLGRV"
+        };
 
-  window.onload = () => {
-    const firebaseConfig = {
-      // CS5356 TODO #2
-      // Create your own Firebase project. See the assignment for
-      // where you can get the Firebase config
+        const app = firebase.initializeApp(firebaseConfig);
+
+        app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+
+        document
+            .getElementById("login-form")
+            .addEventListener("submit", (event) => {
+                event.preventDefault();
+                const login = event.target.login.value;
+                const password = event.target.password.value;
+
+                return false;
+            })
     };
-
-    const app = firebase.initializeApp(firebaseConfig);
-
-    app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
-
-    document
-      .getElementById("login-form")
-      .addEventListener("submit", (event) => {
-        event.preventDefault();
-        const login = event.target.login.value;
-        const password = event.target.password.value;
-
-        // CS5356 TODO #3
-        // Sign in using the Firebase SDK for Web
-        // Get the users ID token
-        // Start a new session with the users ID token
-        // Redirect the user to the /dashboard
-
-        return false;
-      });
-  };
 </script>
 
 </html>

@@ -1,18 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="./static/css/customized.css">
 
 <head>
   <%- include('../partials/head') %>
 </head>
 
 <body>
-  <header>
-    <%- include('../partials/nav') %>
-  </header>
+  <!--<section class="hero is-fullheight has-background-black">-->
+  <!--    <header>-->
+  <!--        <%- include('../partials/nav') %>-->
+  <!--    </header>-->
+  <!--    <div class="hero-body">-->
+  <!--        <div class="container" style="max-width: 450px">-->
+  <!--            <div class="welcome">-->
+  <!--                Welcome You!-->
+  <!--            </div>-->
+  <!--            <form id="login-form" method="get">-->
+  <!--                <div class="field">-->
+  <!--                    <label class="label">Username</label>-->
+  <!--                    <div class="control has-icons-left has-icons-right">-->
+  <!--                        <input id='login' type="text" name="login" class="input is-success"-->
+  <!--                               placeholder="Text input" value="bulma">-->
+  <!--                    </div>-->
+  <!--                </div>-->
+  <!--                <div class="field">-->
+  <!--                    <label class="label">Email</label>-->
+  <!--                    <div class="control has-icons-left has-icons-right">-->
+  <!--                        <input type="password" name="password" class="input is-danger"-->
+  <!--                               placeholder="Email input" value="hello@">-->
+  <!--                    </div>-->
+  <!--                </div>-->
+  <!--                <button type="submit" class="button is-primary" style="margin-top: 10px">Log in</button>-->
+  <!--            </form>-->
+  <!--        </div>-->
+  <!--    </div>-->
+  <!--</section>-->
 
   <div class="container">
     Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
-    <form id="login-form">
+    <form id="login-form" method="GET">
       <label>Login</label>
       <input id="login" type="text" name="login" />
       <label>Password</label>
@@ -25,38 +52,67 @@
   </div>
 </body>
 
-<script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
+<script type="module" src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
+<script type="module" src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
 <script>
-
   window.onload = () => {
-    console.log('Running onload')
+    console.log("Running onload");
+    // CS5356 TODO #2
     const firebaseConfig = {
-      // CS5356 TODO #2
-      // Copy your Firebase config here too
+      apiKey: "AIzaSyAd5EVip-eDS1xZHSW-ajpPNzsBEpnSbbg",
+      authDomain: "cs-5356-assignment.firebaseapp.com",
+      projectId: "cs-5356-assignment",
+      storageBucket: "cs-5356-assignment.appspot.com",
+      messagingSenderId: "198332129631",
+      appId: "1:198332129631:web:5d21197f2fb59d3bfbd6ea",
+      measurementId: "G-NNKDXHLGRV"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
 
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
-    document
-      .getElementById("login-form")
-      .addEventListener("submit", (event) => {
+
+    document.getElementById('login-form')
+      .addEventListener("submit", event => {
         event.preventDefault();
+        debugger
         const login = event.target.login.value;
         const password = event.target.password.value;
-
-        // CS5356 TODO #3
-        // Create a new user using the Firebase SDK for Web
-        // Get the users ID token
-        // Start a new session with the users ID token
-        // Redirect the user to the /dashboard
-
+        firebase.auth().createUserWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+              const user = userCredential.user;
+              user.getIdToken().then((idToken) => {
+                // debugger
+                fetch("/sessionLogin", {
+                  method: "POST",
+                  headers: { "Content-Type": "appication/json"
+                },
+                  body: JSON.stringify({ 
+                    idToken: idToken, 
+                    plan: "free" })
+                }).then((response) => {
+                  console.log('success');
+                  // debugger
+                  window.location.assign('/dashboard')
+                }).catch((err) => {
+                  // debugger
+                  console.error(err)
+                  window.location.assign('/dashboard')
+                })
+              })
+            }).catch((error) => {
+            // debugger
+          })
         return false;
-      });
-  };
+            // CS5356 TODO #3
+            // Create a new user using the Firebase SDK for Web
+            // Get the users ID token
+            // Start a new session with the users ID token
+            // Redirect the user to the /dashboard
+        })
+      }
 </script>
 
 </html>

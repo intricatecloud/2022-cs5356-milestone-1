@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <%- include('../partials/head') %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./static/css/customized.css">
+    <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
-    <style>
-
-    </style>
 </head>
-
 <body>
-  <header>
-    <%- include('../partials/nav') %>
-  </header>
-
-  Fill me in!
-  <!-- CS5356 TODO #1 Add your landing page here -->
-
+<!-- CS5356 TODO #1 Add your landing page here -->
+<section class="hero is-fullheight has-background-black">
+    <header>
+        <%- include('../partials/nav') %>
+    </header>
+    <div class="hero-body">
+        <div class="container" style="max-width: 450px">
+            <div class="welcome">
+                Welcome
+            </div>
+        </div>
+    </div>
+</section>
 </body>
-
 <%- include('../partials/footer') %>
-
 </html>

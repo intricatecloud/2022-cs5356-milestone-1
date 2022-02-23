@@ -1,0 +1,7 @@
+.welcome {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: whitesmoke;
+    font-size: 50px
+}
