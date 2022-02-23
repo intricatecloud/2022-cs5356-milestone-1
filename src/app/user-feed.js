@@ -26,7 +26,7 @@ const add = async (user, message) => {
   const response = await fetch("https://dog.ceo/api/breeds/image/random/1");
   const body = await response.json();
   userFeed.unshift({
-    name: user.name,
+    name: casual.full_name,
     nameHandle: user.email,
     message: message,
     imageSource: body.message,
