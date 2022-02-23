@@ -1,26 +1,3 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyA_mIqCSTezj7QsOr3Yb9NZ6FbmwJ8irzM",
-  authDomain: "my-first-project-4b39e.firebaseapp.com",
-  projectId: "my-first-project-4b39e",
-  storageBucket: "my-first-project-4b39e.appspot.com",
-  messagingSenderId: "500073956370",
-  appId: "1:500073956370:web:30b441b0950906fefc84cb",
-  measurementId: "G-7HT6MLMVBZ"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
@@ -32,7 +9,8 @@ const port = process.env.PORT || 8080;
 // CS5356 TODO #2
 // Uncomment this next line after you've created
 // serviceAccountKey.json
-const serviceAccount = require("./../config/serviceAccountKey.json");
+//const serviceAccount = require("./../config/serviceAccountKey.json");
+const serviceAccount = require("/Users/Chat/Desktop/Spring courses/startup system/2022-cs5356-milestone-1/src/config/serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
 
