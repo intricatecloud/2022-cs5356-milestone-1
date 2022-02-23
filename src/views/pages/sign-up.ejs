@@ -13,11 +13,11 @@
   <div class="container">
     Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
     <form id="login-form">
-      <label>Login</label>
+      <label>Username</label>
       <input id="login" type="text" name="login" />
       <label>Password</label>
       <input type="password" name="password" />
-      <button>Log in</button>
+      <button>Sign Up</button>
     </form>
     <div id="login-error" style="display: none;">
     </div>
@@ -53,9 +53,10 @@
         firebase.auth().createUserWithEmailAndPassword(login, password)
           .then((userCredential) => {
             var user = userCredential.user;
-            window.location.href("/sign-in");  
+            window.location.assign("/sign-in");  
           })
           .catch((error) => {
+            console.log(error)
             console.log('sign up fail');
           });
       });
