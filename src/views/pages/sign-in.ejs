@@ -10,6 +10,8 @@
     <%- include('../partials/nav', { hideSignIn: true }) %>
   </header>
 
+  <div class="container">
+    If you do not have an account, <a href="/sign-up">click here to sign up with a new account</a>
 
   <form id="login-form">
     <input type="text" name="login" placeholder="Your user name" />
@@ -21,6 +23,7 @@
 
     </div>
     </div>
+    
   </form>
 </body>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
@@ -33,6 +36,13 @@
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
+      apiKey: "AIzaSyBdbuMDHC_A2SVfQtJJi3CKRsX0xe9GYNQ",
+      authDomain: "startup-system-hw1-89969.firebaseapp.com",
+      projectId: "startup-system-hw1-89969",
+      storageBucket: "startup-system-hw1-89969.appspot.com",
+      messagingSenderId: "816354160786",
+      appId: "1:816354160786:web:5875b987e5e070df88f64b",
+      measurementId: "G-ZG1JVFY42F"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -51,10 +61,36 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
-
+        app.auth().signInWithEmailAndPassword(login, password)
+          .then(userCredential => userCredential.user.getIdToken())
+            .then((idToken) => {
+              // manage it server-side
+              fetch('/sessionLogin', {
+                method: 'POST',
+                headers: { 
+                  'Content-Type' : 'application/json'
+                },
+                body: JSON.stringify({
+                  idToken: idToken,
+                  //plan: 'free'
+                }),
+              }).then((response) =>{
+                if (response.status !== 201) {
+                throw new Error(response.status)
+              }
+              window.location.assign('/dashboard');
+            }).catch((error) => {
+              document.getElementById("login-error").innerHTML = error.message;
+            })
+          })
+          .catch((error) => {
+            console.log(error)
+            document.getElementById("login-error").innerHTML = error.message;
+          })
         return false;
       });
   };
+
 </script>
 
 </html>

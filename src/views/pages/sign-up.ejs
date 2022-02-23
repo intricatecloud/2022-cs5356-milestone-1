@@ -35,6 +35,13 @@
     const firebaseConfig = {
       // CS5356 TODO #2
       // Copy your Firebase config here too
+      apiKey: "AIzaSyBdbuMDHC_A2SVfQtJJi3CKRsX0xe9GYNQ",
+      authDomain: "startup-system-hw1-89969.firebaseapp.com",
+      projectId: "startup-system-hw1-89969",
+      storageBucket: "startup-system-hw1-89969.appspot.com",
+      messagingSenderId: "816354160786",
+      appId: "1:816354160786:web:5875b987e5e070df88f64b",
+      measurementId: "G-ZG1JVFY42F"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -45,6 +52,7 @@
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
         event.preventDefault();
+        
         const login = event.target.login.value;
         const password = event.target.password.value;
 
@@ -53,7 +61,34 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
-
+        app.auth().createUserWithEmailAndPassword(login, password)
+          .then(userCredential => userCredential.user.getIdToken())
+          .then((idToken) => {
+            fetch('/sessionLogin', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                idToken,
+              })
+            }).then((response) => {
+              window.location.assign('/dashboard');
+            }).catch((error) => {
+              console.log(error)
+              const loginErrorElem = document.getElementById("login-error");
+              loginErrorElem.innerHTML = error.message;
+              loginErrorElem.style.display = 'block';
+            })
+          })
+          .catch((error) => {
+            console.log(error)
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            const loginErrorElem = document.getElementById("login-error");
+            loginErrorElem.innerHTML = errorMessage;
+            loginErrorElem.style.display = 'block';
+          });
         return false;
       });
   };

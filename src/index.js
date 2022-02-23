@@ -9,18 +9,23 @@ const port = process.env.PORT || 8080;
 // CS5356 TODO #2
 // Uncomment this next line after you've created
 // serviceAccountKey.json
-// const serviceAccount = require("./../config/serviceAccountKey.json");
+const serviceAccount = require("./../config/serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
 
 // CS5356 TODO #2
 // Uncomment this next block after you've created serviceAccountKey.json
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-// });
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
 
 // use cookies
 app.use(cookieParser());
+// content-type: text/plain
+app.use(express.text());
+// content-type: application/json
+app.use(express.json());
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
@@ -43,6 +48,13 @@ app.get("/sign-in", function (req, res) {
   res.render("pages/sign-in");
 });
 
+app.get('/about', function(req, res){
+  const cookies = req.cookies
+  const idToken = cookies.session
+  admin.auth().verifySessionCookie()
+  res.render('pages/about');
+})
+
 app.get("/sign-up", function (req, res) {
   res.render("pages/sign-up");
 });
@@ -58,8 +70,21 @@ app.post("/sessionLogin", async (req, res) => {
   // Create a session cookie using the Firebase Admin SDK
   // Set that cookie with the name 'session'
   // And then return a 200 status code instead of a 501
-  res.status(501).send();
-});
+  const idToken = req.body.idToken;
+  const expiresIn = 60 * 60 * 1000;
+  admin.auth().createSessionCookie(idToken, {expiresIn})
+  .then(
+    (sessionCookie) => {
+      // set cookie policy for session cookie
+      const options = {maxAge: expiresIn, httpOnly: true, secure: true};
+      res.cookie('session', sessionCookie, options);
+      res.status(201).send(JSON.stringify({status: 'success'}));
+    },
+    (error) => {
+      res.status(401).send(error.toString());
+    }
+  );
+})
 
 app.get("/sessionLogout", (req, res) => {
   res.clearCookie("session");
@@ -71,6 +96,12 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   // Get the message that was submitted from the request body
   // Get the user object from the request body
   // Add the message to the userFeed so its associated with the user
+  const message = req.body.message;
+  const name = req.user.email.split('@')[0];
+  userFeed.add({ ...req.user, name } , message).then(() => res.redirect("/dashboard"))
+    .catch((error) => {
+      res.status(500).send(error.toString())
+    });
 });
 
 app.listen(port);
