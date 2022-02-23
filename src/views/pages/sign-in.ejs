@@ -27,7 +27,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
 <script>
-
+  // import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
   window.onload = () => {
     const firebaseConfig = {
       // CS5356 TODO #2
@@ -58,6 +58,28 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+        const auth = app.auth()
+        auth.signInWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            // ...
+            user.getIdToken().then((idToken) => {
+
+              fetch('/sessionLogin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idToken })
+                // }).then(() => console.log('success!'))
+              }).then(() => {
+                window.location.href = '/dashboard';
+              })
+            })
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+          });
 
         return false;
       });
