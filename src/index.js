@@ -56,7 +56,7 @@ app.get("/dashboard", authMiddleware, async function(req, res) {
   res.render("pages/dashboard", { user: req.user, feed });
 });
 
-app.post("/sessionLogin", function(req, res) {
+app.post("/sessionLogin", async function(req, res) {
   const idToken = req.body.idToken;
   debugger
   const expiresIn = 60 * 60 * 24 * 5 * 1000;
@@ -64,8 +64,8 @@ app.post("/sessionLogin", function(req, res) {
     .createSessionCookie(idToken, {expiresIn})
     .then(
       (seessionCookie) => {
-        const option = {maxAge: expiresIn, httpOnly: true, secure: true };
-        res.cookie('session', seessionCookie, options);
+        const option = { maxAge: expiresIn, httpOnly: true, secure: true };
+        res.cookie('session', seessionCookie, option);
         res.status(200).send(JSON.stringify({ statue: 'success'}));
       },
 
@@ -73,12 +73,6 @@ app.post("/sessionLogin", function(req, res) {
         res.status(401).send('Unauthorized request')
       }
     )
-  // CS5356 TODO #4
-  // Get the ID token from the request body
-  // Create a session cookie using the Firebase Admin SDK
-  // Set that cookie with the name 'session'
-  // And then return a 200 status code instead of a 501
-  // res.status(501).send();
 });
 
 app.get("/sessionLogout", (req, res) => {
@@ -87,10 +81,11 @@ app.get("/sessionLogout", (req, res) => {
 });
 
 app.post("/dog-messages", authMiddleware, async (req, res) => {
-  // CS5356 TODO #5
-  // Get the message that was submitted from the request body
-  // Get the user object from the request body
-  // Add the message to the userFeed so its associated with the user
+  const message = req.body.message
+  const user = req.user
+  await userFeed.add(user, message)
+  res.redirect('/dashboard')
+
 });
 
 app.listen(port);

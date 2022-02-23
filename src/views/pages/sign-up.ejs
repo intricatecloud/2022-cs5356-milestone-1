@@ -7,37 +7,37 @@
 </head>
 
 <body>
-  <!--<section class="hero is-fullheight has-background-black">-->
-  <!--    <header>-->
-  <!--        <%- include('../partials/nav') %>-->
-  <!--    </header>-->
-  <!--    <div class="hero-body">-->
-  <!--        <div class="container" style="max-width: 450px">-->
-  <!--            <div class="welcome">-->
-  <!--                Welcome You!-->
-  <!--            </div>-->
-  <!--            <form id="login-form" method="get">-->
-  <!--                <div class="field">-->
-  <!--                    <label class="label">Username</label>-->
-  <!--                    <div class="control has-icons-left has-icons-right">-->
-  <!--                        <input id='login' type="text" name="login" class="input is-success"-->
-  <!--                               placeholder="Text input" value="bulma">-->
-  <!--                    </div>-->
-  <!--                </div>-->
-  <!--                <div class="field">-->
-  <!--                    <label class="label">Email</label>-->
-  <!--                    <div class="control has-icons-left has-icons-right">-->
-  <!--                        <input type="password" name="password" class="input is-danger"-->
-  <!--                               placeholder="Email input" value="hello@">-->
-  <!--                    </div>-->
-  <!--                </div>-->
-  <!--                <button type="submit" class="button is-primary" style="margin-top: 10px">Log in</button>-->
-  <!--            </form>-->
-  <!--        </div>-->
-  <!--    </div>-->
-  <!--</section>-->
+  <section class="hero is-fullheight has-background-black">
+     <header>
+         <%- include('../partials/nav') %>
+     </header>
+     <div class="hero-body">
+         <div class="container" style="max-width: 450px">
+             <div class="welcome">
+                 Welcome You!
+             </div>
+             <form id="login-form" method="GET">
+                 <div class="field">
+                     <label class="label">Username</label>
+                     <div class="control has-icons-left has-icons-right">
+                         <input id='login' type="text" name="login" class="input"
+                                placeholder="Email input">
+                     </div>
+                 </div>
+                 <div class="field">
+                     <label class="label">Password</label>
+                     <div class="control has-icons-left has-icons-right">
+                         <input type="password" name="password" class="input"
+                                placeholder="Password input">
+                     </div>
+                 </div>
+                 <button type="submit" class="button is-primary" style="margin-top: 10px">Log in</button>
+             </form>
+         </div>
+     </div>
+  </section>
 
-  <div class="container">
+  <!-- <div class="container">
     Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
     <form id="login-form" method="GET">
       <label>Login</label>
@@ -49,7 +49,7 @@
     <div id="login-error" style="display: none;">
     </div>
     <a href="/dashboard">Dashboard</a>
-  </div>
+  </div> -->
 </body>
 
 <script type="module" src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
@@ -91,26 +91,19 @@
                 },
                   body: JSON.stringify({ 
                     idToken: idToken, 
-                    plan: "free" })
+                    plan: "free" 
+                  })
                 }).then((response) => {
+                  window.location.assign('/dashboard')
                   console.log('success');
-                  // debugger
-                  window.location.assign('/dashboard')
                 }).catch((err) => {
-                  // debugger
                   console.error(err)
-                  window.location.assign('/dashboard')
+                  window.location.assign('/sign-in')
                 })
               })
             }).catch((error) => {
-            // debugger
           })
         return false;
-            // CS5356 TODO #3
-            // Create a new user using the Firebase SDK for Web
-            // Get the users ID token
-            // Start a new session with the users ID token
-            // Redirect the user to the /dashboard
         })
       }
 </script>
