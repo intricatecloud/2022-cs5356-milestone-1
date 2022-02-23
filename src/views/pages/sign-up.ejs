@@ -33,8 +33,15 @@
   window.onload = () => {
     console.log('Running onload')
     const firebaseConfig = {
-      // CS5356 TODO #2
+      // CS5356 TODO #2 DONE
       // Copy your Firebase config here too
+      apiKey: "AIzaSyCvHBxVLm-MdKQYsqzMyuDaGkFNAq32DgU",
+      authDomain: "ruffhouse-a3252.firebaseapp.com",
+      projectId: "ruffhouse-a3252",
+      storageBucket: "ruffhouse-a3252.appspot.com",
+      messagingSenderId: "421953991229",
+      appId: "1:421953991229:web:611abdf115326750dcb054",
+      measurementId: "G-ZFZF8DFYGF"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -53,6 +60,23 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+
+        app.auth().createUserWithEmailAndPassword(login, password)
+        .then((userCredential) => {
+          // Get the user's ID token as it is needed to exchange for a session cookie.
+          const user = userCredential.user
+          return user.getIdToken()
+        })
+        .then((idToken) => {
+          return fetch('/sessionLogin', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({idToken}) // add the users ID token here
+          })
+        })
+        .then(() => window.location.assign('/dashboard')).catch((error) => {
+          console.log(error)
+        });
 
         return false;
       });
