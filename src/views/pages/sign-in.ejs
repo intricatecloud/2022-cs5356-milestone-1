@@ -69,7 +69,6 @@
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({idToken}) // add the users ID token here
             }).then(() => {
-              debugger
               window.location.assign('/dashboard')
             }).catch((error) => {
               console.log("failure")
