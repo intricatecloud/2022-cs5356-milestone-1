@@ -4,19 +4,49 @@
 <head>
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
-    <style>
-
-    </style>
+    <!-- <style> -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Bulma!</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <!-- </style> -->
 </head>
 
 <body>
   <header>
     <%- include('../partials/nav') %>
   </header>
-
-  Fill me in!
   <!-- CS5356 TODO #1 Add your landing page here -->
+  <section class="hero is-link">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title is-1">Ruffhouse</h1>
+        <h2 class="subtitle">A Platform to Share a Constant Stream of Dog Pictures</h2>
+      </div>
+    </div>
+  </section>
 
+  <div class="container">
+    <div class="content is-small">
+        <h2><br></h2>
+        <h1>Dogs can benefit a lot from socializing with other dogs, <br> 
+          but it can be hard finding a place for them to do that. <br> 
+          <br>
+          Here Ruffhouse comes, where you can: </h1>
+      <ul>
+        <li class="is-size-5"> Become a user</li>
+        <li class="is-size-5"> View posts that other users have shared</li>
+        <li class="is-size-5"> Share a new post with the community</li>
+      </ul>
+
+      <div class="buttons">
+        <a href="/sign-in" class="button is-primary">Sign In
+        </a>
+        <a href="/sign-up" class="button is-link">Sign Up
+        </a>
+      </div>
+    </div>
+  </div>
 </body>
 
 <%- include('../partials/footer') %>
