@@ -7,34 +7,98 @@
 
 <body>
   <header>
-    <%- include('../partials/nav') %>
+    <%- include('../partials/nav', { hideSignIn: true }) %>
   </header>
 
-  <div class="container">
-    Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
-    <form id="login-form">
-      <label>Login</label>
-      <input id="login" type="text" name="login" />
-      <label>Password</label>
-      <input type="password" name="password" />
-      <button>Log in</button>
-    </form>
-    <div id="login-error" style="display: none;">
+
+  <section class="hero is-medium is-white">
+    <div class="hero-body">
+<!-- Main container -->
+<nav class="level">
+  <!-- Left side -->
+  <div class="level-left">
+    <div class="level-item" >&ensp;</div>
+    <div class="level-item" >&ensp;</div>
+    <div class="level-item" >&ensp;</div>
+    <div class="level-item" >&ensp;</div>
+    <div class="level-item" >&ensp;</div>
+    <div class="level-item" >&ensp;</div>
+    <div class="level-item" >&ensp;</div>
+
+    <div class="level-item" >
+
+<div>
+  <p class="title">Please Sign Up Here</p>
+  &ensp;
+  <p class="title">  &ensp; </p>
+  <form id="login-form">
+    <div class="field">
+      <label class="label">Email</label>
+      <div class="control has-icons-left has-icons-right">
+        <input class="input is-success" name = "login" type="email" placeholder="email" >
+        <span class="icon is-small is-left">
+          <i class="fas fa-envelope"></i>
+        </span>
+        <span class="icon is-small is-right">
+          <i class="fas fa-check"></i>
+        </span>
+      </div>
     </div>
-    <a href="/dashboard">Dashboard</a>
+    
+    <div class="field">
+      <label class="label">Password</label>
+      <div class="control has-icons-left has-icons-right">
+        <input class="input is-danger" name="password" type="password" >
+        <span class="icon is-small is-left">
+          <i class="fas fa-lock"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="field is-grouped">
+      <div class="control">
+        <button class="button is-link">Submit</button>
+      </div>
+      <div class="control">
+        <button class="button is-link is-light" onclick="window.location.href='./'">Cancel</button>
+      </div>
+    </div>
+  </form>
+  &ensp;
+  <p> sign in with an existing account <a class = "has-text-link" href="./sign-in">cilck here</a> </p>
+
+</div>
+    </div>
   </div>
+  <div class="level-item" >&ensp;</div>
+  <div class="level-item">
+    <figure class="image">
+      <iframe class="has-ratio" width="480" height="480" src="/static/signup.jpeg" frameborder="0" allowfullscreen></iframe>
+  </figure>
+</div>
+
+</nav>
+    </div>
+  </section>
+
+
 </body>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
 <script>
-
   window.onload = () => {
-    console.log('Running onload')
     const firebaseConfig = {
       // CS5356 TODO #2
       // Copy your Firebase config here too
+      apiKey: "AIzaSyB_jLVol0v3Uhoj2VQ8HgtgPDWX-s6kY9o",
+      authDomain: "cs5356milestone1.firebaseapp.com",
+      projectId: "cs5356milestone1",
+      storageBucket: "cs5356milestone1.appspot.com",
+      messagingSenderId: "424980247144",
+      appId: "1:424980247144:web:fc7dcc7149f43daf27c1dd",
+      measurementId: "G-2C4S26GPYN"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -47,14 +111,37 @@
         event.preventDefault();
         const login = event.target.login.value;
         const password = event.target.password.value;
-
+        //console.log('test')
+        app.auth().createUserWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            user.getIdToken().then((IdToken) => {
+              console.log('start')
+              idToken = userCredential.user.getIdToken()
+              fetch('/sessionLogin', {
+                method:'POST',
+                headers:{
+                  'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                  idToken : IdToken,
+                })
+              })
+            }).then((ResponseBody) => {
+              console.log('test');
+              debugger
+              window.location.assign('/dashboard')
+            })
+          }).catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+          });
         // CS5356 TODO #3
         // Create a new user using the Firebase SDK for Web
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
-
-        return false;
+        //return false;
       });
   };
 </script>

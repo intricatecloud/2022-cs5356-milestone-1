@@ -9,15 +9,15 @@ const port = process.env.PORT || 8080;
 // CS5356 TODO #2
 // Uncomment this next line after you've created
 // serviceAccountKey.json
-// const serviceAccount = require("./../config/serviceAccountKey.json");
+const serviceAccount = require("./../config/serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
 
 // CS5356 TODO #2
 // Uncomment this next block after you've created serviceAccountKey.json
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-// });
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 // use cookies
 app.use(cookieParser());
@@ -50,6 +50,7 @@ app.get("/sign-up", function (req, res) {
 app.get("/dashboard", authMiddleware, async function (req, res) {
   const feed = await userFeed.get();
   res.render("pages/dashboard", { user: req.user, feed });
+  // res.render("pages/dashboard", { user: req.user, feed });
 });
 
 app.post("/sessionLogin", async (req, res) => {
@@ -58,8 +59,30 @@ app.post("/sessionLogin", async (req, res) => {
   // Create a session cookie using the Firebase Admin SDK
   // Set that cookie with the name 'session'
   // And then return a 200 status code instead of a 501
-  res.status(501).send();
+  const idToken = req.body.idToken;
+  const expiresIn = 60 * 60 * 1000;
+  admin
+    .auth()
+    .createSessionCookie(idToken,{expiresIn})
+    .then(
+      sessionCookie =>{
+        const options = {
+          maxAge : expiresIn,
+          httpsOnly : true,
+        };
+        res.cookie("session", sessionCookie, options);
+        res.status(200).send(JSON.stringify({ status:'success'}));
+      },
+    ).catch(function (error){    
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorCode, errorMessage)
+    })
+  console.log(idToken)
+  //console.log(res)
+  //res.status(501).send();
 });
+
 
 app.get("/sessionLogout", (req, res) => {
   res.clearCookie("session");
@@ -67,6 +90,15 @@ app.get("/sessionLogout", (req, res) => {
 });
 
 app.post("/dog-messages", authMiddleware, async (req, res) => {
+ 
+  try{
+    const dogMessage = req.body
+    await userFeed.add(req.user, dogMessage.message);
+    res.redirect('/dashboard')
+  } catch (err){
+    res.status(500).send({message : err})
+  }
+
   // CS5356 TODO #5
   // Get the message that was submitted from the request body
   // Get the user object from the request body
