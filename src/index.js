@@ -63,16 +63,19 @@ app.post("/sessionLogin", async (req, res) => {
   // Set session expiration to 1 hour
   const expiresIn = 60 * 60 * 1000;
 
-  admin.auth().createSessionCookie(idToken, {expiresIn})
-  .then(
-    sessionCookie => {
-      const options = {maxAge: expiresIn, httpOnly: true, secure: true};
-      res.cookie("session", sessionCookie, options);
-      res.status(200).send(JSON.stringify({status: "success"}));
-    },
-    error => {
-      res.status(401).send("UNAUTHORIZED REQUEST!");
-    });
+  admin
+    .auth()
+    .createSessionCookie(idToken, { expiresIn })
+    .then(
+      (sessionCookie) => {
+        const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+        res.cookie("session", sessionCookie, options);
+        res.status(200).send(JSON.stringify({ status: "success" }));
+      },
+      (error) => {
+        res.status(401).send("UNAUTHORIZED REQUEST!");
+      }
+    );
 });
 
 app.get("/sessionLogout", (req, res) => {
@@ -92,7 +95,7 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
     await userFeed.add(user, message);
     res.redirect("/dashboard");
   } catch (err) {
-    res.status(500).send(JSON.stringify({message: err}));
+    res.status(500).send(JSON.stringify({ message: err }));
   }
 });
 
