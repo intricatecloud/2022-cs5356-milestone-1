@@ -60,7 +60,7 @@
                   // Signed in
                   const user = response.user;
                   user.getIdToken().then((idToken) => {
-
+                      debugger
                     // set a session cookie to store the user's ID token
                     fetch('/sessionLogin', {
                       method: 'POST',
