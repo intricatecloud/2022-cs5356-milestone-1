@@ -33,17 +33,17 @@
   window.onload = () => {
     console.log('Running onload')
 
-const postUserId = async function (url, idTokenUser) {
-  const response = await fetch(url, {
-    method: "POST",
-    ceredentials: "same-origin",
-    headers: {
-      "Contemnt-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-  return response;
-};
+    const postUserId = async function (url, idTokenUser) {
+      const response = await fetch(url, {
+        method: "POST",
+        // credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      return response;
+    };
 
 
     const firebaseConfig = {
@@ -76,12 +76,12 @@ const postUserId = async function (url, idTokenUser) {
         // Redirect the user to the /dashboard
 
         app.auth().createUserWithEmailAndPassword(login, password)
-          .then((user) => {
+          .then((userCredential) => {
             // Signed in 
             //console.log('userCredential',userCredential)
             var user = userCredential.user;
 
-            return user.getIdToken().the((idToken) => {
+            return user.getIdToken().then((idToken) => {
               return postUserId("/sessionLogin", idToken);
             }).catch((error) => {
               console.log(error.code, error.message);
