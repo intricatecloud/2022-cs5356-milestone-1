@@ -62,6 +62,7 @@
                 .then((userCredential) => {
                   // Signed in
                   userCredential.user.getIdToken().then(function(idToken){
+                    //Set a session cookie to retore the user's idToken
                     fetch("/sessionLogin", {
                       method:"POST",
                       headers:{
