@@ -3,9 +3,27 @@
 
 <head>
   <%- include('../partials/head') %>
+  <script src="https://kit.fontawesome.com/cd1327b62c.js" crossorigin="anonymous"></script>
     <!-- Include any custom css classes that you want available on this page here -->
     <style>
-
+      .hero.is-fullheight.is-primary {
+        background-image: linear-gradient(rgba(0,0,0, 0.4),rgba(0,0,0, 0.4)), url(https://images.unsplash.com/photo-1581888227599-779811939961?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80);
+      }
+      .title {
+        font-family: 'Verdana';
+      }
+      .subtitle {
+        font-family: 'Verdana';
+      }
+      .button {
+        font-family: 'Verdana';
+      }
+      .feature {
+        font-family: 'Verdana';
+      }
+      .fa-solid{
+        color: rgb(168,148,140)
+      }
     </style>
 </head>
 
@@ -13,9 +31,50 @@
   <header>
     <%- include('../partials/nav') %>
   </header>
-
-  Fill me in!
-  <!-- CS5356 TODO #1 Add your landing page here -->
+  <section class="hero is-fullheight is-primary">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title is-size-1">Ruffhouse</h1>
+        <h2 class="subtitle">Share dog pictures with your friends and other dog owners!</h2>
+        <a class="button is-rounded is-medium is-danger" href="/sign-up">Sign Up</a>
+      </div>
+    </div>
+  </section>
+  <section class="hero is-medium">
+    <div class="hero-body">
+      <div class="columns">
+        <div class="column has-text-centered">
+          <div class="contain-icon">
+            <span class="icon">
+              <i class="fa-solid fa-paw fa-4x"></i>
+            </span>
+          </div>
+          <div class="feature is-size-3 mt-3">
+            Join the community
+          </div>
+        </div>
+        <div class="column has-text-centered">
+          <div class="contain-icon">
+            <span class="icon">
+              <i class="fa-solid fa-user fa-4x"></i>
+            </span>
+          </div>
+          <div class="feature is-size-3 mt-3">
+            View other dog lovers posts
+          </div>
+        </div>
+        <div class="column has-text-centered">
+          <div class="contain-icon">
+            <span class="icon">
+              <i class="fa-solid fa-share fa-4x"></i>
+            </span>
+          </div>
+          <div class="feature is-size-3 mt-3">
+            Share post with community
+          </div>
+        </div>
+    </div>
+  </section>
 
 </body>
 

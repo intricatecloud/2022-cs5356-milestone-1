@@ -9,19 +9,35 @@
   <header>
     <%- include('../partials/nav', { hideSignIn: true }) %>
   </header>
+    <!-- new version sign up-->
+ 
+    <!--new styled version-->
 
+<div class="container">
 
-  <form id="login-form">
-    <input type="text" name="login" placeholder="Your user name" />
-    <input type="password" name="password" id="password" />
-    <button>
-      Sign In
-    </button>
-    <div id="login-error">
+  <a href="/dashboard">Dashboard</a>
 
+  <div class='columns is-centered is-desktop'>
+    <div class='column is-one-quarter'>
+
+      <form id="login-form">
+        <input class='column is-full m-5' id='login' type="text" name="User name" placeholder="Your user name" />
+        <input class='column is-full m-5' id='password' type="password" name="password" placeholder="Password" />
+        <button class='column is-full mt-5 ml-5 mr-5'>
+          Sign In
+        </button>
+        <div class='has-text-centered column pl-5'> 
+          Don't have an account?
+          <a href="/sign-up">Sign Up</a>
+        </div>
+        <div id="login-error" style="color: red;"> </div>
     </div>
-    </div>
-  </form>
+    </form>
+  </div>
+
+</div>
+</body>
+
 </body>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
@@ -33,6 +49,12 @@
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
+      apiKey: "AIzaSyDNpUurMvCXH8NLorFcD_mbvKfsoNw4Uck",
+      authDomain: "matchdog-f1cab.firebaseapp.com",
+      projectId: "matchdog-f1cab",
+      storageBucket: "matchdog-f1cab.appspot.com",
+      messagingSenderId: "1035454255329",
+      appId: "1:1035454255329:web:222061707083248ad9e7a0"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -51,6 +73,29 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+
+        firebase.auth().signInWithEmailAndPassword(login, password)
+          .then(async (userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            const idToken = await user.getIdToken();
+            
+            await fetch('/sessionLogin', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ idToken: idToken }) 
+            })
+            .then(() => {
+              console.log("Successfully posted idToken!");
+              document.location = "/dashboard";
+            });
+            // ...
+          })
+          .catch ((error) => {
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              document.getElementById("login-error").textContent = errorMessage;
+            });
 
         return false;
       });
