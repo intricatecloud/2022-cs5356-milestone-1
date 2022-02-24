@@ -1,3 +1,15 @@
+# Peppy Puppy
+Link: https://github.com/Jeannelialbedo/2022-cs5356-milestone-1
+
+Link to Pull Request: https://github.com/intricatecloud/2022-cs5356-milestone-1/pull/60
+
+<img src="https://github.com/Jeannelialbedo/2022-cs5356-milestone-1/blob/main/Screenshot_short1.png">
+<img src="https://github.com/Jeannelialbedo/2022-cs5356-milestone-1/blob/main/localhost_8080_.png">
+<img src="https://github.com/Jeannelialbedo/2022-cs5356-milestone-1/blob/main/Dashboard%20after%20signin%20or%20login.png">
+<img src="https://github.com/Jeannelialbedo/2022-cs5356-milestone-1/blob/main/Firebase%20users.png">
+<img src="https://github.com/Jeannelialbedo/2022-cs5356-milestone-1/blob/main/Sign%20up.png">
+<img src="https://github.com/Jeannelialbedo/2022-cs5356-milestone-1/blob/main/Sign%20in.png">
+
 # Milestone 1 Project: Ruffhouse
 
 Refer to the assignment for most of the details of the project
