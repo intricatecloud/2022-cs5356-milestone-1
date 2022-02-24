@@ -9,10 +9,6 @@ const port = process.env.PORT || 8080;
 // CS5356 TODO #2
 // Import the functions you need from the SDKs you need
 
-// import { initializeApp } from "firebase/app";
-
-// import { getAnalytics } from "firebase/analytics";
-
 // TODO: Add SDKs for Firebase products that you want to use
 
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -34,10 +30,6 @@ const firebaseConfig = {
 
 
 // Initialize Firebase
-
-// const app = initializeApp(firebaseConfig);
-
-// const analytics = getAnalytics(app);
 // Uncomment this next line after you've created
 // serviceAccountKey.json
 const serviceAccount = require("./../config/serviceAccountKey.json");
@@ -124,6 +116,9 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   // Get the message that was submitted from the request body
   // Get the user object from the request body
   // Add the message to the userFeed so its associated with the user
+  message = req.body.message
+  userFeed.add(req.user, message)
+  res.redirect("/dashboard");
 });
 
 app.listen(port);

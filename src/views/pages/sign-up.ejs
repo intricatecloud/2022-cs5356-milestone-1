@@ -66,7 +66,6 @@
             // Session login endpoint is queried and the session cookie is set.
             // CSRF protection should be taken into account.
             // ...
-            //window.localStorage.setItem('token', idToken)
             fetch('/sessionLogin', {
               method: 'POST',
               headers: {'Content-Type': 'application/json'},
