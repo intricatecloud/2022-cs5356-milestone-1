@@ -10,24 +10,24 @@
     <%- include('../partials/nav', { hideSignIn: true }) %>
   </header>
 
+  <div class="container">
+    <form id="login-form">
+      <input type="text" name="login" placeholder="Your user name" />
+      <input type="password" name="password" id="password" />
+      <button>
+        Sign In
+      </button>
 
-  <form id="login-form">
-    <input type="text" name="login" placeholder="Your user name" />
-    <input type="password" name="password" id="password" />
-    <button>
-      Sign In
-    </button>
-    <div id="login-error">
-
-    </div>
-    </div>
-  </form>
+    </form>
+  </div>
+  <div id="login-error" style="display: none;">
+  </div>
 </body>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
 <script>
-  
+
 
   window.onload = () => {
     const firebaseConfig = {
@@ -59,37 +59,37 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
-        
-        
+
+
 
         firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          // Signed in
-          var user = userCredential.user;
-          // ...
-          
-          return user.getIdToken().then(idToken => {
-            // Session login endpoint is queried and the session cookie is set.
-            // CSRF protection should be taken into account.
+          .then((userCredential) => {
+            // Signed in
+            var user = userCredential.user;
             // ...
-            // debugger
-            fetch('/sessionLogin', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ idToken })
-            }).then(() => {
-              window.location.href = '/dashboard'
+
+            return user.getIdToken().then((idToken) => {
+              // Session login endpoint is queried and the session cookie is set.
+              // CSRF protection should be taken into account.
+              // ...
+              // debugger
+              fetch('/sessionLogin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idToken })
+              }).then(() => {
+                window.location.href = '/dashboard'
+              })
             })
+          }).catch((error) => {
+            // debugger
+            var errorCode = error.code;
+            var errorMessage = error.message;
+          }).then(() => {
+            // A page redirect would suffice as the persistence is set to NONE.
+            console.log("2\n")
+            return firebase.auth().signOut();
           })
-        }).catch((error) => {
-          // debugger
-          var errorCode = error.code;
-          var errorMessage = error.message;
-        }).then(() => {
-          // A page redirect would suffice as the persistence is set to NONE.
-          console.log("2\n")
-          return firebase.auth().signOut();
-        })
         // debugger
         return false;
       });
