@@ -33,28 +33,62 @@
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
+      apiKey: "AIzaSyBP_LNsh8-7X8nI3Ki5Z95k_LBFd6naq94",
+  authDomain: "milestone-1-siddharth.firebaseapp.com",
+  projectId: "milestone-1-siddharth",
+  storageBucket: "milestone-1-siddharth.appspot.com",
+  messagingSenderId: "600890486388",
+  appId: "1:600890486388:web:34fefe1f7b1bf41774eb21",
+  measurementId: "G-ZJNK5MY6M5"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
 
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
+
+    // TODO 2 Sign in Form 
     document
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
         event.preventDefault();
         const login = event.target.login.value;
         const password = event.target.password.value;
-
-        // CS5356 TODO #3
-        // Sign in using the Firebase SDK for Web
-        // Get the users ID token
-        // Start a new session with the users ID token
-        // Redirect the user to the /dashboard
-
+        firebase.auth().signInWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+            // CS5356 TODO #3
+            sessionLogin(userCredential.user);
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert(errorMessage)
+          });
         return false;
       });
-  };
+
+  const sessionLogin = (userToken) => {
+        return userToken.getIdToken().then(idToken => {
+          fetch('/sessionLogin', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({idToken}) // add the users ID token here
+          }).then((res) => {
+            // res.redirect('/dashboard')
+            if (res.status==200) { 
+              window.location.assign('/dashboard');
+              console.log('Session started!'); 
+            }
+            else {
+              console.log('Failed to start session.')
+              alert('Internal Server Error')
+            }
+          });
+        });
+        
+      };
+
+    };
 </script>
 
 </html>
