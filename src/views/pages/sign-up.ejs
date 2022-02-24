@@ -29,13 +29,20 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
 <script>
-
   window.onload = () => {
     console.log('Running onload')
     const firebaseConfig = {
       // CS5356 TODO #2
       // Copy your Firebase config here too
-    };
+      apiKey: "AIzaSyDASRp8Dm1ltPw3bz1y2xbAZOMUoHKMepk",
+      authDomain: "milestone1-ed697.firebaseapp.com",
+      projectId: "milestone1-ed697",
+      storageBucket: "milestone1-ed697.appspot.com",
+      messagingSenderId: "596551865727",
+      appId: "1:596551865727:web:ba570f4f3c9c229860764a",
+      measurementId: "G-1C4NK441XL"
+    }
+
 
     const app = firebase.initializeApp(firebaseConfig);
 
@@ -53,8 +60,40 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+        // try{
+        //   const user = await app.auth().createUserWithEmailAndPassword(login, password)
+        //   const idToken = await user.getIdToken()
+        //   await postUserId("/sessionLogin", idToken)
+        //   window.location.assign("/dashboard")
+        // }catch(err){
+        //   console.error(err)
+        //S};
 
-        return false;
+        app.auth().createUserWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            user.getIdToken().then((idToken) => {
+              fetch("/sessionLogin", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify({
+                    idToken
+                  })
+                })
+                .then((ResponseBody) => {
+                  window.location.assign('/dashboard')
+                })
+                .catch((error) => {
+                  debugger
+                })
+            })
+          }).catch((error) => {
+            const errorCode = error.code
+            const errorMsg = error.message
+          });
       });
   };
 </script>
