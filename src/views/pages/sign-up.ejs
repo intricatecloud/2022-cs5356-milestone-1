@@ -7,10 +7,10 @@
 
 <body>
   <header>
-    <%- include('../partials/nav') %>
+    <%- include('../partials/nav')%>
   </header>
 
-  <div class="container">
+  <!-- <div class="container">
     Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
     <form id="login-form">
       <label>Login</label>
@@ -22,7 +22,59 @@
     <div id="login-error" style="display: none;">
     </div>
     <a href="/dashboard">Dashboard</a>
+  </div> -->
+
+
+<section class="hero is-link is-fullheight">
+  <div class="hero-body">
+      <div class="container has-text-centered">
+          <div class="column is-4 is-offset-4">
+              <h3 class="title has-text-black">Sign Up for a new account</h3>
+              <hr class="login-hr">
+              <div class="box">
+
+                <figure class="image is-64x64 is-inline-block">
+                  <img class="is-rounded" src="static/logo.png">
+                </figure>
+
+                <!-- <form id="login-form">
+                  <label>Login</label>
+                  <input id="login" type="text" name="login" />
+                  <label>Password</label>
+                  <input type="password" name="password" />
+                  <button>Log in</button>
+                </form> -->
+
+                  <form id="login-form">
+                      <div class="field">
+                          <div class="control">
+                              <input id="login" type="text" name="login" class="input is-large" placeholder="Your Email" autofocus="">
+                          </div>
+                      </div>
+
+                      <div class="field">
+                          <div class="control">
+                              <input name="password" class="input is-large" type="password" placeholder="Your Password">
+                          </div>
+                      </div>
+                      <div class="field">
+                      </div>
+                      <button class="button is-block is-info is-large is-fullwidth">Login <i class="fa fa-sign-in" aria-hidden="true"></i></button>
+                  </form>
+
+
+              </div>
+              <p class="has-text-grey">
+                  <a href="/sign-up">Sign Up</a> &nbsp;·&nbsp;
+                  </div>
+                    <a href="/dashboard">Dashboard</a>
+                  </div>
+              </p>
+          </div>
+      </div>
   </div>
+</section>
+
 </body>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
