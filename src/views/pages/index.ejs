@@ -1,11 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <%- include('../partials/head') %>
-    <!-- Include any custom css classes that you want available on this page here -->
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="stylesheet" href="landing.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
     <style>
-
+      .Ruff_title {
+        padding: 60px;
+        text-align: center;
+        font-weight: bold;
+        color: white;
+        font-size: 100px;
+        background-color: antiquewhite;
+      }
+      .Ruff_intro{
+        padding: 10px;
+        text-align: center;
+        /* font-weight: bold; */
+        color: white;
+        font-size: 30px;
+      }
+      
     </style>
 </head>
 
@@ -13,10 +32,27 @@
   <header>
     <%- include('../partials/nav') %>
   </header>
-
-  Fill me in!
   <!-- CS5356 TODO #1 Add your landing page here -->
+  <section class="hero is-info is-fullheight">
+    <div class="Ruff_title"> Ruffhouse</div>
+    <div class="Ruff_intro"> A loving place for dogs to socialize. <br> Share a stream of dog pictures with the community.</div>
+    
+    <progress class="progress is-large is-info" max="100">60%</progress>
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-two-fifths">
+                    <p class="mt-6 has-text-centered">Login <a href="/sign-in"
+                      class="tag is-white is-medium">here</a></p>
+        
+                    <p class="mt-6 has-text-centered">Don't have an account? Create one <a href="/sign-up"
+                            class="tag is-white is-medium">here</a></p>
 
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 </body>
 
 <%- include('../partials/footer') %>
