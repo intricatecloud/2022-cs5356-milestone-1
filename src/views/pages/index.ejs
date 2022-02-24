@@ -10,13 +10,60 @@
 </head>
 
 <body>
+  <style>
+    .body-wrapper {
+      height: 100vh;
+      background-image: url(https://www.rd.com/wp-content/uploads/2021/03/GettyImages-1133605325-scaled-e1617227898456.jpg);
+      background-size: 100%;
+    }
+  </style>
+  <div class="body-wrapper">
   <header>
     <%- include('../partials/nav') %>
   </header>
 
-  Fill me in!
   <!-- CS5356 TODO #1 Add your landing page here -->
+  
+  <section class="hero">
+    <div class="hero-body">
+      <style>
+       
+      </style>
+        <div class="container has-text-centered">
+            <div class="column is-6 is-offset-3">
+                <h1 class="title has-text-black">
+                    Welcome to Ruffhouse!
+                </h1>
+                <h2 class="subtitle has-text-black">
+                    As Michael Scott once said, it's "a doggy-dog world" 
+                </h2>
+                <a class="button is-black is-medium is-rounded" href="/sign-up">Sign Up</a>
+            </div>
+        </div>
+    </div>
+  </section>
 
+  <section class="hero pt-6">
+    <div class="menu pt-6">
+      <div class="columns">
+        <div class="column has-text-centered">
+          <div class="feature is-size-4 has-background-link-light has-text-black">
+            Log in to our exclusive dashboard
+          </div>
+        </div>
+        <div class="column has-text-centered">
+          <div class="feature is-size-4 has-background-link-light has-text-black">
+            View posts that other users have shared
+          </div>
+        </div>
+        <div class="column has-text-centered">
+          <div class="feature is-size-4 has-background-link-light has-text-black">
+            Share a new post with the community
+          </div>
+        </div>
+    </div>
+  </section>
+</div>
 </body>
 
 <%- include('../partials/footer') %>
