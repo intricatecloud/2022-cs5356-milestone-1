@@ -4,6 +4,10 @@
 <head>
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Bulma!</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <style>
 
     </style>
@@ -13,10 +17,67 @@
   <header>
     <%- include('../partials/nav') %>
   </header>
+  <section class="hero is-primary">
+    <div class="hero-body">
+      <div class="level-item has-text-centered">
+        <div class="container">
+          <h1 class="title is-4">Let's Get To</h1>
+          <h2 class="title is-1">Net-Woofing</h2>
+        </div>
+      </div>  
+    </div>
+  </section>
 
-  Fill me in!
-  <!-- CS5356 TODO #1 Add your landing page here -->
-
+  <div class="columns is-flex is-centered">
+    <div class="column">
+      <div class="card">
+        <div class="card-image">
+          <p class="pl-6">
+            <img class="is-rounded" src ="/images/img-3.jpg" alt="Dog 1" width="600" height="550">
+          </p>  
+        </div>
+        <footer class="card-footer"> 
+          <div class="card-footer-item">
+            <p class="is-italic has-text-weight-bold is-family-code">Connect with fellow dog pals!</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <div class="column">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-image">
+            <img class="is-rounded" src ="/images/img-1.jpg" alt="Dog 1" width="430" height="300">
+          </div>
+        </div>
+        <footer class="card-footer"> 
+          <div class="card-footer-item">
+            <p class="is-italic has-text-weight-bold is-family-code">Show off your own cute dog pics!</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <div class="column">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-image">
+            <img class="is-rounded" src ="/images/img-4.jpg" alt="Dog 1" width="390" height="500">
+          </div>
+        </div>
+        <footer class="card-footer"> 
+          <div class="card-footer-item">
+            <p class="is-italic has-text-weight-bold is-family-code">Discover other adorable dogs!</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <article class="panel is-link">
+    <p class="panel-heading has-text-centered">
+      <a href="/sign-up" class="button is-primary"> Interested? Sign Up Here and Learn More!
+      </a>
+    </p>
+  </article>
 </body>
 
 <%- include('../partials/footer') %>
