@@ -2,11 +2,11 @@
 <html lang="en">
 
 <head>
-  <%- include('../partials/head') %>
+    <link rel="stylesheet" type="text/css" href="../../../static/hero.css">
+    <title>RuffHouse</title>
+    <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
-    <style>
 
-    </style>
 </head>
 
 <body>
@@ -14,8 +14,29 @@
     <%- include('../partials/nav') %>
   </header>
 
-  Fill me in!
-  <!-- CS5356 TODO #1 Add your landing page here -->
+  <section class="hero is-info is-medium is-bold">
+      <figure class="image">
+          <img src="../../../static/hero-bg.jpg">
+      </figure>
+
+      <div class="container has-text-centered">
+          <h1 class="title">
+              Ruff House
+          </h1>
+          <h2 class="subtitle">
+              Share pictures of lovely dogs!
+          </h2>
+
+          <div>
+              <a href="/sign-up" class="button is-primary">Sign Up
+              </a>
+          </div>
+
+      </div>
+  </section>
+
+
+
 
 </body>
 
