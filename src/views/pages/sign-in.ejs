@@ -12,7 +12,7 @@
 
 
   <form id="login-form">
-    <input type="text" name="login" placeholder="Your user name" />
+    <input type="text" name="email" placeholder="Your user name" />
     <input type="password" name="password" id="password" />
     <button>
       Sign In
@@ -30,20 +30,23 @@
 
   window.onload = () => {
     const firebaseConfig = {
-      // CS5356 TODO #2
-      // Create your own Firebase project. See the assignment for
-      // where you can get the Firebase config
+      apiKey: "AIzaSyAEUc9X2TKp-dWj2n6LRfEUuOPBLUJikko",
+      authDomain: "dogfeed-1e078.firebaseapp.com",
+      projectId: "dogfeed-1e078",
+      storageBucket: "dogfeed-1e078.appspot.com",
+      messagingSenderId: "281873537033",
+      appId: "1:281873537033:web:3ac11d2cd3df18268c00d8"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
 
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
-
+    //import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
     document
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
         event.preventDefault();
-        const login = event.target.login.value;
+        const email = event.target.email.value;
         const password = event.target.password.value;
 
         // CS5356 TODO #3
@@ -51,7 +54,31 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+      //
 
+      const auth = firebase.auth();
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
+          // ...
+          user.getIdToken().then((idToken) => {
+             //manage it server side
+             fetch('/sessionLogin',{
+               method: 'POST',
+               headers: {'Content-Type': 'application/json'},
+               body: JSON.stringify({ 
+                  idToken
+                })
+             }).then(()=> {
+               window.location.assign('/dashboard')
+             })
+            })
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+         const errorMessage = error.message;
+        });
         return false;
       });
   };
