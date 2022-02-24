@@ -5,23 +5,34 @@
   <%- include('../partials/head') %>
 </head>
 
-<body>
+<body style="background-color:black;>
   <header>
     <%- include('../partials/nav') %>
   </header>
 
   <div class="container">
+    <img src="https://michiganfuture.org/wp-content/uploads/2019/11/cornell-tech-logo-optimized.png" width="325px"/>
     Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
     <form id="login-form">
-      <label>Login</label>
-      <input id="login" type="text" name="login" />
-      <label>Password</label>
-      <input id="password" type="password" name="password" />
-      <button>Log in</button>
+      <div class="field">
+        <div class="control">
+            <input class="input is-medium is-rounded" name="login" type="email" placeholder="hello@example.com"
+                   autocomplete="username" required/>
+        </div>
+    <div class="field">
+        <div class="control">
+            <input class="input is-medium is-rounded" name="password" type="password" placeholder="**********"
+                   autocomplete="current-password" required/>
+        </div>
+    </div>
     </form>
     <div id="login-error" style="display: none;">
     </div>
-    <a href="/dashboard">Dashboard</a>
+    <span class="navbar-item">
+                                <a class="button is-white is-outlined" href="/dashboard">
+                                    <span>Dashboard</span>
+                                </a>
+                            </span>
   </div>
 </body>
 
@@ -58,6 +69,7 @@
                         // Signed in
                         const user = userCredential.user;
                         console.log("SUCCESS")
+                        window.location.assign('/dashboard');
                     })
                     .catch((error) => {
                         const errorCode = error.code;

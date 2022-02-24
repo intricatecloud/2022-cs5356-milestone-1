@@ -77,6 +77,7 @@
                     console.log("user ID Token")
                     console.log(userCredential.user)
                     const user = userCredential.user
+                    userCredential.name = "Default_name"
                     const user_id_token = user.getIdToken()
                     user.getIdToken().then(idToken => {
                         // Session login endpoint is queried and the session cookie is set.
@@ -90,7 +91,7 @@
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
                             },
-                            body: JSON.stringify({"id_token" : idToken.toString()}),
+                            body: JSON.stringify({"id_token": idToken.toString()}),
                         })
                     });
                     // Redirect the user to the /dashboard

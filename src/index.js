@@ -64,22 +64,22 @@ app.get("/dashboard", authMiddleware, async function (req, res) {
 });
 
 app.post("/sessionLogin", async (req, res) => {
-  // CS5356 TODO #4
-  // Get the ID token from the request body
-  //   console.log("SESSION LOGIN")
+    // CS5356 TODO #4
+    // Get the ID token from the request body
+    //   console.log("SESSION LOGIN")
     const idToken = req.body.id_token;
     // console.log(idToken)
-  // Create a session cookie using the Firebase Admin SDK
+    // Create a session cookie using the Firebase Admin SDK
     const expiresIn = 60 * 60 * 24 * 5 * 1000;
-  // Set that cookie with the name 'session'
-  // And then return a 200 status code instead of a 501
-    admin.auth().createSessionCookie(idToken, { expiresIn })
+    // Set that cookie with the name 'session'
+    // And then return a 200 status code instead of a 501
+    admin.auth().createSessionCookie(idToken, {expiresIn})
         .then(
             (sessionCookie) => {
                 // Set cookie policy for session cookie.
-                const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+                const options = {maxAge: expiresIn, httpOnly: true, secure: true};
                 res.cookie('session', sessionCookie, options);
-                res.end(JSON.stringify({ status: 'success' }));
+                res.end(JSON.stringify({status: 'success'}));
                 res.status(200).send();
             },
             (error) => {
@@ -87,7 +87,7 @@ app.post("/sessionLogin", async (req, res) => {
             }
         );
 
-  //   console.log(idToken)
+    //   console.log(idToken)
 });
 
 app.get("/sessionLogout", (req, res) => {
@@ -95,11 +95,23 @@ app.get("/sessionLogout", (req, res) => {
     res.redirect("/sign-in");
 });
 
+function myfunc() {
+    console.log("Delay")
+}
+
 app.post("/dog-messages", authMiddleware, async (req, res) => {
     // CS5356 TODO #5
     // Get the message that was submitted from the request body
+    const msg = req.body.message
     // Get the user object from the request body
-    // Add the message to the userFeed so its associated with the user
+    const user = req.user
+    user.name = "Omar Alherech"
+    console.log(user)
+    console.log(req.body)
+    userFeed.add(user, msg)
+    const delay = time => new Promise(res=>setTimeout(res,time));
+    await delay(1000);
+    res.redirect('/dashboard')
 });
 
 app.listen(port);
