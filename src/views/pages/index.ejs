@@ -1,24 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<section class="hero is-success is-fullheight">
+ 
 <head>
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
     <style>
-
+ 
     </style>
 </head>
-
+ 
 <body>
   <header>
     <%- include('../partials/nav') %>
   </header>
-
-  Fill me in!
+ 
   <!-- CS5356 TODO #1 Add your landing page here -->
-
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <p class="title">
+        RuffHouse
+      </p>
+      <p class="subtitle">
+        where dogs meet dogs
+      </p>
+    </div>
+  </div>
+ 
 </body>
-
+ 
 <%- include('../partials/footer') %>
-
+<div class="hero-foot">
+  <nav class="tabs is-boxed is-fullwidth">
+    <div class="container">
+      <ul>
+        <li class="is-active"><a>Overview</a></li>
+        <li><a href="/dashboard">Dogs</a></li>
+        <li><a href="/dashboard">Stories</a></li>
+        <li><a href="/dashboard">Posts</a></li>
+        <li><a href="/dashboard">About Us</a></li>
+        <li><a href="/dashboard">Contact Us</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
 </html>
+</section>
+ 
+

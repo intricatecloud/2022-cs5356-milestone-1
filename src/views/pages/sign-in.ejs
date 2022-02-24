@@ -10,18 +10,46 @@
     <%- include('../partials/nav', { hideSignIn: true }) %>
   </header>
 
+  <div class="container has-text-centered">
+    <div class="columns">
+      <div class="column is-one-third">
+        <form id="login-form">
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input class="input is-rounded" type="text" placeholder="Enter your email here" name="email"
+                style="text-align:center;">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Password</label>
+            <div class="control">
+              <input class="input is-rounded" type="text" placeholder="Enter your password here" name="password"
+                id="password" style="text-align:center;">
+            </div>
+          </div>
+          <div class="field is-grouped">
+            <div class="control">
+              <button class="button is-primary">
+                Sign In
+              </button>
+            </div>
 
-  <form id="login-form">
-    <input type="text" name="login" placeholder="Your user name" />
-    <input type="password" name="password" id="password" />
-    <button>
-      Sign In
-    </button>
-    <div id="login-error">
+          </div>
+
+          <div id="login-error">
+          </div>
+
+        </form>
+
+      </div>
 
     </div>
+    <div class="block">
+      First time here? <a href="/sign-up"> Sign up </a> for a new account!
     </div>
-  </form>
+  </div>
+  </div>
 </body>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
@@ -33,6 +61,12 @@
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
+      apiKey: "AIzaSyARdGW65Cb9s3GKmD41l3O-x4xiVb3pvHg",
+      authDomain: "ruffhouse---bss-milestone1.firebaseapp.com",
+      projectId: "ruffhouse---bss-milestone1",
+      storageBucket: "ruffhouse---bss-milestone1.appspot.com",
+      messagingSenderId: "629509702059",
+      appId: "1:629509702059:web:8c16dde238f2d7c0e352ee"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -43,7 +77,7 @@
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
         event.preventDefault();
-        const login = event.target.login.value;
+        const email = event.target.email.value;
         const password = event.target.password.value;
 
         // CS5356 TODO #3
@@ -51,8 +85,39 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+        firebase.auth().signInWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            // Signed in
+            var user = userCredential.user;
+            
+            user.getIdToken()
+            .then( function(idToken) {
+              fetch('/sessionLogin',{
+                method:'POST',
+                headers:{
+                  'Content-Type':'application/json'
+                },
+                body: JSON.stringify({
+                  idToken: idToken,
+                  plan: 'free'
+                })
+              })
+              .then(function(response){
+                window.location.assign('/dashboard')
+              })
+              .catch(err => {console.log(err)})
+            } )
+            .catch(function(err) {
+              console.log(err);
+            })
 
-        return false;
+            // ...
+          })
+          .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+          });
+
       });
   };
 </script>
