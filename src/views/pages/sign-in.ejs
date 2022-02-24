@@ -29,7 +29,7 @@
 <script>
 
   window.onload = () => {
-      // CS5356 TODO #2 Done
+      // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
 
@@ -54,7 +54,7 @@
 
     document
       .getElementById("login-form")
-      .addEventListener("submit", (event) => {
+      .addEventListener("submit", async (event) => {
         event.preventDefault();
         const login = event.target.login.value;
         const password = event.target.password.value;
@@ -64,30 +64,25 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
-
-        app.auth().signInWithEmailAndPassword(login, password)
-          .then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user;
-            user.getIdToken().then((idToken) => {
-              // Manage it Server Side
-              fetch('/sessionLogin', {
+        try {
+          const userCredential = await app.auth().signInWithEmailAndPassword(login, password);
+          const user = userCredential.user;
+          const idToken = await user.getIdToken()
+          // Start a new session with User's IdToken
+          await fetch('/sessionLogin', {
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ idToken })
-              }).then(() => {
-         
-                window.location.href = '/dashboard'
-            })
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage)
-            // ..
           });
-        //return false;
-        });
+          // Redirect to Dashboard
+          window.location.href = '/dashboard'
+
+        } catch (err){
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage)
+        }
+        
     });
   };
 
