@@ -79,6 +79,10 @@
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
+            var test = document.getElementById("password")
+            test.setCustomValidity(errorMessage);
+            test.reportValidity();
+            console.log(errorCode, errorMessage);
           });
 
         return false;

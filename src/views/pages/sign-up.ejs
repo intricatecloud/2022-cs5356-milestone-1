@@ -16,7 +16,7 @@
       <label>Login</label>
       <input id="login" type="text" name="login" />
       <label>Password</label>
-      <input type="password" name="password" />
+      <input type="password" name="password" id="password" />
       <button>Log in</button>
     </form>
     <div id="login-error" style="display: none;">
@@ -29,8 +29,6 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
 <script>
-  // import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-  // const adminAuth = require(“firebase-admin/auth”);
   window.onload = () => {
     console.log('Running onload')
     const firebaseConfig = {
@@ -65,19 +63,13 @@
         const auth = app.auth();
         auth.createUserWithEmailAndPassword(login, password)
           .then((userCredential) => {
-            // Signed in 
             const user = userCredential.user;
-            // ...
-            // user.getIdToken().then((idToken) => {
-            //   window.localStorage.setItem('token', idToken);
-            // })
             user.getIdToken().then((idToken) => {
 
               fetch('/sessionLogin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ idToken })
-                // }).then(() => console.log('success!'))
               }).then(() => {
                 window.location.href = '/dashboard';
               })
@@ -88,7 +80,10 @@
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            // ..
+            var test = document.getElementById("password")
+            test.setCustomValidity(errorMessage);
+            test.reportValidity();
+            console.log(errorCode, errorMessage);
           });
 
         return false;
