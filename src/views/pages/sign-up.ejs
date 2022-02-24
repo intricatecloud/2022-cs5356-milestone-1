@@ -13,11 +13,11 @@
   <div class="container">
     Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
     <form id="login-form">
-      <label>Login</label>
-      <input id="login" type="text" name="login" />
+      <label>Email</label>
+      <input id="login" type="text" name="login" placeholder="Email Address"/>
       <label>Password</label>
-      <input type="password" name="password" />
-      <button>Log in</button>
+      <input type="password" name="password" placeholder="Password"/>
+      <button>Sign Up</button>
     </form>
     <div id="login-error" style="display: none;">
     </div>
@@ -35,6 +35,13 @@
     const firebaseConfig = {
       // CS5356 TODO #2
       // Copy your Firebase config here too
+      apiKey: "AIzaSyBFaS1vPut2CGga3qn2KAOUXfz9wFUNJxQ",
+      authDomain: "cs5356-milestone-1-15229.firebaseapp.com",
+      projectId: "cs5356-milestone-1-15229",
+      storageBucket: "cs5356-milestone-1-15229.appspot.com",
+      messagingSenderId: "364760847404",
+      appId: "1:364760847404:web:93773d3231c888f0c26d89",
+      measurementId: "G-J178FJ40WX"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -53,6 +60,33 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+        app.auth().createUserWithEmailAndPassword(login, password)
+        .then((userCredential) => {
+          let user = userCredential.user
+          user.getIdToken()
+          .then(function(idToken) {
+            fetch('/sessionLogin',{
+              method:'POST',
+              headers:{ 'Content-Type':'application/json' },
+              body: JSON.stringify({idToken})
+            })
+            .then(function(response) {
+              if (response.status !== 200) {
+                throw new Error(response.status)
+              }
+              window.location.assign('/dashboard')
+            })
+            .catch(function(error) {
+              document.getElementById("login-error").innerHTML = error.message;
+            })
+          })
+          .catch(function(error) {
+            document.getElementById("login-error").innerHTML = error.message;
+          })
+        })
+        .catch(function(error) {
+          document.getElementById("login-error").innerHTML = error.message;
+        });
 
         return false;
       });
