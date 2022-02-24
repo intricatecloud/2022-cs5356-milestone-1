@@ -63,6 +63,7 @@
                   // Signed in
                   const user = userCredential.user;
                   user.getIdToken().then((idToken) => {
+                    //
                     fetch("/sessionLogin", {
                       method:"POST",
                       headers:{
@@ -83,7 +84,6 @@
                 .catch((error) => {
                   const errorCode = error.code;
                   const errorMessage = error.message;
-                  debugger
                 });
         return false;
       });

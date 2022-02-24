@@ -9,7 +9,7 @@ const port = process.env.PORT || 8080;
 // CS5356 TODO #2
 // Uncomment this next line after you've created
 // serviceAccountKey.json
-const serviceAccount = require("./../config/serviceAccountKey.json");
+const serviceAccount = require("./config/serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
 
