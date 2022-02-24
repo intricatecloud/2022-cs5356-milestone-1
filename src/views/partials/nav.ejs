@@ -1,11 +1,19 @@
-<nav class="navbar">
+<nav class="navbar is-light navbar-height:40rem">
   <div class="container">
     <div class="navbar-brand">
-      <a class="navbar-item" href="/">
+      <!-- <a class="navbar-item" href="/">
         <figure class="image">
-          <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png" alt="Logo">
+          <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png" alt="Logo">check
         </figure>
-      </a>
+      </a> -->
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="/">
+            Home
+          </a>
+        </div>
+      </div>
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -26,7 +34,16 @@
         <div id="navbarMenu" class="navbar-menu">
           <div class="navbar-end">
             <div class="navbar-item">
-              <a href="/sign-in" class="button is-primary">Sign In
+              <div class="buttons">
+                <a class="button is-light" href="/sign-in"> 
+                  <strong>Sign In</strong>
+                </a>
+                <a class="button is-primary" href="/sign-up">
+                  <strong>Sign Up</strong>
+                </a>
+              </div>
+              <!-- <a href="/sign-in" class="button is-primary">Sign In
+              <a href="/sign-up" class="button is-primary">Sign Up -->
               </a>
             </div>
           </div>
@@ -34,3 +51,14 @@
       <% }%>
   </div>
 </nav>
+
+<section class="hero has-background-grey-lighter">
+  <div class="hero-body">
+    <div class="container">
+      <div class="level-item">
+        <p class="title is-size-1 is-spaced is-family-monospace has-text-centered has-text-weight-bold has-text-info-dark">Doggie World</p>
+      </div>
+    </div>
+  </div>
+</section>
+<p class="mb-4"></p>

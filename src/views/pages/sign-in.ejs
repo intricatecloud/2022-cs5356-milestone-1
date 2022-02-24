@@ -3,6 +3,7 @@
 
 <head>
   <%- include('../partials/head') %>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -12,15 +13,34 @@
 
 
   <form id="login-form">
-    <input type="text" name="login" placeholder="Your user name" />
-    <input type="password" name="password" id="password" />
-    <button>
-      Sign In
-    </button>
-    <div id="login-error">
+    <div class="field">
+      <p class="control has-icons-left has-icons-right">
+        <input class="input" type="text" placeholder="Your user name" name="login">
+        <span class="icon is-small is-left">
+          <i class="fa fa-envelope"></i>
+        </span>
+      </p>
+    </div>
 
+    <div class="field">
+      <p class="control has-icons-left">
+        <input class="input" type="password" placeholder="Password" name="password" id="password" />
+        <span class="icon is-small is-left">
+          <i class="fa fa-lock"></i>
+        </span>
+      </p>
     </div>
+
+    <div class="field">
+      <p class="control has-text-centered">
+        <button class="button is-success ">
+          Sign In
+        </button>
+      </p>
     </div>
+
+    <div id="login-error"></div>
+    <!-- </div> -->
   </form>
 </body>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
@@ -33,6 +53,13 @@
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
+      apiKey: "AIzaSyC5GiHLii9Eb5gsbl_MzzpcwzE50VHsUl0",
+      authDomain: "cs5356-milestone-1-ef.firebaseapp.com",
+      projectId: "cs5356-milestone-1-ef",
+      storageBucket: "cs5356-milestone-1-ef.appspot.com",
+      messagingSenderId: "565538442679",
+      appId: "1:565538442679:web:328b5933e6a3cd697c6c32",
+      measurementId: "G-463H467SSP"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -51,6 +78,20 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+        app.auth().signInWithEmailAndPassword(login, password)
+           .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            user.getIdToken().then((idToken) => {
+              fetch('/sessionLogin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idToken })
+              }).then(() => {
+                window.location.href = '/dashboard'
+              })
+            })
+          })
 
         return false;
       });

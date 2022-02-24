@@ -3,6 +3,7 @@
 
 <head>
   <%- include('../partials/head') %>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -11,13 +12,40 @@
   </header>
 
   <div class="container">
-    Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
+    <p>Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a></p>
+    <label>Login</label>
     <form id="login-form">
-      <label>Login</label>
-      <input id="login" type="text" name="login" />
+      <div class="field">
+        <p class="control has-icons-left has-icons-right">
+          <input class="input" id="login" type="text" name="login">
+          <span class="icon is-small is-left">
+            <i class="fa fa-envelope"></i>
+          </span>
+        </p>
+      </div>
+
       <label>Password</label>
-      <input type="password" name="password" />
-      <button>Log in</button>
+      <div class="field">
+        <p class="control has-icons-left">
+          <input class="input" type="password" name="password" />
+          <span class="icon is-small is-left">
+            <i class="fa fa-lock"></i>
+          </span>
+        </p>
+      </div>
+
+      <!-- <input id="login" type="text" name="login" /> -->
+      <!-- <input type="password" name="password" /> -->
+      <!-- <button>Log in</button> -->
+
+      <div class="field">
+        <p class="control has-text-centered">
+          <button class="button is-success ">
+            Log In
+          </button>
+        </p>
+      </div>
+
     </form>
     <div id="login-error" style="display: none;">
     </div>
@@ -35,6 +63,13 @@
     const firebaseConfig = {
       // CS5356 TODO #2
       // Copy your Firebase config here too
+      apiKey: "AIzaSyC5GiHLii9Eb5gsbl_MzzpcwzE50VHsUl0",
+      authDomain: "cs5356-milestone-1-ef.firebaseapp.com",
+      projectId: "cs5356-milestone-1-ef",
+      storageBucket: "cs5356-milestone-1-ef.appspot.com",
+      messagingSenderId: "565538442679",
+      appId: "1:565538442679:web:328b5933e6a3cd697c6c32",
+      measurementId: "G-463H467SSP"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -53,6 +88,29 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+        firebase.auth().createUserWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+              const user = userCredential.user;
+              user.getIdToken().then((idToken) => {
+                // debugger
+                fetch("/sessionLogin", {
+                  method: "POST",
+                  headers: { "Content-Type": "appication/json"
+                },
+                  body: JSON.stringify({ 
+                    idToken: idToken, 
+                    plan: "free" 
+                  })
+                }).then((response) => {
+                  window.location.assign('/dashboard')
+                  console.log('success');
+                }).catch((err) => {
+                  console.error(err)
+                  window.location.assign('/sign-in')
+                })
+              })
+            }).catch((error) => {
+          })
 
         return false;
       });
