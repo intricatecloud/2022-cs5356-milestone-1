@@ -3,20 +3,121 @@
 
 <head>
   <%- include('../partials/head') %>
-    <!-- Include any custom css classes that you want available on this page here -->
     <style>
-
+      .navbar {
+        justify-content: space-between;
+        background: #ffffff;
+        padding: 0.5rem 1.75rem;
+      }
     </style>
 </head>
 
 <body>
-  <header>
+  <nav>
     <%- include('../partials/nav') %>
-  </header>
+  </nav>
+  <section id="colored-dna-back" class="hero is-white is-fullheight">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns  is-vcentered reverse-columns">
+          <div class="column
+          is-10-mobile 
+          is-10-tablet 
+          is-5-desktop 
+          is-5-widescreen 
+          is-5-fullhd " data-aos="fade-down">
+            <h1 class="title">
+              <p style="color: white">
+                a social network for dogs and dog lovers!
+            </h1>
+            <div class="subtitle">
+              <h2 class="white text" style="color: white;">Ruffhouse is the only social media platform that is made for dog owners</h2>
+              <h2 class="white text" style="color: white;">Share pics of your pup and check out other people's pups!</h2>
+            </div>
+          </div>
+          <div data-aos="fade-right" class="column
+          is-10-mobile 
+          is-10-tablet 
+          is-4-desktop 
+          is-7-widescreen 
+          is-4-fullhd is-offset-1-fullhd">
+            <figure class="image is-square">
+              <img src="https://i.imgur.com/HwyCh5O.jpg">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  Fill me in!
-  <!-- CS5356 TODO #1 Add your landing page here -->
+  <section class="hero is-white is-fullheight">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns  is-vcentered">
+          <div data-aos="fade-left" class="column
+          is-10-mobile is-offset-1-mobile
+          is-10-tablet is-offset-1-tablet
+          is-4-desktop is-offset-1-desktop
+          is-4-widescreen is-offset-1-widescreen
+          is-4-fullhd is-offset-1-fullhd">
+            <figure class="image is-square">
+              <img
+                src="https://ggsc.s3.amazonaws.com/images/uploads/The_Science-Backed_Benefits_of_Being_a_Dog_Owner.jpg">
+            </figure>
+          </div>
+          <div data-aos="fade-down" class="column
+          is-10-mobile is-offset-1-mobile
+          is-10-tablet is-offset-1-tablet
+          is-5-desktop is-offset-1-desktop
+          is-5-widescreen is-offset-1-widescreen
+          is-5-fullhd is-offset-1-fullhd">
+            <h1 class="titled title is-1 mb-6">
+              tell us what you did today!
+            </h1>
+            <h2 class="subtitled subtitle">
+              this good boy went to the park :)
+            </h2>
+          </div>
 
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-medium has-text-centered">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-centered">
+          <div data-aos="zoom-in-up" class="column is-8">
+            <h1 class="title titled is-1 mb-6">
+              What are you waiting for?
+              <span id="typewriter"></span>
+            </h1>
+            <h2 class="subtitle subtitled">
+              join the doggosphere!
+            </h2>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/TypewriterJS/2.13.1/core.min.js"></script>
+  <script>
+    new Typewriter('#typewriter', {
+      strings: ['Create an account now!'],
+      autoStart: true,
+      loop: true,
+    });
+  </script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      once: true
+    });
+  </script>
 </body>
 
 <%- include('../partials/footer') %>

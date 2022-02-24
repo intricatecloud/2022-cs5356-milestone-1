@@ -3,6 +3,9 @@
 
 <head>
   <%- include('../partials/head') %>
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -10,10 +13,10 @@
     <%- include('../partials/nav', { hideSignIn: true }) %>
   </header>
 
-
   <form id="login-form">
     <input type="text" name="login" placeholder="Your user name" />
-    <input type="password" name="password" id="password" />
+    <input required type="password" name="password" id="password" />
+
     <button>
       Sign In
     </button>
@@ -30,9 +33,13 @@
 
   window.onload = () => {
     const firebaseConfig = {
-      // CS5356 TODO #2
-      // Create your own Firebase project. See the assignment for
-      // where you can get the Firebase config
+      apiKey: "AIzaSyBsMKnQsVSGwcqzwcQiUjgeFqtZphEPw8s",
+      authDomain: "milestone-1-adb277.firebaseapp.com",
+      projectId: "milestone-1-adb277",
+      storageBucket: "milestone-1-adb277.appspot.com",
+      messagingSenderId: "1076237030085",
+      appId: "1:1076237030085:web:8d3922d353c21cf70716ac",
+      measurementId: "G-WW86W7MM72"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -51,7 +58,28 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
-
+        app
+          .auth()
+          .signInWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+            // Signed in
+            // Get the user's ID token as it is needed to exchange for a session cookie.
+            const user = userCredential.user;
+            user.getIdToken().then((idToken) => {
+              fetch('/sessionLogin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  idToken: idToken,
+                  plan: 'free'
+                })
+              }).then(() => window.location.assign('/dashboard'))  // Redirect the user to the dashboard
+            })
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+          });
         return false;
       });
   };
