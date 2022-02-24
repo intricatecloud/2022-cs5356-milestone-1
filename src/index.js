@@ -9,15 +9,15 @@ const port = process.env.PORT || 8080;
 // CS5356 TODO #2
 // Uncomment this next line after you've created
 // serviceAccountKey.json
-// const serviceAccount = require("./../config/serviceAccountKey.json");
+const serviceAccount = require("./../config/serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
 
 // CS5356 TODO #2
 // Uncomment this next block after you've created serviceAccountKey.json
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-// });
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 // use cookies
 app.use(cookieParser());
@@ -58,12 +58,27 @@ app.post("/sessionLogin", async (req, res) => {
   // Create a session cookie using the Firebase Admin SDK
   // Set that cookie with the name 'session'
   // And then return a 200 status code instead of a 501
-  res.status(501).send();
+  console.log(req.body.idToken);
+  const idToken = req.body.idToken.toString();
+
+  // set expiration to 3 days
+  const expiresIn = 3600 * 24 * 3 * 1000;
+
+  admin.auth().createSessionCookie(idToken, { expiresIn }).then((sessionCookie) => {
+    const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+    res.cookie("session", sessionCookie, options);
+    res.end(JSON.stringify({ status: "success" }));
+  },
+    (error) => {
+      console.log("error", error);
+      res.status(401).send("Unauthorized Request!!");
+    }
+  );
 });
 
 app.get("/sessionLogout", (req, res) => {
   res.clearCookie("session");
-  res.redirect("/sign-in");
+  res.redirect("/sign-up");
 });
 
 app.post("/dog-messages", authMiddleware, async (req, res) => {
@@ -71,7 +86,16 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   // Get the message that was submitted from the request body
   // Get the user object from the request body
   // Add the message to the userFeed so its associated with the user
-});
+  
+  const userMessage = req.body.message.toString();
 
+  const user = req.user;
+
+  await userFeed.add(user, userMessage);
+
+  // so it refreshes
+  res.redirect("/dashboard");
+  
+});
 app.listen(port);
 console.log("Server started at http://localhost:" + port);

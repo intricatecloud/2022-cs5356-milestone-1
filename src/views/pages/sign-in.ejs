@@ -31,6 +31,13 @@
   window.onload = () => {
     const firebaseConfig = {
       // CS5356 TODO #2
+      apiKey: "AIzaSyBsYZeuK8-P856vVBbDsbOIW7BKVUN1Oe8",
+      authDomain: "ruffhouse-6dd5d.firebaseapp.com",
+      projectId: "ruffhouse-6dd5d",
+      storageBucket: "ruffhouse-6dd5d.appspot.com",
+      messagingSenderId: "914838820824",
+      appId: "1:914838820824:web:10ea97c4f60679b12d44ad",
+      measurementId: "G-8G99ZXJL02"
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
     };
@@ -46,13 +53,34 @@
         const login = event.target.login.value;
         const password = event.target.password.value;
 
+        console.log('error');
+
         // CS5356 TODO #3
         // Sign in using the Firebase SDK for Web
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
-
-        return false;
+        app.auth().signInWithEmailAndPassword(login, password)
+          .then(function (response) {
+            response.user.getIdToken().then(function (idToken) {
+              fetch('/sessionLogin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  idToken: idToken,
+                  plan: 'free'
+                })
+              }).then(function (responseBody) {
+                window.location.assign('/dashboard')
+              })
+            })
+              .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                debugger
+              });
+            return false;
+          });
       });
   };
 </script>
