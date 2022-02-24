@@ -31,9 +31,7 @@
     {"description":"The demo site for Bulma Clean Theme, made for Jekyll and GitHub pages websites","headline":"Example Landing Page","url":"https://www.csrhymes.com/bulma-clean-theme/landing/","@type":"WebPage","@context":"https://schema.org"}</script>
     <!-- End Jekyll SEO tag -->
     <!-- head scripts -->
-    <style> 
 
-    </style>
 </head>
 
 <body>
@@ -43,17 +41,21 @@
 
   Ruffhouse
   <!-- CS5356 TODO #1 Add your landing page here -->
-  
 
   <section class="hero  is-large  is-bold is-primary">
-    <div class="hero-body ">
-      <div class="container">
-        <h1 class="title is-2">Ruffhouse</h1>
-        <p class="subtitle is-3">A social media platform for dogs (and dog lovers)</p>
-
-        <a href="/sign-up" class="button is-info is-large">Sign Up</a>
-
-      </div>
+    <style> 
+      .super-hero {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('/static/dogs.jpg');
+      }
+    </style>
+    <div class="super-hero">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title is-2">Ruffhouse</h1>
+          <p class="subtitle is-3">A social media platform for dogs (and dog lovers)</p>
+          <a href="/sign-up" class="button is-info is-large">Sign Up</a>
+        </div>
+    </div>
     </div>
   </section>
 
