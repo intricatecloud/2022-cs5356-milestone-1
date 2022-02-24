@@ -6,14 +6,14 @@ const admin = require("firebase-admin");
 const app = express();
 const port = process.env.PORT || 8080;
 
-// CS5356 TODO #2
+// CS5356 TODO #2 - DONE
 // Uncomment this next line after you've created
 // serviceAccountKey.json
 const serviceAccount = require("./../config/serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
 
-// CS5356 TODO #2
+// CS5356 TODO #2 - DONE
 // Uncomment this next block after you've created serviceAccountKey.json
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -35,6 +35,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use("/static", express.static("static/"));
+app.use('/favicon.ico', express.static('static/favicon_io/favicon.ico'));
 
 // use res.render to load up an ejs view file
 // index page
@@ -56,7 +57,7 @@ app.get("/dashboard", authMiddleware, async function (req, res) {
 });
 
 app.post("/sessionLogin", async (req, res) => {
-  // CS5356 TODO #4
+  // CS5356 TODO #4 - DONE
   // Get the ID token from the request body
   // Create a session cookie using the Firebase Admin SDK
   // Set that cookie with the name 'session'
@@ -94,12 +95,17 @@ app.get("/sessionLogout", (req, res) => {
 });
 
 app.post("/dog-messages", authMiddleware, async (req, res) => {
-  // CS5356 TODO #5
+  // CS5356 TODO #5 - DONE
   // Get the message that was submitted from the request body
   // Get the user object from the request body
   // Add the message to the userFeed so its associated with the user
-  console.log(req.body);
-  res.end(JSON.stringify({ status: 'success' }));
+  try{
+    await userFeed.add(req.user, req.body.message);
+    res.redirect("/dashboard")
+  }
+  catch{
+    res.status(500).send(JSON.stringify({ message: err }));
+  }
 });
 
 app.listen(port);

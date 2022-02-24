@@ -60,7 +60,7 @@
   window.onload = () => {
     console.log('Running onload')
     const firebaseConfig = {
-      // CS5356 TODO #2
+      // CS5356 TODO #2 - DONE
       // Copy your Firebase config here too
       apiKey: "AIzaSyAz2xjkMWTuP2qWsyUF7HSTGjYA71P2X5o",
       authDomain: "ruffhouse-2022.firebaseapp.com",
@@ -83,7 +83,7 @@
         const login = event.target.login.value;
         const password = event.target.password.value;
 
-        // CS5356 TODO #3
+        // CS5356 TODO #3 - DONE
         // Create a new user using the Firebase SDK for Web
         // Get the users ID token
         // Start a new session with the users ID token
@@ -92,7 +92,6 @@
         app.auth().createUserWithEmailAndPassword(login, password)
           .then((userCredential) => {
             // Signed in 
-            //const token = userCredential.user.multiFactor.user.accessToken;
             return userCredential.user.getIdToken().then(idToken => {
               // Set cookie and redirect to dashboard
               fetch('/sessionLogin', {
@@ -109,14 +108,13 @@
               })
               .catch((err) => {
                 (document.getElementById("login-error").innerHTML = err ).style.display = "block";
-                debugger
+                // debugger
               })
             })
           })
           .catch((err) => {
             (document.getElementById("login-error").innerHTML = err.message ).style.display = "block";
-            debugger
-            // ..
+            // debugger
           });
 
         return false;

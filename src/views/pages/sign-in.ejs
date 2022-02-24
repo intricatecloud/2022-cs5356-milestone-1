@@ -52,7 +52,7 @@
 
   window.onload = () => {
     const firebaseConfig = {
-      // CS5356 TODO #2
+      // CS5356 TODO #2 - DONE
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
       apiKey: "AIzaSyAz2xjkMWTuP2qWsyUF7HSTGjYA71P2X5o",
@@ -75,7 +75,7 @@
         const login = event.target.login.value;
         const password = event.target.password.value;
 
-        // CS5356 TODO #3
+        // CS5356 TODO #3 - DONE
         // Sign in using the Firebase SDK for Web
         // Get the users ID token
         // Start a new session with the users ID token
@@ -84,7 +84,6 @@
         app.auth().signInWithEmailAndPassword(login, password)
           .then((userCredential) => {
             // Signed in 
-            //const token = userCredential.user.multiFactor.user.accessToken;
             return userCredential.user.getIdToken().then(idToken => {
               // Set cookie and redirect to dashboard
               fetch('/sessionLogin', {
@@ -101,14 +100,13 @@
               })
               .catch((err) => {
                 (document.getElementById("login-error").innerHTML = err ).style.display = "block";
-                debugger
+                // debugger
               })
             })
           })
           .catch((err) => {
             (document.getElementById("login-error").innerHTML = err.message ).style.display = "block";
-            debugger
-            // ..
+            // debugger
           });
 
         return false;
