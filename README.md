@@ -3,11 +3,22 @@ Link: https://github.com/Jeannelialbedo/2022-cs5356-milestone-1
 
 Link to Pull Request: https://github.com/intricatecloud/2022-cs5356-milestone-1/pull/60
 
+## Landing page
 <img src="https://github.com/Jeannelialbedo/2022-cs5356-milestone-1/blob/main/Screenshot_short1.png">
+
+## Long screenshot of the langding page
 <img src="https://github.com/Jeannelialbedo/2022-cs5356-milestone-1/blob/main/localhost_8080_.png">
+
+## Dashboard after signing in or signing up
 <img src="https://github.com/Jeannelialbedo/2022-cs5356-milestone-1/blob/main/Dashboard%20after%20signin%20or%20login.png">
+
+## Firebase users record
 <img src="https://github.com/Jeannelialbedo/2022-cs5356-milestone-1/blob/main/Firebase%20users.png">
+
+## Sign up page
 <img src="https://github.com/Jeannelialbedo/2022-cs5356-milestone-1/blob/main/Sign%20up.png">
+
+## Sign in page
 <img src="https://github.com/Jeannelialbedo/2022-cs5356-milestone-1/blob/main/Sign%20in.png">
 
 # Milestone 1 Project: Ruffhouse
