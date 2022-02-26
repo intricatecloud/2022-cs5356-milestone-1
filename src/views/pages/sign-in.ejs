@@ -33,6 +33,13 @@
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
+      apiKey: "AIzaSyC3fSu_OwzBevx2wwTStnqADUb5O56GBzI",
+      authDomain: "building-startup-systems-pa.firebaseapp.com",
+      projectId: "building-startup-systems-pa",
+      storageBucket: "building-startup-systems-pa.appspot.com",
+      messagingSenderId: "606798052998",
+      appId: "1:606798052998:web:59d1e1f7d8e5b35e5b1b07",
+      measurementId: "G-M3EBEN9JWH"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -51,6 +58,36 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+
+       firebase
+        .auth()
+        .signInWithEmailAndPassword(login, password)
+        .then((userCredential) => {
+          // Signed in
+          var user = userCredential.user;
+          // ...
+          user.getIdToken()
+            .then(function(idToken) {
+              console.log("idToken", idToken)
+              cons
+              fetch('/sessionLogin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify({idToken}) // add the users ID token here
+              });
+            })
+            .catch((error) => {
+              // Log errors if they exist
+              console.log(error.code, error.message);
+            })
+          }).then(() => {
+                window.location.assign("/dashboard");
+              })
+        .catch((error) => {
+          let errorCode = error.code;
+          let errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+        });
 
         return false;
       });

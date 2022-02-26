@@ -100,24 +100,39 @@
       
     </h2>
     <div class="card-content">
-      Problem:
 
-Dogs can benefit a lot from socializing with other dogs, but it can be hard finding a place for them to do that.
+<p>Your dog can benefit a lot from socializing with other dogs, but we know it can be hard finding a place for them to do that.</p>
 
-Solution
-
-A web app that allows for people to share a constant stream of dog pictures.
-
-User stories:
-
-As a user, I can create an account and sign in
-As a user, I can view posts that other users have shared
-As a user, I can share a new post with the community
-As an admin, I can limit access to the stream to only signed in users.
+<p>So we decided to build a web app that allows you to share a constant stream of dog pictures so you can share what your dog is upto and view posts by other users so you can start expanding your dog's community!</p>
 
     </div>
   </div>
   </section>
+
+
+</section>
+<div class="block">
+  <h1 class="title">Our features include</h1>
+
+  <div class="columns is-centered">
+      <% features.forEach(function(feature){ %>
+        <div class="column">
+        <figure class="image is-256x256">
+            <img src=<%= feature.img %> alt="Icon of a lock in 3D">
+          <h2><%= feature.title %></h2>
+        </figure>
+        </div>
+      <% }) %>
+    </div>
+
+  </div>
+<section class="section">
+  <h1 class="title">Join our Community Today!</h1>
+  <h2 class="section--title">What are you waiting for? Join our community of dogs and dog-lovers for FREE today!</h2>
+  <a  class="button is-large shiny" href="#">Sign me up!</a>
+</section>
+
+
 
   <!-- CS5356 TODO #1 Add your landing page here -->
 
