@@ -28,14 +28,40 @@
 
 <script>
 
+  
   window.onload = () => {
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "firebase/app";
+    import { getAnalytics } from "firebase/analytics";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     const firebaseConfig = {
-      // CS5356 TODO #2
-      // Create your own Firebase project. See the assignment for
-      // where you can get the Firebase config
+      apiKey: "AIzaSyB6NQ2iwHlo2A2JGQDDfA9nCCDPL-fOx28",
+      authDomain: "cs5356-milestone1-3a24d.firebaseapp.com",
+      projectId: "cs5356-milestone1-3a24d",
+      storageBucket: "cs5356-milestone1-3a24d.appspot.com",
+      messagingSenderId: "290958610555",
+      appId: "1:290958610555:web:1f313a09947469c2ad52de",
+      measurementId: "G-WEWB829XFN"
     };
 
-    const app = firebase.initializeApp(firebaseConfig);
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    // const firebaseConfig = {
+    //   apiKey: "AIzaSyB6NQ2iwHlo2A2JGQDDfA9nCCDPL-fOx28",
+    //   authDomain: "cs5356-milestone1-3a24d.firebaseapp.com",
+    //   projectId: "cs5356-milestone1-3a24d",
+    //   storageBucket: "cs5356-milestone1-3a24d.appspot.com",
+    //   messagingSenderId: "290958610555",
+    //   appId: "1:290958610555:web:1f313a09947469c2ad52de",
+    //   measurementId: "G-WEWB829XFN"
+    // };
+
+    // const app = firebase.initializeApp(firebaseConfig);
 
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
@@ -58,3 +84,4 @@
 </script>
 
 </html>
+
