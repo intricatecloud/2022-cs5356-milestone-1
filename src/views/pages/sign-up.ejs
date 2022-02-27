@@ -33,8 +33,13 @@
   window.onload = () => {
     console.log('Running onload')
     const firebaseConfig = {
-      // CS5356 TODO #2
-      // Copy your Firebase config here too
+      apiKey: "AIzaSyB6NQ2iwHlo2A2JGQDDfA9nCCDPL-fOx28",
+      authDomain: "cs5356-milestone1-3a24d.firebaseapp.com",
+      projectId: "cs5356-milestone1-3a24d",
+      storageBucket: "cs5356-milestone1-3a24d.appspot.com",
+      messagingSenderId: "290958610555",
+      appId: "1:290958610555:web:1f313a09947469c2ad52de",
+      measurementId: "G-WEWB829XFN"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -47,16 +52,26 @@
         event.preventDefault();
         const login = event.target.login.value;
         const password = event.target.password.value;
+        app.auth().createUserWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+            // Signed in 
+            //console.log('userCredential',userCredential)
+            var user = userCredential.user;
+            return user.getIdToken().then((idToken) => {
+              return postUserId("/sessionLogin", idToken);
+            }).catch((error) => {
+              console.log(error.code, error.message);
+            }).then(() => {
+              window.location.assign("/dashboard");
+            }).catch((error) => {
+              let errorCode = error.code;
+              let errorMessage = error.message;
+            })
+            return false;
+          });
+      })
+  }
 
-        // CS5356 TODO #3
-        // Create a new user using the Firebase SDK for Web
-        // Get the users ID token
-        // Start a new session with the users ID token
-        // Redirect the user to the /dashboard
-
-        return false;
-      });
-  };
 </script>
 
 </html>
