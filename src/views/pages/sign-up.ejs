@@ -29,12 +29,17 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
 <script>
-
   window.onload = () => {
     console.log('Running onload')
     const firebaseConfig = {
       // CS5356 TODO #2
       // Copy your Firebase config here too
+      apiKey: "AIzaSyBUhKCKeLskvhYwmC73Hzkbd6uKMUO7skk",
+      authDomain: "cs5356-milestone1-sw2255.firebaseapp.com",
+      projectId: "cs5356-milestone1-sw2255",
+      storageBucket: "cs5356-milestone1-sw2255.appspot.com",
+      messagingSenderId: "586552483549",
+      appId: "1:586552483549:web:9cb6ce8fac9300b5824534"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -49,10 +54,26 @@
         const password = event.target.password.value;
 
         // CS5356 TODO #3
+
         // Create a new user using the Firebase SDK for Web
-        // Get the users ID token
-        // Start a new session with the users ID token
-        // Redirect the user to the /dashboard
+        app.auth().createUserWithEmailAndPassword(login,password)
+          .then((userCredential) => {
+            var user = userCredential.user;
+            user.getIdToken().then((idToken) => {// Get the users ID token
+              fetch('/sessionLogin', {// Start a new session with the users ID token
+                method:'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({idToken})
+              }).then(()=>{
+                window.location.href = '/dashboard' // Redirect the user to the /dashboard
+              })
+              method: 'POST'
+            })
+          })
+          .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+          });
 
         return false;
       });
