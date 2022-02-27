@@ -18,7 +18,6 @@
       Sign In
     </button>
     <div id="login-error">
-
     </div>
     </div>
   </form>
@@ -27,12 +26,20 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
 <script>
-
   window.onload = () => {
-    const firebaseConfig = {
+    const firebaseConfig = { 
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
+      
+      apiKey: "AIzaSyD-k2Br5h1kip1anUlCRa8iOBfw0eUY_5A",
+      authDomain: "startsystem-milestone1.firebaseapp.com",
+      projectId: "startsystem-milestone1",
+      storageBucket: "startsystem-milestone1.appspot.com",
+      messagingSenderId: "71580284527",
+      appId: "1:71580284527:web:29cbb09e7b108bac423f9a",
+      measurementId: "G-XW1SGF1J49"
+
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -51,6 +58,21 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+        
+        app.auth().signInWithEmailAndPassword(login, password)
+           .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            user.getIdToken().then((idToken) => {
+              fetch('/sessionLogin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idToken })
+              }).then(() => {
+                window.location.href = '/dashboard'
+              })
+            })
+          })
 
         return false;
       });

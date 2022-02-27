@@ -18,6 +18,7 @@
       <label>Password</label>
       <input type="password" name="password" />
       <button>Log in</button>
+ 
     </form>
     <div id="login-error" style="display: none;">
     </div>
@@ -35,6 +36,13 @@
     const firebaseConfig = {
       // CS5356 TODO #2
       // Copy your Firebase config here too
+      apiKey: "AIzaSyD-k2Br5h1kip1anUlCRa8iOBfw0eUY_5A",
+      authDomain: "startsystem-milestone1.firebaseapp.com",
+      projectId: "startsystem-milestone1",
+      storageBucket: "startsystem-milestone1.appspot.com",
+      messagingSenderId: "71580284527",
+      appId: "1:71580284527:web:29cbb09e7b108bac423f9a",
+      measurementId: "G-XW1SGF1J49"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -52,8 +60,33 @@
         // Create a new user using the Firebase SDK for Web
         // Get the users ID token
         // Start a new session with the users ID token
-        // Redirect the user to the /dashboard
+        // Redirect the user to the /dashboard'
 
+        firebase.auth().createUserWithEmailAndPassword(login, password)
+                .then((userCredential)=>{
+                  
+                  const user = userCredential.user;
+                  user.getIdToken().then((idToken) => {
+                    fetch('/sessionLogin', {
+                      method:"POST",
+                      headers:{
+                        'Content-Type':'application/json'
+                      },
+                      body:JSON.stringify({
+                        idToken: idToken,
+                        plan: 'free'
+                      })
+                    }).then((response)=>{
+                      console.log('success!');
+                      window.location.assign('/dashboard')
+                    })
+                  })
+                })
+                .catch((error) => {
+                  const errorCode = error.code;
+                  const errorMessage = error.message;
+                 
+                })
         return false;
       });
   };
