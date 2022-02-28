@@ -1,17 +1,18 @@
 <nav class="navbar is-primary ">
   <div class="container">
     <div class="navbar-brand">
-      
-        <a href="/dashboard" class="navbar-item">
-          <i class="material-icons">pets</i> &nbsp; Ruffhouse
-        </a>
-    
-      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu" :class="{ 'is-active': openNav }" x-on:click="openNav = !openNav">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
+
+      <a href="/" class="navbar-item">
+        <i class="material-icons">pets</i> &nbsp; Ruffhouse
       </a>
-  </div>
+
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu"
+        :class="{ 'is-active': openNav }" x-on:click="openNav = !openNav">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
     <!-- <div class="navbar-brand">
       <a class="navbar-item" href="/">
         <figure class="image">
@@ -34,27 +35,27 @@
           <a href="/dashboard" class="navbar-item">
             <%= email %>
               <i class="material-icons">person_outline</i>
-             
+
           </a>
           <a href="/sessionLogout" class="navbar-item">
-            
-              Logout
-             
+
+            Logout
+
           </a>
         </div>
       </div>
       <% } else if(locals.hideSignIn) { %>
-      <% } else { %>
-        <div id="navbarMenu" class="navbar-menu">
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <a href="/sign-in" class="button is-primary">Sign In
-              </a> &nbsp;
-              <a href="/sign-up" class="button is-primary">Sign Up
-              </a>
+        <% } else { %>
+          <div id="navbarMenu" class="navbar-menu">
+            <div class="navbar-end">
+              <div class="navbar-item">
+                <a href="/sign-in" class="button is-primary">Sign In
+                </a> &nbsp;
+                <a href="/sign-up" class="button is-primary">Sign Up
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-      <% }%>
+          <% }%>
   </div>
 </nav>

@@ -48,12 +48,9 @@ app.get("/dashboard", authMiddleware, async function (req, res) {
 });
 
 app.post("/sessionLogin", async (req, res) => {
-  console.log('blah');
   const idToken = req.body.idToken.toString();
-  console.log('blah1');
   console.log(idToken);
-  // set expiration to 3 days
-  const expiresIn = 3600 * 24 * 3 * 1000;
+  const expiresIn = 3600 * 24 * 1 * 1000;
 
   admin.auth().createSessionCookie(idToken, { expiresIn }).then((sessionCookie) => {
     const options = { maxAge: expiresIn, httpOnly: true, secure: true };
@@ -73,7 +70,7 @@ app.get("/sessionLogout", (req, res) => {
 });
 
 app.post("/dog-messages", authMiddleware, async (req, res) => {
-  
+
   const userMessage = req.body.message.toString();
 
   const user = req.user;

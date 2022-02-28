@@ -7,21 +7,43 @@
 
 <body>
   <header>
-    <%- include('../partials/nav', { hideSignIn: true }) %>
+    <%- include('../partials/nav', { hideSignIn: false }) %>
   </header>
 
-
-  <form id="login-form">
-    <input type="text" name="login" placeholder="Your user name" />
-    <input type="password" name="password" id="password" />
-    <button>
-      Sign In
-    </button>
-    <div id="login-error">
-
-    </div>
-    </div>
-  </form>
+  <section class="hero is-primary is-fullheight">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+            <form id="login-form" class="box">
+              <div class="field">
+                <label for="" class="label">Email</label>
+                <div class="control has-icons-left">
+                  <input type="email" placeholder="e.g. blah@gmail.com" class="input" name="login" required>
+                  <span class="icon is-small is-left">
+                    <i class="material-icons">email</i>
+                  </span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="" class="label">Password</label>
+                <div class="control has-icons-left">
+                  <input type="password" placeholder="*******" class="input" name="password" required>
+                  <span class="icon is-small is-left">
+                    <i class="material-icons">lock</i>
+                  </span>
+                </div>
+              </div>
+              <div class="field">
+                <button class="button is-success">
+                  Sign In
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  </section>
 </body>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
@@ -45,11 +67,10 @@
     const postUserId = async function (url, idTokenUser) {
       const response = await fetch(url, {
         method: "POST",
-        // credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({idToken: idTokenUser}),
+        body: JSON.stringify({ idToken: idTokenUser }),
       });
       return response;
     };
@@ -68,20 +89,13 @@
 
         app.auth().signInWithEmailAndPassword(login, password)
           .then((userCredential) => {
-            // Signed in 
-            //console.log('userCredential',userCredential)
-
             var user = userCredential.user;
-
             return user.getIdToken().then((idToken) => {
-
               return postUserId("sessionLogin", idToken);
             }).catch((error) => {
               console.log(error.code, error.message);
             });
-
           }).then(() => {
-            //window.location.href = '/dashboard'
             window.location.assign('/dashboard');
           }).catch((error) => {
             var errorCode = error.code;
@@ -100,5 +114,3 @@
 </script>
 
 </html>
-
-

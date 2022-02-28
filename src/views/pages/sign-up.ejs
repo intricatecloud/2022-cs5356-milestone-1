@@ -7,11 +7,49 @@
 
 <body>
   <header>
-    <%- include('../partials/nav') %>
+    <%- include('../partials/nav', { hideSignIn: false }) %>
   </header>
 
-  <div class="container">
-    Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
+  <!-- <div class="container"> -->
+  <section class="hero is-primary is-fullheight">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+
+            <form id="login-form" class="box">
+              <div class="field">
+                <label for="" class="label">Email</label>
+                <div class="control has-icons-left">
+                  <input type="email" placeholder="e.g. blah@gmail.com" class="input" name="login" required>
+                  <span class="icon is-small is-left">
+                    <i class="material-icons">email</i>
+                  </span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="" class="label">Password</label>
+                <div class="control has-icons-left">
+                  <input type="password" placeholder="*******" class="input" name="password" required>
+                  <span class="icon is-small is-left">
+                    <i class="material-icons">lock</i>
+                  </span>
+                </div>
+              </div>
+              <div class="field">
+                <button class="button is-success">
+                  Sign Up
+                </button>
+              </div>
+            </form>
+            <!-- <p><a href="/sign-in" style="color: black;"> Or sign in with an existing
+                account</a></p> -->
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <!-- Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
     <form id="login-form">
       <label>Login</label>
       <input id="login" type="text" name="login" />
@@ -21,8 +59,8 @@
     </form>
     <div id="login-error" style="display: none;">
     </div>
-    <a href="/dashboard">Dashboard</a>
-  </div>
+    <a href="/dashboard">Dashboard</a> -->
+  <!-- </div> -->
 </body>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
@@ -54,8 +92,6 @@
         const password = event.target.password.value;
         app.auth().createUserWithEmailAndPassword(login, password)
           .then((userCredential) => {
-            // Signed in 
-            //console.log('userCredential',userCredential)
             var user = userCredential.user;
             return user.getIdToken().then((idToken) => {
               return postUserId("/sessionLogin", idToken);
