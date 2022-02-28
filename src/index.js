@@ -69,14 +69,11 @@ app.post("/sessionLogin", async (req, res) => {
 
 app.get("/sessionLogout", (req, res) => {
   res.clearCookie("session");
-  res.redirect("/sign-in");
+  res.redirect("/");
 });
 
 app.post("/dog-messages", authMiddleware, async (req, res) => {
-  // CS5356 TODO #5
-  // Get the message that was submitted from the request body
-  // Get the user object from the request body
-  // Add the message to the userFeed so its associated with the user
+  
   const userMessage = req.body.message.toString();
 
   const user = req.user;
