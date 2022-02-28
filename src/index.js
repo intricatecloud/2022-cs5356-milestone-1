@@ -8,16 +8,15 @@ const port = process.env.PORT || 8080;
 
 // CS5356 TODO #2
 // Uncomment this next line after you've created
-// serviceAccountKey.json
-// const serviceAccount = require("./../config/serviceAccountKey.json");
+//serviceAccountKey.json
+const serviceAccount = require("./../config/serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
 
 // CS5356 TODO #2
 // Uncomment this next block after you've created serviceAccountKey.json
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-// });
+admin.initializeApp({credential: admin.credential.cert(serviceAccount),
+});
 
 // use cookies
 app.use(cookieParser());
@@ -58,6 +57,23 @@ app.post("/sessionLogin", async (req, res) => {
   // Create a session cookie using the Firebase Admin SDK
   // Set that cookie with the name 'session'
   // And then return a 200 status code instead of a 501
+  const idToken = req.body.idToken;
+  
+  // Setting cookie expiration to be 2 days 
+  const expiresIn = 60 * 60 * 24 * 2 * 1000;
+
+  admin.auth().createSessionCookie(idToken, { expiresIn })
+  .then(
+    sessionCookie => {
+      const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+      res.cookie("session", sessionCookie, options);
+      res.status(200).send(JSON.stringify({status: "success"}));  
+    }, 
+    error => {
+      console.log("error", error);
+      res.status(401).send("Unauthorized Request!!");
+    }
+  )
   res.status(501).send();
 });
 

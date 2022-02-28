@@ -2,10 +2,20 @@
 <html lang="en">
 
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
+    <title>Hero - Free Bulma template</title>
+    <link rel="shortcut icon" href="../images/fav_icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <!-- Bulma Version 0.9.0-->
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/hero.css">
+    <link rel="stylesheet" href="https://unpkg.com/bulma-modal-fx/dist/css/modal-fx.min.css" />
     <style>
-
+      
     </style>
 </head>
 
@@ -16,7 +26,95 @@
 
   Fill me in!
   <!-- CS5356 TODO #1 Add your landing page here -->
+  <section class="hero is-info is-medium is-bold">
+    <div class="hero-head">
+      <nav class="navbar">
+        <div class="container">
+          <div id="navbarMenu" class="navbar-menu">
+            <div class="navbar-end">
+              <div class="tabs is-right">
+                <ul>
+                  <li class="is-active"><a>Home</a></li>
+                  <li><a href="">Examples</a></li>
+                  <li><a href="">Features</a></li>
+                  <li><a href="">Team</a></li>
+                  <li><a href="">Help</a></li>
+                </ul>
+                <span class="navbar-item">
+                  <a class="button is-white is-outlined" href="/sign-in">
+                      <span class="icon">
+                          <i class="fa-solid fa-user-plus"></i>
+                      </span>
+                      <span title="Sign Up Page">Sign In</span>
+                  </a>
+              </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="hero-body">
+      <div class="container has-text-centered">
+          <h1 class="title">
+          Welcome to Ruffhouse
+          </h1>
+          <h2 class="subtitle">
+            Helping connect dog parents, one cute pic at a time.
+          </h2>
+          <button class="button is-medium"><a href="/sign-in">Click Here to Sign Up</a></button>
+      </div>
+    </div>
+  </section>
+  <br> <br> <br>
+  <section class="container">
+    <div class="columns features" >
+      <div class="column is-4">
+          <div class="card is-shady">
+              <div class="card-image has-text-centered">
+                 <i class="fa fa-users"></i>
+              </div>
+              <div class="card-content">
+                  <div class="content">
+                      <h4>Connect and build community </h4>
+                      <p>More text about the importance of community...</p>
+                      <p><a href="#">Learn more</a></p>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="column is-4">
+        <div class="card is-shady">
+            <div class="card-image has-text-centered">
+                <i class="fa fa-paw"></i>
+            </div>
+            <div class="card-content">
+                <div class="content">
+                    <h4>View posts from dog parents</h4>
+                    <p>Interact with a variety of content from community...</p>
+                    <p><a href="#">Learn more</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="column is-4">
+      <div class="card is-shady">
+          <div class="card-image has-text-centered">  
+              <i class="fa fa-users"></i>
+          </div>
+          <div class="card-content">
+              <div class="content">
+                  <h4>Create and share your own content</h4>
+                  <p>Info about sharing post with the community...</p>
+                  <p><a href="#">Learn more</a></p>
+              </div>
+          </div>
+      </div>
+  </div>
 
+  </section>
+                
+  
 </body>
 
 <%- include('../partials/footer') %>
