@@ -7,13 +7,6 @@
 
 <body>
   <header>
-<<<<<<< HEAD
-    <%- include('../partials/nav') %>
-  </header>
-
-  <div class="container">
-    Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
-=======
   </header>
 
   <section>
@@ -21,7 +14,6 @@
     <p class="subtitle is-3">
     Sign Up for a new account 
     </p>
->>>>>>> df08b9b (Commit milestone 1)
     <form id="login-form">
       <label>Login</label>
       <input id="login" type="text" name="login" />
@@ -31,9 +23,6 @@
     </form>
     <div id="login-error" style="display: none;">
     </div>
-<<<<<<< HEAD
-    <a href="/dashboard">Dashboard</a>
-=======
 
     <p class="subtitle is-3">
       or
@@ -44,7 +33,6 @@
 
     <a href="/dashboard">Return to Dashboard</a>
 
->>>>>>> df08b9b (Commit milestone 1)
   </div>
 </body>
 
@@ -58,15 +46,12 @@
     const firebaseConfig = {
       // CS5356 TODO #2
       // Copy your Firebase config here too
-<<<<<<< HEAD
-=======
       apiKey: "AIzaSyCXO0jxl4E2ZOcOQRHMYtbG1wcnLwzdwTU",
       authDomain: "cs5356-milestone1.firebaseapp.com",
       projectId: "cs5356-milestone1",
       storageBucket: "cs5356-milestone1.appspot.com",
       messagingSenderId: "775437841855",
       appId: "1:775437841855:web:bb3561eeb28aff70695d0a"
->>>>>>> df08b9b (Commit milestone 1)
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -82,11 +67,6 @@
 
         // CS5356 TODO #3
         // Create a new user using the Firebase SDK for Web
-<<<<<<< HEAD
-        // Get the users ID token
-        // Start a new session with the users ID token
-        // Redirect the user to the /dashboard
-=======
         //import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
         //const auth = getAuth();
@@ -111,7 +91,6 @@
             const errorCode = error.code;
             const errorMessage = error.message;
           });
->>>>>>> df08b9b (Commit milestone 1)
 
         return false;
       });

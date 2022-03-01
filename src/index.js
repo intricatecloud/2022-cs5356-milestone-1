@@ -7,11 +7,6 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 // CS5356 TODO #2
-<<<<<<< HEAD
-// Uncomment this next line after you've created
-// serviceAccountKey.json
-// const serviceAccount = require("./../config/serviceAccountKey.json");
-=======
 // from firebase config page
 const firebaseConfig = {
   apiKey: "AIzaSyCXO0jxl4E2ZOcOQRHMYtbG1wcnLwzdwTU",
@@ -25,21 +20,14 @@ const firebaseConfig = {
 // Uncomment this next line after you've created
 // serviceAccountKey.json
 const serviceAccount = require("./../config/serviceAccountKey.json");
->>>>>>> df08b9b (Commit milestone 1)
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
 
 // CS5356 TODO #2
 // Uncomment this next block after you've created serviceAccountKey.json
-<<<<<<< HEAD
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-// });
-=======
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
->>>>>>> df08b9b (Commit milestone 1)
 
 // use cookies
 app.use(cookieParser());
@@ -49,10 +37,7 @@ app.use(
     extended: true,
   })
 );
-<<<<<<< HEAD
-=======
 
->>>>>>> df08b9b (Commit milestone 1)
 // set the view engine to ejs
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -79,14 +64,6 @@ app.get("/dashboard", authMiddleware, async function (req, res) {
 });
 
 app.post("/sessionLogin", async (req, res) => {
-<<<<<<< HEAD
-  // CS5356 TODO #4
-  // Get the ID token from the request body
-  // Create a session cookie using the Firebase Admin SDK
-  // Set that cookie with the name 'session'
-  // And then return a 200 status code instead of a 501
-  res.status(501).send();
-=======
 
   // CS5356 TODO #4
   // Get the ID token from the request body
@@ -114,7 +91,6 @@ app.post("/sessionLogin", async (req, res) => {
         res.status(401).send('UNAUTHORIZED REQUEST!');
       }
     );
->>>>>>> df08b9b (Commit milestone 1)
 });
 
 app.get("/sessionLogout", (req, res) => {
@@ -125,10 +101,6 @@ app.get("/sessionLogout", (req, res) => {
 app.post("/dog-messages", authMiddleware, async (req, res) => {
   // CS5356 TODO #5
   // Get the message that was submitted from the request body
-<<<<<<< HEAD
-  // Get the user object from the request body
-  // Add the message to the userFeed so its associated with the user
-=======
   const message = req.body.message.toString();
 
   // Get the user object from the request body
@@ -139,7 +111,6 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
 
   // Reload /dashboard
   res.redirect("/dashboard");
->>>>>>> df08b9b (Commit milestone 1)
 });
 
 app.listen(port);

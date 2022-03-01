@@ -10,20 +10,6 @@
     <%- include('../partials/nav', { hideSignIn: true }) %>
   </header>
 
-<<<<<<< HEAD
-
-  <form id="login-form">
-    <input type="text" name="login" placeholder="Your user name" />
-    <input type="password" name="password" id="password" />
-    <button>
-      Sign In
-    </button>
-    <div id="login-error">
-
-    </div>
-    </div>
-  </form>
-=======
   <section>
     <div class="container">
       <p class="subtitle is-3">
@@ -51,7 +37,6 @@
     </div>
     <a href="/dashboard">Return to Dashboard</a>
   </section>
->>>>>>> df08b9b (Commit milestone 1)
 </body>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
@@ -63,15 +48,12 @@
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
-<<<<<<< HEAD
-=======
       apiKey: "AIzaSyCXO0jxl4E2ZOcOQRHMYtbG1wcnLwzdwTU",
       authDomain: "cs5356-milestone1.firebaseapp.com",
       projectId: "cs5356-milestone1",
       storageBucket: "cs5356-milestone1.appspot.com",
       messagingSenderId: "775437841855",
       appId: "1:775437841855:web:bb3561eeb28aff70695d0a"
->>>>>>> df08b9b (Commit milestone 1)
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -87,15 +69,6 @@
 
         // CS5356 TODO #3
         // Sign in using the Firebase SDK for Web
-<<<<<<< HEAD
-        // Get the users ID token
-        // Start a new session with the users ID token
-        // Redirect the user to the /dashboard
-
-        return false;
-      });
-  };
-=======
         //import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
         //const auth = getAuth();
@@ -125,7 +98,6 @@
       });
   };
 
->>>>>>> df08b9b (Commit milestone 1)
 </script>
 
 </html>
