@@ -7,8 +7,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 // CS5356 TODO #2
-// Uncomment this next line after you've created
-//serviceAccountKey.json
+// Uncomment this next line after you've created serviceAccountKey.json
 const serviceAccount = require("./../config/serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
@@ -58,23 +57,24 @@ app.post("/sessionLogin", async (req, res) => {
   // Set that cookie with the name 'session'
   // And then return a 200 status code instead of a 501
   const idToken = req.body.idToken;
-  
+
   // Setting cookie expiration to be 2 days 
   const expiresIn = 60 * 60 * 24 * 2 * 1000;
 
   admin.auth().createSessionCookie(idToken, { expiresIn })
   .then(
     sessionCookie => {
-      const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+      const options = { maxAge: expiresIn, httpOnly: true};
       res.cookie("session", sessionCookie, options);
       res.status(200).send(JSON.stringify({status: "success"}));  
     }, 
     error => {
       console.log("error", error);
       res.status(401).send("Unauthorized Request!!");
+      res.redirect("/sign-up");
     }
-  )
-  res.status(501).send();
+  );
+  //res.status(501).send();
 });
 
 app.get("/sessionLogout", (req, res) => {
@@ -84,9 +84,19 @@ app.get("/sessionLogout", (req, res) => {
 
 app.post("/dog-messages", authMiddleware, async (req, res) => {
   // CS5356 TODO #5
-  // Get the message that was submitted from the request body
-  // Get the user object from the request body
-  // Add the message to the userFeed so its associated with the user
+
+  try{
+    // Get the message that was submitted from the request body
+    const userMessage = req.body.message.toString();
+    // Get the user object from the request body
+    const user = req.user
+    // Add the message to the userFeed so its associated with the user
+    await userFeed.add(user, userMessage); 
+    // Refresh the dashboard 
+    res.redirect("/dashboard"); 
+  } catch(err) {
+    res.status(500).send({message: err});
+  }
 });
 
 app.listen(port);
