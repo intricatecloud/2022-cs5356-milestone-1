@@ -5,7 +5,21 @@
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
     <style>
-
+      .landing-img {
+        width: 100%;
+        height: auto;
+      }
+      .container {
+        position: relative;
+      }
+      .description {
+        position: absolute;
+        /* width: 35vw;
+        height: fit-content; */
+        top: 10vh;
+        left: 10vh;
+        color:white;
+      }
     </style>
 </head>
 
@@ -13,10 +27,26 @@
   <header>
     <%- include('../partials/nav') %>
   </header>
-
-  Fill me in!
   <!-- CS5356 TODO #1 Add your landing page here -->
-
+  <div class="container">
+    <div class="description">
+      <h1 class="title is-size-1">Ruffhouse</h1>
+      <h2 class="subtitle is-size-4">SHARE A CONSTANT STREAM OF DOG PICTURES.</h2>
+      <h2 class="subtitle is-size-4">Product Overviews</h2>
+      <h2 class="mb-4 is-size-5">Dogs can benefit a lot from socializing with other dogs, <br> it can be hard finding a place for them to do that.</h2>
+      <h2 class="mb-4 is-size-5">
+        At here, you can... <br>
+      </h2>
+      <ul><li>* Share a new post with the community</li> <li>* View posts that other users have shared</li></ul>
+      <div class="buttons mt-6 is-justify-content-flex-start">
+        <a href="/sign-in" class="button is-primary">Sign In
+        </a>
+        <a href="/sign-up" class="button is-link">Sign Up
+        </a>
+      </div>
+    </div>
+    <img class="landing-img" src="static/hero-bg.jpg"/>
+  </div>
 </body>
 
 <%- include('../partials/footer') %>
