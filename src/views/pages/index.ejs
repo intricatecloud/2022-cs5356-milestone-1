@@ -4,8 +4,22 @@
 <head>
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Bulma!</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <style>
-
+      .bg-img{ 
+        background-image: url(./../static/hero-bg.jpg) ;
+        background-position: center center;
+        background-repeat:  no-repeat;
+        background-attachment: fixed;
+        background-size:  cover;
+        background-color: #999;
+      }
+      .text-color{
+        color: hsl(171, 100%, 41%)
+      }
     </style>
 </head>
 
@@ -13,9 +27,49 @@
   <header>
     <%- include('../partials/nav') %>
   </header>
-
-  Fill me in!
   <!-- CS5356 TODO #1 Add your landing page here -->
+
+  <section class="bg-img hero is-large">
+    <div class="hero-body">
+      <h1 class="text-color title">Ruffhouse</h1>
+      <h2 class="text-color subtitle">A web app that allows for people to share a constant stream of dog pictures.</h2>
+    </div>
+  </section>
+
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class ='title'>Product Overview</h1>
+      <h2 class="mt-3">Dogs can benefit a lot from socializing with other dogs, but it can be hard finding a place for them to do that.</h2>
+      <h2 class="mb-4"> With this web app, you can share a constant stream of dog pictures with your friends and strangers.</h2>
+    </div>
+  </div>
+  <section class="container">
+    <div class="columns features">
+        <div class="column is-6">
+            <div class="card is-shady">
+                <div class="card-content">
+                    <div class="content">
+                        <h4>Feature Sets</h4>
+                        <p>you can create an account and sign in, view posts that other users have shared, and share a new post with the community</p>
+                        <a href="#">Learn more</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-6">
+            <div class="card is-shady">
+                <div class="card-content">
+                    <div class="content">
+                        <h4>How to Sign Up</h4>
+                        <p class="my-0">to sign up and start sharing your dogs with other people,</p>
+                        <p>please click on "learn more"</p> 
+                        <p><a href="#">Learn more</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
 
 </body>
 
