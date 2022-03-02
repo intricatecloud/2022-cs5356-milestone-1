@@ -30,10 +30,14 @@
 
   window.onload = () => {
     const firebaseConfig = {
-      // CS5356 TODO #2
-      // Create your own Firebase project. See the assignment for
-      // where you can get the Firebase config
-    };
+  apiKey: "AIzaSyDVeHN2WcDlQM10HQdU1hXFDrNKVLt6ekA",
+  authDomain: "cs5356-milestone-1-47b71.firebaseapp.com",
+  projectId: "cs5356-milestone-1-47b71",
+  storageBucket: "cs5356-milestone-1-47b71.appspot.com",
+  messagingSenderId: "54048075007",
+  appId: "1:54048075007:web:daf5f9a80d5f1dc81270ca",
+  measurementId: "G-VE6KYGT311"
+};
 
     const app = firebase.initializeApp(firebaseConfig);
 
@@ -45,15 +49,62 @@
         event.preventDefault();
         const login = event.target.login.value;
         const password = event.target.password.value;
-
+        
         // CS5356 TODO #3
         // Sign in using the Firebase SDK for Web
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
-
+        app.auth().signInWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+            // CS5356 TODO #3
+            //sessionLogin(userCredential.user);
+            console.log("User signed in")
+            userCredential.user.getIdToken().then(function(idToken) {
+                fetch('/sessionLogin', {
+                method: 'POST',
+                headers: {
+                'Content-Type':'application/json'
+                },
+                body: JSON.stringify({idToken}) // add the users ID token here
+                })
+                .then(function(response){
+                  return response.json
+                })
+                .then(() => {
+                  console.log('Going to dashboard!')
+                  window.location.href = "/dashboard"
+                })
+            })
+          })
+          // .catch((error) => {
+          //   const errorCode = error.code;
+          //   const errorMessage = error.message;
+          //   alert(errorMessage)
+          // });
         return false;
       });
+      const sessionLogin = (userToken) => {
+        return userToken.getIdToken().then(idToken => {
+          fetch('/sessionLogin', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({idToken}) // add the users ID token here
+          }).then((res) => {
+            // res.redirect('/dashboard')
+            console.log("response from sign in request in function")
+            if (res.status==200) { 
+              window.location.href = '/dashboard'
+              console.log('Session started!'); 
+            }
+            else {
+              console.log('Failed to start session.')
+              alert('Internal Server Error')
+            }
+          });
+        });
+        
+      };
   };
 </script>
 
