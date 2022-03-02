@@ -33,6 +33,14 @@
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
+
+      apiKey: "AIzaSyBXyHNLaWHXqZADU4P-CWM4zpt4Ho_VQy8",
+      authDomain: "cs2356-3bc2b.firebaseapp.com",
+      projectId: "cs2356-3bc2b",
+      storageBucket: "cs2356-3bc2b.appspot.com",
+      messagingSenderId: "1025029633513",
+      appId: "1:1025029633513:web:436da74fb9a501bc864778",
+      measurementId: "G-YP9GCMVSPL"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -51,10 +59,41 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+        //firebase.auth().signInWithEmailAndPassword(login, password).then(user => {
 
+        app.auth().signInWithEmailAndPassword(login, password)
+        .then((userCredential) => {
+        // Signed in 
+        sessionLogin(userCredential.user);
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert(errorMessage)
+          });
         return false;
       });
-  };
+  const sessionLogin = (userToken) => {
+        return userToken.getIdToken().then(idToken => {
+          fetch('/sessionLogin', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({idToken}) // add the users ID token here
+          }).then((res) => {
+            // res.redirect('/dashboard')
+            if (res.status==200) { 
+              window.location.assign('/dashboard');
+              console.log('Session started!'); 
+            }
+            else {
+              console.log('Failed to start session.')
+              alert('Internal Server Error')
+            }
+          });
+        });
+        
+      };
+    };
 </script>
 
 </html>
