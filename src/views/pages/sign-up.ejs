@@ -10,19 +10,41 @@
     <%- include('../partials/nav') %>
   </header>
 
-  <div class="container">
-    Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
-    <form id="login-form">
-      <label>Login</label>
-      <input id="login" type="text" name="login" />
-      <label>Password</label>
-      <input type="password" name="password" />
-      <button>Log in</button>
-    </form>
-    <div id="login-error" style="display: none;">
+  <section class="hero is-primary is-halfheight">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="column is-4 is-offset-4">
+                <h3 class="subtitle has-text-black">Create your account</h3>
+                <div class="box- is-success">
+                  <form id="login-form">
+                    <div class="field">
+                        <div class="control">
+                            <input id="login" type="text" name="login" class="input is-medium" placeholder="Enter your email" autofocus="">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input name="password" class="input is-medium" type="password" placeholder="Create a strong Password">
+                        </div>
+                    </div>
+                    <div class="field">
+                    </div>
+                    <button class="button is-block is-info is-medium is-fullwidth">Save account details <i class="fa fa-sign-in" aria-hidden="true"></i></button>
+                </form>
+
+
+            </div>
+                </div>
+                  <p class="has-text-black">
+                  <a href="/dashboard">Visit Dashboard</a>
+                </div>
+            </p>
+        </div>
     </div>
-    <a href="/dashboard">Dashboard</a>
-  </div>
+</div>
+</section>
+
 </body>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
@@ -33,8 +55,13 @@
   window.onload = () => {
     console.log('Running onload')
     const firebaseConfig = {
-      // CS5356 TODO #2
-      // Copy your Firebase config here too
+      apiKey: "AIzaSyAgLK4XaMVyQRUei9Wu7DgmfEvuee3ttr8",
+      authDomain: "ruffhouse-61f9b.firebaseapp.com",
+      projectId: "ruffhouse-61f9b",
+      storageBucket: "ruffhouse-61f9b.appspot.com",
+      messagingSenderId: "87800979410",
+      appId: "1:87800979410:web:d44dcb4d20119633b6320b",
+      measurementId: "G-Z0SW3LVJVJ"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -45,7 +72,8 @@
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
         event.preventDefault();
-        const login = event.target.login.value;
+        //const login = event.target.login.value;
+        const email = event.target.login.value;
         const password = event.target.password.value;
 
         // CS5356 TODO #3
@@ -54,6 +82,33 @@
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
 
+        //import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+        app.auth().createUserWithEmailAndPassword(email, password)
+          
+          .then((userCredential)=>{ //get user credentail as a response
+            
+              const user = userCredential.u ;
+              const idtoken = userCredential.user.getIdToken()
+              userCredential.user.getIdToken().then(function(idToken) {
+                fetch('/sessionLogin', {
+                method: 'POST',
+                headers: {
+                'Content-Type':'application/json'
+                },
+                body: JSON.stringify({idToken}) // add the users ID token here
+                })
+                .then(() => console.log('success!'))
+                
+              })
+              //console.log(user)
+              //console.log(user.getIdToken())
+          })
+          .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          });
+      
         return false;
       });
   };

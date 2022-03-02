@@ -1,22 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
   <%- include('../partials/head') %>
-    <!-- Include any custom css classes that you want available on this page here -->
-    <style>
-
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RuffHouse</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
-
 <body>
-  <header>
-    <%- include('../partials/nav') %>
-  </header>
-
-  Fill me in!
-  <!-- CS5356 TODO #1 Add your landing page here -->
-
+<section class="hero is-primary is-halfheight">
+  <%- include('../partials/nav') %>
+  <div class="hero-body">
+    <div class="container">
+    <h1 class="title is-1">
+      Welcome to RuffHouse
+    </h1>
+    <p></p>
+    <p class="subtitle">
+      Dogs love to socialize with other dogs, but it can be hard to find a place for them to do that.
+      <br>RuffHouse is a web app where dog lovers can share pictures with each other and build community.
+    </p>
+    <a href="/sign-up"><button class="button is-link">
+      Sign up for free
+    </button></a>
+    </div>  
+  </div>
+</section>
+<section>
+<div class="container-is-fullhd">
+    <figure class="image is-fullwidth">
+      <img src="https://www.petguide.com/wp-content/uploads/2018/10/dog-friends.jpg">
+    </figure>
+</div>
+</section>
 </body>
 
 <%- include('../partials/footer') %>
