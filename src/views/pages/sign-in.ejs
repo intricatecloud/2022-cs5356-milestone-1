@@ -12,7 +12,7 @@
 
 
   <form id="login-form">
-    <input type="text" name="login" placeholder="Your user name" />
+    <input type="text" name="login" placeholder="Your Email" />
     <input type="password" name="password" id="password" />
     <button>
       Sign In
@@ -33,6 +33,13 @@
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
+      apiKey: "AIzaSyBsDn_BUsQpxVtCCc5Z1LZ1PQxrokKYUqM",
+      authDomain: "cs5356-project-steven.firebaseapp.com",
+      projectId: "cs5356-project-steven",
+      storageBucket: "cs5356-project-steven.appspot.com",
+      messagingSenderId: "153813072893",
+      appId: "1:153813072893:web:37a813a092f5d7987ab794",
+      measurementId: "G-FDDN35V2LF"      
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -52,9 +59,26 @@
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
 
+        firebase.auth().signInWithEmailAndPassword(login, password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          user.getIdToken().then((idToken) => {
+            fetch('/sessionLogin', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({idToken})
+            }).then(() => { window.location.href = '/dashboard'})
+          })
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+        });
+
         return false;
-      });
-  };
+        });
+      };
 </script>
 
 </html>

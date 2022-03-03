@@ -13,7 +13,7 @@
   <div class="container">
     Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
     <form id="login-form">
-      <label>Login</label>
+      <label>Email</label>
       <input id="login" type="text" name="login" />
       <label>Password</label>
       <input type="password" name="password" />
@@ -35,6 +35,13 @@
     const firebaseConfig = {
       // CS5356 TODO #2
       // Copy your Firebase config here too
+      apiKey: "AIzaSyBsDn_BUsQpxVtCCc5Z1LZ1PQxrokKYUqM",
+      authDomain: "cs5356-project-steven.firebaseapp.com",
+      projectId: "cs5356-project-steven",
+      storageBucket: "cs5356-project-steven.appspot.com",
+      messagingSenderId: "153813072893",
+      appId: "1:153813072893:web:37a813a092f5d7987ab794",
+      measurementId: "G-FDDN35V2LF"          
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -54,9 +61,26 @@
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
 
+        firebase.auth().createUserWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+            // Signed in, sign up process
+            const user = userCredential.user;
+            user.getIdToken().then((idToken) => {
+              fetch('/sessionLogin', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({idToken})
+              }).then(() => { window.location.href = '/dashboard'})
+            })
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+          });
+
         return false;
-      });
-  };
+        });
+      };
 </script>
 
 </html>
