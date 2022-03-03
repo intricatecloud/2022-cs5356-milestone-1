@@ -35,6 +35,12 @@
     const firebaseConfig = {
       // CS5356 TODO #2
       // Copy your Firebase config here too
+      apiKey: "AIzaSyDXxBTz8x-D8-epeuDEaux3j0CQp0OumvU",
+      authDomain: "ruffhouse-bb9ec.firebaseapp.com",
+      projectId: "ruffhouse-bb9ec",
+      storageBucket: "ruffhouse-bb9ec.appspot.com",
+      messagingSenderId: "631531276510",
+      appId: "1:631531276510:web:776b80096490988b089a4f"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -53,7 +59,26 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+        app.auth().createUserWithEmailAndPassword(login, password)
+          .then((userCredential) => {
 
+            var user = userCredential.user;
+            user.getIdToken().then((idToken) => {
+              fetch('/sessionLogin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idToken })
+              }).then(() => {
+                window.location.href = '/dashboard'
+              })
+            })
+
+          })
+            .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+
+            });
         return false;
       });
   };

@@ -30,9 +30,12 @@
 
   window.onload = () => {
     const firebaseConfig = {
-      // CS5356 TODO #2
-      // Create your own Firebase project. See the assignment for
-      // where you can get the Firebase config
+      apiKey: "AIzaSyDXxBTz8x-D8-epeuDEaux3j0CQp0OumvU",
+      authDomain: "ruffhouse-bb9ec.firebaseapp.com",
+      projectId: "ruffhouse-bb9ec",
+      storageBucket: "ruffhouse-bb9ec.appspot.com",
+      messagingSenderId: "631531276510",
+      appId: "1:631531276510:web:776b80096490988b089a4f"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -51,7 +54,25 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+        app.auth().signInWithEmailAndPassword(login, password).then(({
+          userCredential
+        }) => {
 
+          const user = userCredential.user;
+          user.getIdToken().then(idToken => {
+            fetch('/sessionLogin',{
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({idToken})
+            }).then(() => {
+              window.location.href='/dashboard'
+          })
+          })
+        })
+        // .catch((error) => {
+        //   const errorCode = error.code;
+        //   const errorMessage = error.message;
+        // });
         return false;
       });
   };
