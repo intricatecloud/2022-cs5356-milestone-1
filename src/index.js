@@ -9,15 +9,15 @@ const port = process.env.PORT || 8080;
 // CS5356 TODO #2
 // Uncomment this next line after you've created
 // serviceAccountKey.json
-// const serviceAccount = require("./../config/serviceAccountKey.json");
+const serviceAccount = require("./../config/serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
 
 // CS5356 TODO #2
 // Uncomment this next block after you've created serviceAccountKey.json
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-// });
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 // use cookies
 app.use(cookieParser());
@@ -58,7 +58,25 @@ app.post("/sessionLogin", async (req, res) => {
   // Create a session cookie using the Firebase Admin SDK
   // Set that cookie with the name 'session'
   // And then return a 200 status code instead of a 501
-  res.status(501).send();
+  const idToken = req.body.idToken;
+  const expiresIn = 60 * 60 * 1000; // in ms
+  admin.auth().createSessionCookie(idToken, {expiresIn})
+  .then(
+    (sessionCookie) => {
+      const options = {
+        maxAge: expiresIn,
+        httpOnly: true,
+        secure: true };
+      res.cookie('session', sessionCookie, options);
+      res.status(201).send(JSON.stringify({ status: 'success'}));
+    },
+    (error) => {
+      // debugger
+      res.status(401).send(error.toString());
+    }
+  );
+  // 501 means not implemented, just a placeholder
+  // res.status(501).send();
 });
 
 app.get("/sessionLogout", (req, res) => {
@@ -71,6 +89,16 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   // Get the message that was submitted from the request body
   // Get the user object from the request body
   // Add the message to the userFeed so its associated with the user
+  try {
+    const dogMessage = req.body;
+
+    await userFeed.add(req.user, dogMessage.message);
+    res.redirect("/dashboard");
+  } catch (err) {
+    res.status(500).send({message:err});
+    res.status(500).send(JSON.stringify({message: err}));
+  }
+  //
 });
 
 app.listen(port);

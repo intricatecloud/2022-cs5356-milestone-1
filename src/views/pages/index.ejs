@@ -4,7 +4,76 @@
 <head>
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="https://unpkg.com/bulma-modal-fx/dist/css/modal-fx.min.css" /> -->
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
     <style>
+      html,body {
+        background: #EFF3F4;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+      }
+      /*.has-bg-img { background: url('static/dog-background.jpeg'); background-size:cover; opacity: 0.5}*/
+      .has-bg-img{
+        position: relative;
+        overflow: hidden;
+      }
+      .is-bg-img {
+        position: absolute;
+        object-fit: cover;
+        object-position: top center;
+        width: 100%;
+        height: 100%;}
+      .is-transparent{opacity: 0.6;}
+
+      .hero-body .container {
+        max-width: 700px;
+      }
+      .hero-body .title {
+        /*color: hsl(192,17%,99%) !important;*/
+        color: rgb(0, 0, 0) !important;
+      }
+      .hero-body .subtitle {
+        color: rgb(0, 0, 0) !important;
+        padding-top: 1rem;
+        line-height: 1.5;
+      }
+
+
+      .card-image > .fa {
+        font-size: 8rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        color: rgb(0, 0, 0);
+      }
+      .card-content .content {
+        font-size: 14px;
+        margin: 1rem 1rem;
+      }
+      .card-content .content h4 {
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .card {
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
+        margin-bottom: 2rem;
+      }
+      .features {
+        padding: 5rem 0;
+      }
+
+      .is-shady {
+        animation: flyintoright .4s backwards;
+        background: #fff;
+        box-shadow: rgba(0, 0, 0, .1) 0 1px 0;
+        border-radius: 4px;
+        display: inline-block;
+        margin: 10px;
+        position: relative;
+        transition: all .2s ease-in-out;
+        }
+        .is-shady:hover {
+        box-shadow: 0 10px 16px rgba(0, 0, 0, .13), 0 6px 6px rgba(0, 0, 0, .19);
+        }
 
     </style>
 </head>
@@ -14,8 +83,75 @@
     <%- include('../partials/nav') %>
   </header>
 
-  Fill me in!
   <!-- CS5356 TODO #1 Add your landing page here -->
+
+  <!-- Product overview -->
+  <!-- <section class="hero is-info is-medium is-bold"> -->
+  <section class="hero is-medium is-bold has-bg-img">
+    <img class='is-bg-img is-transparent' src='static/dog-background.jpeg' alt='dog-background'>
+    <!-- The image in 'static/dog-background.jpeg' is from 4lovofdog.org. Creator: cg. Copyright: ©Christin Lola - stock.adobe.com-->
+    <div class="hero-body">
+      <div class="container has-text-centered">
+          <h1 class="title">
+          DogGo
+          </h1>
+          <h2 class="subtitle">
+          A place where you can share a constant stream of doggo pictures
+          </h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature sets -->
+  <section class="container">
+    <div class="columns features">
+        <div class="column is-4">
+            <div class="card is-shady">
+                <div class="card-image has-text-centered">
+                    <i class="fa fa-paw"></i>
+                </div>
+                <div class="card-content">
+                    <div class="content">
+                        <h4>Post</h4>
+                        <p>Share a new post of your cute doggo with the whole community.</p>
+                        <!-- <p><a href="#">Learn more</a></p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-4">
+            <div class="card is-shady">
+                <div class="card-image has-text-centered">
+                    <i class="fa fa-empire"></i>
+                </div>
+                <div class="card-content">
+                    <div class="content">
+                        <h4>Browse</h4>
+                        <p>View the doggo posts that other users have shared in the community.</p>
+                        <!-- <p><a href="#">Learn more</a></p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-4">
+          <div class="card is-shady">
+                <div class="card-image has-text-centered">
+                    <i class="fa fa-apple"></i>
+                </div>
+                <div class="card-content">
+                    <div class="content">
+                        <h4>Privacy</h4>
+                        <p>Limited access to the stream to only signed in users.</p>
+                        <!-- <p><a href="#">Learn more</a></p> -->
+                    </div>
+                </div>
+          </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- How to sign up -->
+  <!-- code in nav.ejs -->
 
 </body>
 
