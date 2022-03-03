@@ -1,15 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <%- include('../partials/head') %>
-</head>
+  <head>
+    <%- include('../partials/head') %>
+    <title>Doges</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+  body {
+    background-image: url("/static/images/doge.jpg");
+    background-repeat: no-repeat;
+    background-size:cover;
+    height: 100vh;
+    font-family: "Lato", sans-serif}
+  .mySlides {display: none}
+  footer {
+    bottom: 0px; 
+    position: absolute; 
+    width: 100%}
+  </style>
+  </head>
 
 <body>
   <header>
     <%- include('../partials/nav') %>
   </header>
 
+  <div style="text-align:center">
   <div class="container">
     Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
     <form id="login-form">
@@ -17,12 +37,13 @@
       <input id="login" type="text" name="login" />
       <label>Password</label>
       <input type="password" name="password" />
-      <button>Log in</button>
+      <button>Sign up</button>
     </form>
     <div id="login-error" style="display: none;">
     </div>
     <a href="/dashboard">Dashboard</a>
   </div>
+</div>
 </body>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
@@ -33,8 +54,15 @@
   window.onload = () => {
     console.log('Running onload')
     const firebaseConfig = {
-      // CS5356 TODO #2
+      // CS5356 TODO some progress #2
       // Copy your Firebase config here too
+      apiKey: "AIzaSyAwik2DL60NgRf32CI3uPMt50nWpTK7PIk",
+      authDomain: "ab2425-cornell-tech.firebaseapp.com",
+      projectId: "ab2425-cornell-tech",
+      storageBucket: "ab2425-cornell-tech.appspot.com",
+      messagingSenderId: "791274938577",
+      appId: "1:791274938577:web:4ffdcd0304fd705b44e5f0",
+      measurementId: "G-32L9XCDXLE"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -53,7 +81,21 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
-
+        firebase.auth().createUserWithEmailAndPassword(login, password).then(user => {
+        // Get the user's ID token as it is needed to exchange for a session cookie.
+          return user.user.getIdToken().then((idToken) => {
+            // Session login endpoint is queried and the session cookie is set.
+            // CSRF protection should be taken into account.
+            // ...
+            fetch('/sessionLogin', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({ idToken })
+            }).then(() => {
+              window.location.href = '/dashboard'
+            })
+          })
+        })
         return false;
       });
   };
