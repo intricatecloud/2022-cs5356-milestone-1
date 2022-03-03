@@ -5,16 +5,17 @@ module.exports = (req, res, next) => {
 
   if (sessionCookie === "") {
     res.redirect("/sign-in");
-  } else {
+    return
+    } else {
     admin
       .auth()
       .verifySessionCookie(sessionCookie, true /** checkRevoked */)
-      .then(userData => {
+      .then((userData) => {
         console.log("Logged in:", userData.email);
         req.user = userData;
         next();
       })
-      .catch(error => {
+      .catch((error) => {
         res.redirect("/sign-in");
       });
   }

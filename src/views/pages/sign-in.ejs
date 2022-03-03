@@ -27,20 +27,22 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
 
 <script>
-
   window.onload = () => {
     const firebaseConfig = {
+      // DONE ✅
+
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
-      apiKey: "AIzaSyCJxXWLesj1VNh0PqTXtJGd-FTuSbeCeY8",
-      authDomain: "startupsystemsmilestone1.firebaseapp.com",
-      projectId: "startupsystemsmilestone1",
-      storageBucket: "startupsystemsmilestone1.appspot.com",
-      messagingSenderId: "580093202200",
-      appId: "1:580093202200:web:8e9ff35abddedd1a16d86d"
-    };
 
+      apiKey: "AIzaSyBF4BxY_1MgepA3J5aHP2z88f8ftjH6gwU",
+      authDomain: "cs5356-22.firebaseapp.com",
+      projectId: "cs5356-22",
+      storageBucket: "cs5356-22.appspot.com",
+      messagingSenderId: "802452725516",
+      appId: "1:802452725516:web:798e1cffa572327083b329",
+      measurementId: "G-PK7ELW8TLH",
+    };
 
     const app = firebase.initializeApp(firebaseConfig);
 
@@ -49,32 +51,35 @@
     document
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
-        event.preventDefault();
-        const login = event.target.login.value;
-        const password = event.target.password.value;
+      event.preventDefault();
+      const login = event.target.login.value;
+      const password = event.target.password.value;
 
-        // CS5356 TODO #3
-        // Sign in using the Firebase SDK for Web
-        // Get the users ID token
-        // Start a new session with the users ID token
-        // Redirect the user to the /dashboard
-        import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-        
-        const auth = getAuth();
-        signInWithEmailAndPassword(auth, email, password)
+      // DONE ✅
+
+      // CS5356 TODO #3
+      // Sign in using the Firebase SDK for Web
+      // Get the users ID token
+      // Start a new session with the users ID token
+      // Redirect the user to the /dashboard
+      app.auth().signInWithEmailAndPassword(login, password)
           .then((userCredential) => {
-            // Signed in 
             const user = userCredential.user;
-            // ...
+            
+            user.getIdToken().then((idToken) => {
+              fetch('/sessionLogin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify({ idToken })
+              }).then(() => {
+                window.location.href = '/dashboard'
+              })
+            })
           })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-          });
-        
-        return false;
-      });
+      
+    });
   };
+
 </script>
 
 </html>
