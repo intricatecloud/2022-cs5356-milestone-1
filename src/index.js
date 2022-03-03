@@ -58,7 +58,21 @@ app.post("/sessionLogin", async (req, res) => {
   // Create a session cookie using the Firebase Admin SDK
   // Set that cookie with the name 'session'
   // And then return a 200 status code instead of a 501
-  res.status(501).send();
+  const idToken = req.body.idToken.toString();
+  const expiresIn = 60 * 60 * 24 * 7 * 1000;
+  admin
+    .auth()
+    .createSessionCookie(idToken, { expiresIn })
+    .then(
+      (sessionCookie) => {
+        const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+        console.log("set up session")
+        res.cookie('session', sessionCookie, options);
+        res.status(200).send();
+      },
+      (error) => {
+        res.status(401).send('UNAUTHORIZED REQUEST!');
+      });
 });
 
 app.get("/sessionLogout", (req, res) => {
@@ -71,6 +85,12 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   // Get the message that was submitted from the request body
   // Get the user object from the request body
   // Add the message to the userFeed so its associated with the user
+  const message = req.body.message;
+  const usr = req.user
+  userFeed.add(usr, message)
+    .then(() => {
+      res.redirect('/dashboard');
+    });
 });
 
 app.listen(port);

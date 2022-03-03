@@ -9,16 +9,12 @@
         width: 100%;
         height: auto;
       }
-      .container {
-        position: relative;
-      }
-      .description {
+
+      .overview {
+        color: white;
         position: absolute;
-        /* width: 35vw;
-        height: fit-content; */
-        top: 10vh;
-        left: 10vh;
-        color:white;
+        top: 60px;
+        left: 80px;
       }
     </style>
 </head>
@@ -29,23 +25,24 @@
   </header>
   <!-- CS5356 TODO #1 Add your landing page here -->
   <div class="container">
-    <div class="description">
-      <h1 class="title is-size-1">Ruffhouse</h1>
-      <h2 class="subtitle is-size-4">SHARE A CONSTANT STREAM OF DOG PICTURES.</h2>
-      <h2 class="subtitle is-size-4">Product Overviews</h2>
-      <h2 class="mb-4 is-size-5">Dogs can benefit a lot from socializing with other dogs, <br> it can be hard finding a place for them to do that.</h2>
+    <div class="overview">
+      <h1 class="is-size-1">Ruffhouse</h1>
+      <h2 class="mb-4 is-size-4">A place where dogs can socialize with others.</h2>
+      <h2 class="is-size-3">Product Overview</h2>
       <h2 class="mb-4 is-size-5">
-        At here, you can... <br>
+        This is a social platform for people to share cute pictures of their dog.
+        <br> Help your dog make a friend!
       </h2>
-      <ul><li>* Share a new post with the community</li> <li>* View posts that other users have shared</li></ul>
-      <div class="buttons mt-6 is-justify-content-flex-start">
-        <a href="/sign-in" class="button is-primary">Sign In
-        </a>
-        <a href="/sign-up" class="button is-link">Sign Up
-        </a>
-      </div>
+      <h2 class="is-size-3">Features</h2>
+      <ol>
+        <li> Create an account and sign in </li>
+        <li> View posts that other users have shared</li>
+        <li> Share a new post with the community</li>
+      </ol>
+      <a href="/sign-in" class="button mt-4">Sign In</a>
+      <a href="/sign-up" class="button mt-4">Sign Up</a>
     </div>
-    <img class="landing-img" src="static/hero-bg.jpg"/>
+    <img class="landing-img" src="static/hero-bg.jpg" />
   </div>
 </body>
 
