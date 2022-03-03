@@ -4,18 +4,83 @@
 <head>
   <%- include('../partials/head') %>
     <!-- Include any custom css classes that you want available on this page here -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <style>
 
     </style>
 </head>
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <body>
   <header>
     <%- include('../partials/nav') %>
   </header>
 
-  Fill me in!
   <!-- CS5356 TODO #1 Add your landing page here -->
+  <br>
+  <section class="hero is-danger">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title is-2">Welcome to Ruffhouse!</h1>
+        <h2 class="subtitle is-5">
+          A web app that allows you to share pics of your cute dog.
+        </h2>
+      </div>
+    </div>
+  </section>
+  
+  <br><br>
+
+  <div class="columns is-mobile is-centered">
+    <div class="column is-narrow">
+      <div class="box" style="width: 400px;height: 400px;">
+        <article class="message is-primary" style="height: 350px;">
+          <div class="message-header">
+            <p><font size="+2">Product Overview</font></p>
+            <button class="delete" aria-label="delete"></button>
+          </div>
+          <div class="message-body">
+            Dogs can benefit a lot from socializing with other dogs, 
+            but it can be hard finding a place for them to do that.
+            Raffhouse solves it by allowing people to share a 
+            constant stream of dog pictures.
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="column is-narrow">
+      <div class="box" style="width: 400px;height: 400px;">
+        <article class="message is-warning" style="height: 350px;">
+          <div class="message-header">
+            <p><font size="+2">Feature Sets</font></p>
+            <button class="delete" aria-label="delete"></button>
+          </div>
+          <div class="message-body">
+            <font size="+1">User of Raffhouse can:</font>
+            <ul><br>
+              <li>- create an account and sign in</li>
+              <li>- view posts that other users have shared</li>
+              <li>- share a new post with the community</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>   
+
+    <div class="column is-narrow">
+      <div class="box" style="width: 400px; height: 400px;">
+        <article class="message is-link" style="height: 350px;">
+          <div class="message-header">
+            <p><font size="+2">How to Sign Up</font></p>
+            <button class="delete" aria-label="delete"></button>
+          </div>
+          <div class="message-body">
+            Click top right corner to Sign Up for Raffhouse!
+          </div>
+        </article>
+      </div>
+    </div>  </div>
 
 </body>
 

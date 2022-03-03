@@ -22,6 +22,7 @@
     </div>
     </div>
   </form>
+
 </body>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
@@ -29,10 +30,18 @@
 <script>
 
   window.onload = () => {
+
     const firebaseConfig = {
       // CS5356 TODO #2
       // Create your own Firebase project. See the assignment for
       // where you can get the Firebase config
+      apiKey: "AIzaSyChmFEc5UJcFry-LAe95f6yNyDf6dRvPec",
+      authDomain: "fluent-timing-312313.firebaseapp.com",
+      projectId: "fluent-timing-312313",
+      storageBucket: "fluent-timing-312313.appspot.com",
+      messagingSenderId: "16464048392",
+      appId: "1:16464048392:web:d6e43d9f90fa8f3b427cbd",
+      measurementId: "G-CYK5KQK2GL"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -51,6 +60,22 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
+
+        app.auth().signInWithEmailAndPassword(login, password)
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+
+            user.getIdToken().then((idToken) => {
+              fetch('/sessionLogin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idToken })
+              }).then(() => {
+                window.location.href = '/dashboard'
+              })
+            })
+          })
 
         return false;
       });
