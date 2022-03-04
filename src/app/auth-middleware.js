@@ -9,12 +9,12 @@ module.exports = (req, res, next) => {
     admin
       .auth()
       .verifySessionCookie(sessionCookie, true /** checkRevoked */)
-      .then(userData => {
+      .then((userData) => {
         console.log("Logged in:", userData.email);
         req.user = userData;
         next();
       })
-      .catch(error => {
+      .catch((error) => {
         res.redirect("/sign-in");
       });
   }
