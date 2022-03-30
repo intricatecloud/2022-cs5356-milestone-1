@@ -28,6 +28,7 @@ app.use(
     extended: true,
   })
 );
+app.use(express.static(path.resolve(__dirname, '../client/build')));
 // set the view engine to ejs
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -49,8 +50,9 @@ app.get("/sign-up", function (req, res) {
 });
 
 app.get("/dashboard", authMiddleware, async function (req, res) {
-  const feed = await userFeed.get();
-  res.render("pages/dashboard", { user: req.user, feed });
+  // const feed = await userFeed.get();
+  // res.render("pages/dashboard", { user: req.user, feed });
+  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 });
 
 app.post("/sessionLogin", async (req, res) => {
@@ -108,19 +110,19 @@ app.get("/sessionLogout", (req, res) => {
   res.redirect("/sign-in");
 });
 
-app.post("/dog-messages", authMiddleware, async (req, res) => {
-  // CS5356 TODO #5
-  // Get the message that was submitted from the request body
-  // Get the user object from the request body
-  // Add the message to the userFeed so its associated with the user
-  try {
-    const dogMessage = req.body;
-    await userFeed.add(req.user, dogMessage.message);
-    res.redirect("/dashboard");
-  } catch (err) {
-    res.status(500).send(JSON.stringify({message: err}));
-  }
-});
+// app.post("/dog-messages", authMiddleware, async (req, res) => {
+//   // CS5356 TODO #5
+//   // Get the message that was submitted from the request body
+//   // Get the user object from the request body
+//   // Add the message to the userFeed so its associated with the user
+//   try {
+//     const dogMessage = req.body;
+//     await userFeed.add(req.user, dogMessage.message);
+//     res.redirect("/dashboard");
+//   } catch (err) {
+//     res.status(500).send(JSON.stringify({message: err}));
+//   }
+// });
 
 app.listen(port);
 console.log("Server started at http://localhost:" + port);
