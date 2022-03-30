@@ -9,16 +9,16 @@ const List = () => {
   const [rating,setRating] = useState('')
   const places = [
     {name:'Statue of Liberty'},
-    {name:'White House'},
-    {name:"Golden State Bridge"},
-    {name:"Las Vegas"},
-    {name:"Yellowstone National Park"}
+    {name:'High Line Park'},
+    {name:"Little Island"},
+    {name:"Roosevelt Island"},
+    {name:"Hudson Yard"}
 
   ]
 
   return (
     <div className={classes.container}>
-      <Typography variant="h4">Itinerary around you</Typography>   
+      <Typography variant="h4">Attractions around you</Typography>   
       <FormControl className={classes.formControl}>
         <InputLabel id="rating">Rating</InputLabel>
         <Select id="rating" value={rating} onChange={(e) => setRating(e.target.value)}>
