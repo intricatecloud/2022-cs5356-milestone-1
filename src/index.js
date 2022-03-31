@@ -1,3 +1,4 @@
+const functions = require("firebase-functions") 
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
@@ -122,5 +123,6 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
   }
 });
 
-app.listen(port);
-console.log("Server started at http://localhost:" + port);
+exports.app = functions.https.onRequest(app);
+// app.listen(port);
+// console.log("Server started at http://localhost:" + port);
