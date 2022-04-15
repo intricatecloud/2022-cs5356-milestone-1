@@ -10,26 +10,17 @@
     <%- include('../partials/nav') %>
   </header>
 
-  <div class="hero is-fullheight">
-    <div class="hero-body">
-      <div class="container">
-        <div class="title">
-          Sign Up
-        </div>
-        <div class="subtitle">
-          Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
-        </div>
-        <form id="login-form">
-          <label>Email</label>
-          <input id="email" type="text" name="email" />
-          <label>Password</label>
-          <input type="password" name="password" />
-          <button>Log in</button>
-        </form>
-        <div id="login-error" style="display: none;">
-        </div>
-        <a href="/dashboard">Dashboard</a>
-      </div>
+  <div class="container">
+    Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
+    <form id="login-form">
+      <label>Login</label>
+      <input id="login" type="text" name="login" />
+      <label>Password</label>
+      <input type="password" name="password" />
+      <button>Log in</button>
+    </form>
+    <div id="login-error" style="display: none;">
+      <a href="/dashboard">Dashboard</a>
     </div>
     
   </div>
