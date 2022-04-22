@@ -2,21 +2,23 @@
   "name": "2022-cs-5356-milestone-1",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "nodemon src/index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.2",
+    "body-parser": "^1.20.0",
     "bulma": "^0.9.3",
     "casual": "^1.6.2",
     "cookie-parser": "^1.4.6",
     "ejs": "^3.1.6",
-    "express": "^4.17.2",
-    "firebase": "^9.6.6",
+    "express": "^4.17.3",
+    "firebase": "^9.6.9",
     "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.19.0",
+    "mongodb": "^4.5.0",
     "nodemon": "^2.0.15"
   },
   "devDependencies": {
