@@ -19,7 +19,8 @@
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.19.0",
     "mongodb": "^4.5.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "snekjs": "^1.0.4"
   },
   "devDependencies": {
     "cypress": "^9.3.1"
