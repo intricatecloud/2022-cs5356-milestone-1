@@ -13,11 +13,11 @@
   <div class="container">
     Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
     <form id="login-form">
-      <label>Username</label>
+      <label>Login</label>
       <input id="login" type="text" name="login" />
       <label>Password</label>
       <input type="password" name="password" />
-      <button>Sign Up</button>
+      <button>Log in</button>
     </form>
     <div id="login-error" style="display: none;">
     </div>
@@ -31,18 +31,15 @@
 <script>
   window.onload = () => {
     console.log('Running onload')
-    const firebaseConfig = {  apiKey: "AIzaSyB_wt1W4TNsLqe7lPifAjMlzMAQsOQvytw",
+    const firebaseConfig = {
+      apiKey: "AIzaSyB_wt1W4TNsLqe7lPifAjMlzMAQsOQvytw",
   authDomain: "cs-5356-c641b.firebaseapp.com",
   projectId: "cs-5356-c641b",
   storageBucket: "cs-5356-c641b.appspot.com",
   messagingSenderId: "801240318543",
-  appId: "1:801240318543:web:84cd6deb69ca1eff70203a"
-    };
-
+  appId: "1:801240318543:web:84cd6deb69ca1eff70203a"    };
     const app = firebase.initializeApp(firebaseConfig);
-
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
-
     document
       .getElementById("login-form")
       .addEventListener("submit", (event) => {
@@ -52,14 +49,12 @@
         firebase.auth().createUserWithEmailAndPassword(login, password)
           .then((userCredential) => {
             var user = userCredential.user;
-            window.location.assign("/sign-in");  
+            window.location.href("/sign-in");  
           })
           .catch((error) => {
-            console.log(error)
             console.log('sign up fail');
           });
       });
-
   };
 </script>
 
