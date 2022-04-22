@@ -13,11 +13,11 @@
   <div class="container">
     Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
     <form id="login-form">
-      <label>Login</label>
+      <label>Login Email for Sign Up</label>
       <input id="login" type="text" name="login" />
       <label>Password</label>
       <input type="password" name="password" />
-      <button>Log in</button>
+      <button>Sign Up</button>
     </form>
     <div id="login-error" style="display: none;">
     </div>
@@ -27,6 +27,7 @@
 
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-performance-compat.js"></script>
 
 <script>
   window.onload = () => {
@@ -39,6 +40,8 @@
   messagingSenderId: "801240318543",
   appId: "1:801240318543:web:84cd6deb69ca1eff70203a"    };
     const app = firebase.initializeApp(firebaseConfig);
+    const fire_pref = firebase.performance();
+
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
     document
       .getElementById("login-form")

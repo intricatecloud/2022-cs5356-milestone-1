@@ -13,6 +13,12 @@ const port = process.env.PORT || 8080;
 app.use(express.json());
 
 
+// TODO: Replace the following with your app's Fire
+// Initialize Firebase
+
+
+// Initialize Performance Monitoring and get a reference to the service
+
 
 // Database Connection Info
 
@@ -128,6 +134,10 @@ const authMiddleware = require("./app/auth-middleware");
 admin.initializeApp({
    credential: admin.credential.cert(serviceAccount),
 });
+
+const fire_pref = require("firebase/performance");
+
+
 
 // use cookies
 app.use(cookieParser());
