@@ -1,121 +1,88 @@
 <!DOCTYPE html>
-<html lang="en" class="has-background-dark">
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Rufflehouse</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" >
+    <%- include('../partials/head') %>
 </head>
+
 <body>
-    <div id="leaderboard" class="container">
-        <!-- scores will be inserted by the script here -->
-    </div>
-    <button onclick="randomize()">Randomize</button>
+
+    <!-- <div id="outer_box" class="box">
+
+        <div class="columns">
+            Usernames
+                <div id="name_column" class="column">
+                    <h2>
+                        name
+                    </h2>
+                </div>
+                <div id="score_column" class="columm">
+                    <h2>
+                        score
+                    </h2>
+                </div>
+        </div>
+	</div> -->
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="tr1">
+                <td id="tr1td1">tr1td1</td>
+                <td id="tr1td2">tr1td2</td>
+            </tr>
+            <tr id="tr2">
+                <td id="tr2td1">tr2td1</td>
+                <td id="tr2td2">tr2td2</td>
+            </tr>
+            <tr id="tr3">
+                <td id="tr3td1">tr3td1</td>
+                <td id="tr3td2">tr3td2</td>
+            </tr>
+        </tbody>
+    </table>
+
     <script>
-            let scores = [
-                {name: "Player 1", score: 300},
-                {name: "Player 2", score: 370},
-                {name: "Player 3", score: 500},
-                {name: "Player 4", score: 430},
-                {name: "Player 5", score: 340},
-            ];
 
-            function updateLeaderboardView() {
-                let leaderboard = document.getElementById("leaderboard");
-                leaderboard.innerHTML = "";
+  
+        async function fetchPlayersJSON() {
+            const response = await fetch('/get');
+            const players = await response.json();
+            return players;
+        }
+        fetchPlayersJSON().then(players => {
+            console.log(players) //grab json and put stuff in here
 
-                scores.sort(function(a, b){ return b.score - a.score  });
-                let elements = []; // we'll need created elements to update colors later on
-                // create elements for each player
-                for(let i=0; i<scores.length; i++) {
-                    let name = document.createElement("div");
-                    let score = document.createElement("div");
-                    name.classList.add("name");
-                    score.classList.add("score");
-                    name.innerText = scores[i].name;
-                    score.innerText = scores[i].score;
-
-                    let scoreRow = document.createElement("div");
-                    scoreRow.classList.add("row");
-                    scoreRow.appendChild(name);
-                    scoreRow.appendChild(score);
-                    leaderboard.appendChild(scoreRow);
-
-                    elements.push(scoreRow);
-
-                }
-
-                let colors = ["gold", "silver", "#cd7f32"];
-                for(let i=0; i < 3; i++) {
-                    elements[i].style.color = colors[i];
-                }
-            }
-
-            updateLeaderboardView();
-            function randomize() {
-                for(var i=0; i<scores.length; i++) {
-                    scores[i].score = Math.floor(Math.random() * (600 - 300 + 1)) + 300;
-                }
-                // when your data changes, call updateLeaderboardView
-                updateLeaderboardView();
+            for (let i = 0; i < 3; i++) {
+                // array.push(players[i])
+                document.write (players[i]["score"]+ "  ") 
+                // document.getElementById("trtd1").innerHTML = players[i]["username"]
             }
 
 
 
+
+            document.write (players[0]["username"])
+            document.write (players[0]["score"])
+
+            console.log(players[0]["username"])
+            
+            // for (let i = 0; i <= players.length; i++) {
+            //     console.log(players[i]["score"])
+            // }
+     
+
+        });
+
+ 
 
     </script>
 
+
+
 </body>
-
-
-<!-- 
-<body>
-<header>
-  <%- include('../partials/nav') %>
-  </header>           
-  <section class = "section">
-    <div class = "container has-text-centered">
-      
-       <span class = "title">
-           Ruffle House Meet Dogs and not Cats
-       </span>
-       <br>
-       <br>
-
-   <section class = "hero is-warning is-bold">
-    <div class = "hero-body">
-       <div class = "container has-text-centered">
-          <h1 class = "title">
-             CS 5356 Landing Page Assignment 1 
-          </h1>
-          <h2 class = "subtitle">
-             James An 
-          </h2>
-       </div>
-    </div>
- </section>
-</div>
-</section>
-
-</body> -->
-<script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-performance-compat.js"></script>
-
-<script>
-    window.onload = () => {
-      const firebaseConfig = {
-        apiKey: "AIzaSyB_wt1W4TNsLqe7lPifAjMlzMAQsOQvytw",
-    authDomain: "cs-5356-c641b.firebaseapp.com",
-    projectId: "cs-5356-c641b",
-    storageBucket: "cs-5356-c641b.appspot.com",
-    messagingSenderId: "801240318543",  
-    appId: "1:801240318543:web:84cd6deb69ca1eff70203a"    };
-      const app = firebase.initializeApp(firebaseConfig);
-      const fire_pref = firebase.performance();
-      }
-  </script>
-<%- include('../partials/footer') %>
-
-</html>
