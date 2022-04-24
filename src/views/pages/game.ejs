@@ -26,7 +26,8 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-performance-compat.js"></script>
 
-  <script>
+  <script type="text/javascript">
+
   const firebaseConfig = {
             apiKey: "AIzaSyB_wt1W4TNsLqe7lPifAjMlzMAQsOQvytw",
             authDomain: "cs-5356-c641b.firebaseapp.com",
@@ -36,7 +37,6 @@
             appId: "1:801240318543:web:84cd6deb69ca1eff70203a"    };
     const app = firebase.initializeApp(firebaseConfig);
     const fire_pref = firebase.performance();
-    
     const board_border = 'black';
     const board_background = "white";
     const snake_col = 'lightblue';
@@ -50,7 +50,7 @@
       {x: 160, y: 200}
     ]
 
-    let score = 0;
+    let session_score = 1000;
     // True if changing direction
     let changing_direction = false;
     // Horizontal velocity
@@ -76,10 +76,32 @@
     function main() {
 
         if (has_game_ended()) {
-          window.location.href = '/dashboard';
-          //james parson to update
-          return 
-        }
+
+
+
+                  async function Get_Email() {
+                    const email = await fetch('/get_email');
+                    return email.text();
+                  }
+                  Get_Email().then(email => {
+                        let player_session = {
+                            username: email,
+                            score: session_score,
+                        };
+
+                        return fetch("/create", {
+                            method: "POST",
+                            headers: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(player_session),
+                           
+                        });   
+                       window.location.href = '/dashboard';
+                  }); 
+                  return 
+                }
 
         changing_direction = false;
         setTimeout(function onTick() {
@@ -199,9 +221,9 @@
       const has_eaten_food = snake[0].x === food_x && snake[0].y === food_y;
       if (has_eaten_food) {
         // Increase score
-        score += 10;
+        session_score += 1;
         // Display score on screen
-        document.getElementById('score').innerHTML = score;
+        document.getElementById('score').innerHTML = session_score;
         // Generate new food location
         gen_food();
       } else {

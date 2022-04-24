@@ -1,4 +1,3 @@
-//const functions = require("firebase-functions")
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
@@ -14,6 +13,7 @@ const uri =  "mongodb+srv://ja548:3hFmV7tyeqjyPjfP@cluster0.ggyax.mongodb.net/my
 const client = new MongoClient(uri,{ useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 app.post("/create", async (request, response) => {
+
   try {
     await client.connect();
     const collection = client.db("game").collection("scores");
@@ -32,16 +32,10 @@ app.post("/create", async (request, response) => {
     client.close()
   }
  else if (  old_player_score <= request.body.score && (request.body.username !== null) ) {
-      let { username, score } = req.body;
       // check if the username already exists
-      collection.updateOne({
-        _id: alreadyExisting._id
-      }, {
-          $set: {
-            score: request.body.score
-        }
-      })
-      response.send({ "_id": alreadyExisting._id });
+      let result = await collection.updateOne({ username: request.body.username }, { $set: { score: request.body.score } })
+
+      response.send({ "_id": result.insertedId });
       client.close()
 }
   else {
@@ -131,8 +125,8 @@ app.get("/sign-up", function (req, res) {
   res.render("pages/sign-up");
 });
 
-app.get("/game", function (req, res) {
-  res.render("pages/game");
+app.get("/game",authMiddleware, async function (req, res) {
+  res.render("pages/game", { user: req.user.email  });
 });
 
 
@@ -165,11 +159,6 @@ app.get("/sessionLogout", (req, res) => {
 });
 
 app.post("/dog-messages", authMiddleware, async (req, res) => {
-  // CS5356 TODO #5
-
-  // Get the message that was submitted from the r   equest body
-  // Get the user object from the request body
-  // Add the message to the userFeed so its associated with the user
   const msg = req.body.message
   const user = req.user 
   await userFeed.add(user,msg)
@@ -178,7 +167,13 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
 });
 
 
-//exports.app = functions.https.onRequest(app);
+app.get("/get_email", authMiddleware, async function (req, res) {
+  res.send(req.user.email);
+});
+
+//const functions = require("firebase-functions")
+
+// exports.app = functions.https.onRequest(app);
 
 app.listen({ hostname : 'localhost', port : PORT});
 console.log("Server started at http://localhost:" + PORT);
