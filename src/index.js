@@ -134,6 +134,10 @@ app.get("/leaderboard", function (req, res) {
   res.render("pages/leaderboard");
 });
 
+app.get("/chess", function (req, res) {
+  res.render("pages/chess");
+});
+
 app.get("/dashboard", authMiddleware, async function (req, res) {
   const feed = await userFeed.get();
   res.render("pages/dashboard", { user: req.user, feed });
