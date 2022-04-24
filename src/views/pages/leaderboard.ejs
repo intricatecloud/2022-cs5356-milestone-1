@@ -4,7 +4,19 @@
 <head>
     <%- include('../partials/head') %>
 </head>
-
+<script>
+    window.onload = () => {
+      const firebaseConfig = {
+        apiKey: "AIzaSyB_wt1W4TNsLqe7lPifAjMlzMAQsOQvytw",
+    authDomain: "cs-5356-c641b.firebaseapp.com",
+    projectId: "cs-5356-c641b",
+    storageBucket: "cs-5356-c641b.appspot.com",
+    messagingSenderId: "801240318543",  
+    appId: "1:801240318543:web:84cd6deb69ca1eff70203a"    };
+      const app = firebase.initializeApp(firebaseConfig);
+      const fire_pref = firebase.performance();
+      }
+  </script>
 <body  background="https://th.bing.com/th/id/OIP.-TZz-JNKElwOL7xEjDXDUgHaEr?w=310&h=195&c=7&r=0&o=5&dpr=2.5&pid=1.7">
 
     <div class="columns">
@@ -57,7 +69,6 @@
         }
         fetchPlayersJSON().then(players => {
             let player_array = [players][0];
-            console.log(player_array)
             let player_name = []
             let player_score = []
             for (let i = 0; i < 3; i++) {
@@ -74,9 +85,6 @@
             document.getElementById("tr2td2").innerHTML = player_score[1]
             document.getElementById("tr3td1").innerHTML = player_name[2]
             document.getElementById("tr3td2").innerHTML = player_score[2]
-
-            console.log(player_name)
-            console.log(player_score)
 
 
 

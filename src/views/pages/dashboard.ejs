@@ -5,7 +5,19 @@
   <%- include('../partials/head') %>
 
 </head>
-
+<script>
+  window.onload = () => {
+    const firebaseConfig = {
+      apiKey: "AIzaSyB_wt1W4TNsLqe7lPifAjMlzMAQsOQvytw",
+  authDomain: "cs-5356-c641b.firebaseapp.com",
+  projectId: "cs-5356-c641b",
+  storageBucket: "cs-5356-c641b.appspot.com",
+  messagingSenderId: "801240318543",  
+  appId: "1:801240318543:web:84cd6deb69ca1eff70203a"    };
+    const app = firebase.initializeApp(firebaseConfig);
+    const fire_pref = firebase.performance();
+    }
+</script>
 <body>
   <header>
     <%- include('../partials/nav', { email: user.email }) %>

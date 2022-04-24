@@ -50,7 +50,7 @@
       {x: 160, y: 200}
     ]
 
-    let session_score = 1000;
+    let session_score = 13311321;
     // True if changing direction
     let changing_direction = false;
     // Horizontal velocity
@@ -89,7 +89,7 @@
                             score: session_score,
                         };
 
-                        return fetch("/create", {
+                        fetch("/create", {
                             method: "POST",
                             headers: {
                             Accept: "application/json",
@@ -98,7 +98,7 @@
                             body: JSON.stringify(player_session),
                            
                         });   
-                       window.location.href = '/dashboard';
+                       window.location.href = '/leaderboard';
                   }); 
                   return 
                 }
