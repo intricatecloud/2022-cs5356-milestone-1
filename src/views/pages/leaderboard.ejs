@@ -7,47 +7,44 @@
 
 <body>
 
-    <!-- <div id="outer_box" class="box">
-        <div class="columns">
-            Usernames
-                <div id="name_column" class="column">
-                    <h2>
-                        name
-                    </h2>
-                </div>
-                <div id="score_column" class="columm">
-                    <h2>
-                        score
-                    </h2>
-                </div>
+    <div class="columns">
+        <div class="column is-one-third"></div>
+        <div class="column is-one-third">
+            <div>
+                <table class="table is-striped is-bordered is-size-2 has-text-weight-bold">
+                    <thead>
+                        <tr>
+                            <th style="text-shadow: -1px -1px black; size:10px">Username</th>
+                            <th style="text-shadow: -1px -1px black; size:10px">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="tr1" , style="background-color: rgb(205, 219, 237)">
+                            <td id="tr1td1" , style="color: gold; text-shadow: -1px -1px black; size:10px">tr1td1</td>
+                            <td id="tr1td2" , style="color: gold; text-shadow: -1px -1px black; size:10px">tr1td2</td>
+                        </tr>
+                        <tr id="tr2" , style="background-color: rgb(205, 219, 237)">
+                            <td id="tr2td1" , style="color: silver; text-shadow: -1px -1px black; size:10px">tr2td1</td>
+                            <td id="tr2td2" , style="color: silver; text-shadow: -1px -1px black; size:10px">tr2td2</td>
+                        </tr>
+                        <tr id="tr3" , style="background-color: rgb(205, 219, 237)">
+                            <td id="tr3td1" , style="color: rgb(75, 48, 2); text-shadow: -1px -1px black; size:10px">
+                                tr3td1</td>
+                            <td id="tr3td2" , style="color: rgb(75, 48, 2); text-shadow: -1px -1px black; size:10px">
+                                tr3td2</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-	</div> -->
+        <div class="column is-one-third"></div>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Username</th>
-                <th>Score</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr id="tr1">
-                <td id="tr1td1">tr1td1</td>
-                <td id="tr1td2">tr1td2</td>
-            </tr>
-            <tr id="tr2">
-                <td id="tr2td1">tr2td1</td>
-                <td id="tr2td2">tr2td2</td>
-            </tr>
-            <tr id="tr3">
-                <td id="tr3td1">tr3td1</td>
-                <td id="tr3td2">tr3td2</td>
-            </tr>
-        </tbody>
-    </table>
+
+
 
     <script>
-  
+
         async function fetchPlayersJSON() {
             const response = await fetch('/get');
             const players = await response.json();
@@ -59,21 +56,30 @@
             let player_name = []
             let player_score = []
             for (let i = 0; i < 3; i++) {
-                 player_name.push(player_array[i].username)
-                 player_score.push(player_array[i].score)
+                player_name.push(player_array[i].username)
+                player_score.push(player_array[i].score)
 
-                // document.write (players[i]["score"]+ "  ") 
-                // document.getElementById("trtd1").innerHTML = players[i]["username"]
             }
+
+
+            // fill in the leaderboard
+            document.getElementById("tr1td1").innerHTML = player_name[0]
+            document.getElementById("tr1td2").innerHTML = player_score[0]
+            document.getElementById("tr2td1").innerHTML = player_name[1]
+            document.getElementById("tr2td2").innerHTML = player_score[1]
+            document.getElementById("tr3td1").innerHTML = player_name[2]
+            document.getElementById("tr3td2").innerHTML = player_score[2]
+
             console.log(player_name)
             console.log(player_score)
-            // for (let i = 0; i <= players.length; i++) {
-            //     console.log(players[i]["score"])
-            // }
-     
+
+
+
         });
- 
+
+
     </script>
+
 
 
 
