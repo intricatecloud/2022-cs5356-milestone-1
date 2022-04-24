@@ -8,7 +8,6 @@
 <body>
 
     <!-- <div id="outer_box" class="box">
-
         <div class="columns">
             Usernames
                 <div id="name_column" class="column">
@@ -48,7 +47,6 @@
     </table>
 
     <script>
-
   
         async function fetchPlayersJSON() {
             const response = await fetch('/get');
@@ -56,31 +54,25 @@
             return players;
         }
         fetchPlayersJSON().then(players => {
-            console.log(players) //grab json and put stuff in here
-
+            let player_array = [players][0];
+            console.log(player_array)
+            let player_name = []
+            let player_score = []
             for (let i = 0; i < 3; i++) {
-                // array.push(players[i])
-                document.write (players[i]["score"]+ "  ") 
+                 player_name.push(player_array[i].username)
+                 player_score.push(player_array[i].score)
+
+                // document.write (players[i]["score"]+ "  ") 
                 // document.getElementById("trtd1").innerHTML = players[i]["username"]
             }
-
-
-
-
-            document.write (players[0]["username"])
-            document.write (players[0]["score"])
-
-            console.log(players[0]["username"])
-            
+            console.log(player_name)
+            console.log(player_score)
             // for (let i = 0; i <= players.length; i++) {
             //     console.log(players[i]["score"])
             // }
      
-
         });
-
  
-
     </script>
 
 
