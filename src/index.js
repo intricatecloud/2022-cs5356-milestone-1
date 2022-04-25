@@ -12,55 +12,55 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri =  "mongodb+srv://ja548:3hFmV7tyeqjyPjfP@cluster0.ggyax.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri,{ useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
-app.post("/create", async (request, response) => {
+app.post("/create", async (req, res) => {
 
   try {
     await client.connect();
     const collection = client.db("game").collection("scores");
-    const alreadyExisting = await collection.findOne({ username: request.body.username });
+    const alreadyExisting = await collection.findOne({ username: req.body.username });
     if (alreadyExisting){
       var old_player_score = alreadyExisting.score
     }
-  if ( !alreadyExisting && (request.body.username !== null)) {
+  if ( !alreadyExisting && (req.body.username !== null)) {
       let result = await collection.insertOne(
         {
-            "username": request.body.username,
-            "score": request.body.score,
+            "username": req.body.username,
+            "score": req.body.score,
         }
     );
-    response.send({ "_id": result.insertedId });
+    res.send({ "_id": result.insertedId });
     client.close()
   }
- else if (  old_player_score <= request.body.score && (request.body.username !== null) ) {
+ else if (  old_player_score <= req.body.score && (req.body.username !== null) ) {
       // check if the username already exists
-      let result = await collection.updateOne({ username: request.body.username }, { $set: { score: request.body.score } })
+      let result = await collection.updateOne({ username: req.body.username }, { $set: { score: req.body.score } })
 
-      response.send({ "_id": result.insertedId });
+      res.send({ "_id": result.insertedId });
       client.close()
 }
   else {
-    response.send({ status: false, msg: 'player username already exists or the score is higher' });
+    res.send({ status: false, msg: 'player username already exists or the score is higher' });
       }
   } catch (e) {
-      response.status(500).send({ message: e.message });
+      res.status(500).send({ message: e.message });
   }
 });
   
 
-app.get("/get", async (request, response) => {
+app.get("/get", async (req, res) => {
   try {
     await client.connect();
     const collection = client.db("game").collection("scores");
       let result = await collection.find({}).sort({ score: -1 }).limit(3).toArray();
-      response.send(result);
+      res.send(result);
     } catch (e) {
-      response.status(500).send({ message: e.message });
+      res.status(500).send({ message: e.message });
     }
     
 });
 
 
-app.delete('/delete', async function(req, response) {
+app.delete('/delete', async function(req, res) {
   try {
     let { username, score } = req.body;
     await client.connect();
@@ -69,11 +69,11 @@ app.delete('/delete', async function(req, response) {
     const alreadyExisting = await collection.findOne({ username: req.body.username });
     if (alreadyExisting) {
         const result = await collection.deleteMany(alreadyExisting);
-        response.send({ status: true, msg: 'player deleted' });
+        res.send({ status: true, msg: 'player deleted' });
     } else {
-      response.send({ status: false, msg: 'username not found' });
+      res.send({ status: false, msg: 'username not found' });
     }    } catch (e) {
-      response.status(500).send({ message: e.message });
+      res.status(500).send({ message: e.message });
     }
     
 });
@@ -152,7 +152,7 @@ app.post("/sessionLogin", async(req, res) => {
       res.cookie("__session", sessionCookie, options);
       res.status(200).send(JSON.stringify({status: 'success'}))
   }, error => {
-    res.status(401).send('UNAUTHORIZED REQUEST!')
+    res.status(401).send('UNAUTHORIZED req!')
   })
 
 });
@@ -175,9 +175,9 @@ app.get("/get_email", authMiddleware, async function (req, res) {
   res.send(req.user.email);
 });
 
-const functions = require("firebase-functions")
+// const functions = require("firebase-functions")
 
-exports.app = functions.https.onRequest(app);
+// exports.app = functions.https.onreq(app);
 
-// app.listen({ hostname : 'localhost', port : PORT});
-// console.log("Server started at http://localhost:" + PORT);
+app.listen({ hostname : 'localhost', port : PORT});
+console.log("Server started at http://localhost:" + PORT);
