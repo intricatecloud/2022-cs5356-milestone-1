@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') %>
+  	<title>Snake Game</title>
+  </head>
+
+  <body>
+
+    <div id="score">0</div>
+    <canvas id="snakeboard" width="400" height="400"></canvas>
+
+    <style>
+      #snakeboard {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      #score {
+        text-align: center;
+        font-size: 140px;
+      }
+    </style>
+  </body>
+  <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-performance-compat.js"></script>
+
+  <script type="text/javascript">
+
+    const firebaseConfig = {
+            apiKey: "AIzaSyB_wt1W4TNsLqe7lPifAjMlzMAQsOQvytw",
+            authDomain: "cs-5356-c641b.firebaseapp.com",
+            projectId: "cs-5356-c641b",
+            storageBucket: "cs-5356-c641b.appspot.com",
+            messagingSenderId: "801240318543",  
+            appId: "1:801240318543:web:84cd6deb69ca1eff70203a"    };
+    const app = firebase.initializeApp(firebaseConfig);
+    const fire_pref = firebase.performance();
+    const board_border = 'black';
+    const board_background = "white";
+    const snake_col = 'lightblue';
+    const snake_border = 'darkblue';
+    
+    let snake = [
+      {x: 200, y: 200},
+      {x: 195, y: 200},
+      {x: 190, y: 200},
+      {x: 185, y: 200},
+      {x: 180, y: 200}
+    ]
+
+    let session_score = 0;
+    let changing_direction = false;
+    let food_x;
+    let food_y;
+    let dx = 5; //james fixed speed
+    let dy = 0;
+    
+    
+    const snakeboard = document.getElementById("snakeboard");
+    const snakeboard_ctx = snakeboard.getContext("2d");
+    main();
+
+    gen_food();
+
+    document.addEventListener("keydown", change_direction);
+    
+    function main() {
+
+        if (has_game_ended()) {
+                  //james added get email
+                  async function Get_Email() {
+                    const email = await fetch('/get_email');
+                    return email.text();
+                  }
+                  Get_Email().then(email => {
+                        let player_session = {
+                            username: email,
+                            score: session_score,
+                        };
+
+                        fetch("/create", {
+                            method: "POST",
+                            headers: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(player_session),
+                           
+                        });   
+                       window.location.href = '/leaderboard';
+                  }); 
+                  return 
+                }
+                //end of james's api integration
+        changing_direction = false;
+        setTimeout(function onTick() {
+        clear_board();
+        drawFood();
+        move_snake();
+        drawSnake();
+        main();
+      }, 50)
+    }
+    
+    function clear_board() {
+      snakeboard_ctx.fillStyle = board_background;
+      snakeboard_ctx.strokestyle = board_border;
+      snakeboard_ctx.fillRect(0, 0, snakeboard.width, snakeboard.height);
+      snakeboard_ctx.strokeRect(0, 0, snakeboard.width, snakeboard.height);
+    }
+    
+    function drawSnake() {
+      snake.forEach(drawSnakePart)
+    }
+
+    function drawFood() {
+      snakeboard_ctx.fillStyle = 'red';
+      snakeboard_ctx.fillRect(food_x, food_y, 5, 5);
+    }
+    
+    function drawSnakePart(snakePart) {
+
+      snakeboard_ctx.fillStyle = snake_col;
+      snakeboard_ctx.fillRect(snakePart.x, snakePart.y, 5, 5);
+    }
+
+    function has_game_ended() {
+      for (let i = 0; i < snake.length; i++) {
+        for (let j = 0; j < snake.length; j++) { //james added better logic for detecting game end. 
+              if ((i != j)  && (snake[i].x === snake[j].x && snake[i].y === snake[j].y)) return true
+        }
+      }
+      const hitLeftWall = snake[0].x < 0;
+      const hitRightWall = snake[0].x > snakeboard.width - 5;
+      const hitToptWall = snake[0].y < 0;
+      const hitBottomWall = snake[0].y > snakeboard.height - 5;
+      return hitLeftWall || hitRightWall || hitToptWall || hitBottomWall
+    }
+
+    function random_food(min, max) {
+      return Math.round((Math.random() * (max-min) + min) / 5) * 5+5; //james fixed some stuff 
+    }
+
+    function gen_food() {
+      food_x = random_food(5, snakeboard.width - 5); //james- fixed some hard positions with the food generation
+      food_y = random_food(5, snakeboard.height - 5);
+      snake.forEach(function has_snake_eaten_food(part) {
+        const has_eaten = part.x == food_x && part.y == food_y;
+        if (has_eaten) gen_food();
+      });
+    }
+
+    function change_direction(event) {
+      const LEFT_KEY = 37;
+      const RIGHT_KEY = 39;
+      const UP_KEY = 38;
+      const DOWN_KEY = 40;
+      
+    
+      if (changing_direction) return;
+      changing_direction = true;
+      const keyPressed = event.keyCode;
+      const goingUp = dy === -5;
+      const goingDown = dy === 5;
+      const goingRight = dx === 5;
+      const goingLeft = dx === -5;
+      if (keyPressed === LEFT_KEY && !goingRight) {
+        dx = -5;
+        dy = 0;
+      }
+      if (keyPressed === UP_KEY && !goingDown) {
+        dx = 0;
+        dy = -5;
+      }
+      if (keyPressed === RIGHT_KEY && !goingLeft) {
+        dx = 5;
+        dy = 0;
+      }
+      if (keyPressed === DOWN_KEY && !goingUp) {
+        dx = 0;
+        dy = 5;
+      }
+    }
+
+    function move_snake() {
+      const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+      snake.unshift(head);
+      const has_eaten_food = snake[0].x === food_x && snake[0].y === food_y;
+      if (has_eaten_food) {
+        session_score += 2;
+        document.getElementById('score').innerHTML = session_score;
+        gen_food();
+      } else {
+        snake.pop();
+      }
+    }
+    
+  </script>
+</html>

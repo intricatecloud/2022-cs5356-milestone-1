@@ -130,6 +130,11 @@ app.get("/game",authMiddleware, async function (req, res) {
 });
 
 
+app.get("/game_hard",authMiddleware, async function (req, res) {
+  res.render("pages/game_hard", { user: req.user.email  });
+});
+
+
 app.get("/leaderboard", function (req, res) {
   res.render("pages/leaderboard");
 });
