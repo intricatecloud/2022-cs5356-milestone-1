@@ -50,7 +50,7 @@
       {x: 160, y: 200}
     ]
 
-    let session_score = 13311321;
+    let session_score = 0;
     // True if changing direction
     let changing_direction = false;
     // Horizontal velocity
@@ -133,8 +133,8 @@
     }
 
     function drawFood() {
-      snakeboard_ctx.fillStyle = 'lightgreen';
-      snakeboard_ctx.strokestyle = 'darkgreen';
+      snakeboard_ctx.fillStyle = 'red';
+      snakeboard_ctx.strokestyle = 'red';
       snakeboard_ctx.fillRect(food_x, food_y, 10, 10);
       snakeboard_ctx.strokeRect(food_x, food_y, 10, 10);
     }

@@ -138,10 +138,10 @@ app.get("/chess", function (req, res) {
   res.render("pages/chess");
 });
 
-app.get("/dashboard", authMiddleware, async function (req, res) {
-  const feed = await userFeed.get();
-  res.render("pages/dashboard", { user: req.user, feed });
-});
+// app.get("/dashboard", authMiddleware, async function (req, res) {
+//   const feed = await userFeed.get();
+//   res.render("pages/dashboard", { user: req.user, feed });
+// });
 
 app.post("/sessionLogin", async(req, res) => {
   const idToken = req.body.idToken.toString();
@@ -162,13 +162,13 @@ app.get("/sessionLogout", (req, res) => {
   res.redirect("/sign-in");
 });
 
-app.post("/dog-messages", authMiddleware, async (req, res) => {
-  const msg = req.body.message
-  const user = req.user 
-  await userFeed.add(user,msg)
-  res.redirect("/dashboard");
+// app.post("/dog-messages", authMiddleware, async (req, res) => {
+//   const msg = req.body.message
+//   const user = req.user 
+//   await userFeed.add(user,msg)
+//   res.redirect("/dashboard");
 
-});
+// });
 
 
 app.get("/get_email", authMiddleware, async function (req, res) {
