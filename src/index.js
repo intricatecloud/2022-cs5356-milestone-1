@@ -180,9 +180,9 @@ app.get("/get_email", authMiddleware, async function (req, res) {
   res.send(req.user.email);
 });
 
-// const functions = require("firebase-functions")
+const functions = require("firebase-functions")
 
-// exports.app = functions.https.onreq(app);
+exports.app = functions.https.onRequest(app);
 
-app.listen({ hostname : 'localhost', port : PORT});
-console.log("Server started at http://localhost:" + PORT);
+// app.listen({ hostname : 'localhost', port : PORT});
+// console.log("Server started at http://localhost:" + PORT);
