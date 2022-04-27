@@ -51,6 +51,7 @@
         firebase.auth().createUserWithEmailAndPassword(login, password)
           .then((userCredential) => {
             var user = userCredential.user;
+            window.location.href = "/sign-in";
             window.location.href("/sign-in");  
           })
           .catch((error) => {
