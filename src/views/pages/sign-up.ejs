@@ -13,11 +13,11 @@
   <div class="container">
     Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
     <form id="login-form">
-      <label>Login</label>
+      <label>Email</label>
       <input id="login" type="text" name="login" />
       <label>Password</label>
       <input type="password" name="password" />
-      <button>Log in</button>
+      <button>Signup</button>
     </form>
     <div id="login-error" style="display: none;">
     </div>
@@ -33,13 +33,26 @@
   window.onload = () => {
     console.log('Running onload')
     const firebaseConfig = {
-          apiKey: "AIzaSyDUBzc_bQFbGuI7xko5lWifCIqu1hWMUtY",
-          authDomain: "ruffhouse-25330.firebaseapp.com",
-          projectId: "ruffhouse-25330",
-          storageBucket: "ruffhouse-25330.appspot.com",
-          messagingSenderId: "760636555079",
-          appId: "1:760636555079:web:235d5505c51a7d39aad662"
+      apiKey: "AIzaSyDUBzc_bQFbGuI7xko5lWifCIqu1hWMUtY",
+      authDomain: "ruffhouse-25330.firebaseapp.com",
+      projectId: "ruffhouse-25330",
+      storageBucket: "ruffhouse-25330.appspot.com",
+      messagingSenderId: "760636555079",
+      appId: "1:760636555079:web:235d5505c51a7d39aad662"
     };
+
+    const postUserId = async function (url, idTokenUser) {
+      const response = await fetch(url, {
+        method: "POST",
+        // credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({idToken: idTokenUser}),
+      });
+      return response;
+    };
+
 
     const app = firebase.initializeApp(firebaseConfig);
 
@@ -57,20 +70,23 @@
         // Get the users ID token
         // Start a new session with the users ID token
         // Redirect the user to the /dashboard
-        import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
-        const auth = getAuth();
-        createUserWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
+        app.auth().createUserWithEmailAndPassword(login, password)
+            .then((userCredential) => {
             // Signed in
-            const user = userCredential.user;
-            // ...
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // ..
-          });
+            var user = userCredential.user;
+            return user.getIdToken().then((idToken) => {
+              return postUserId("/sessionLogin", idToken);
+            })
+            .catch((error) => {
+              console.log(error.code, error.message);
+            })
+            .then(() => {
+              window.location.assign("/dashboard");
+            })
+            .catch((error) => {
+              let errorCode = error.code;
+              let errorMessage = error.message;
+            })
 
         return false;
       });

@@ -9,15 +9,15 @@ const port = process.env.PORT || 8080;
 // CS5356 TODO #2
 // Uncomment this next line after you've created
 // serviceAccountKey.json
-// const serviceAccount = require("./../config/serviceAccountKey.json");
+const serviceAccount = require("./../config/serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
 
 // CS5356 TODO #2
 // Uncomment this next block after you've created serviceAccountKey.json
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-// });
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 // use cookies
 app.use(cookieParser());
@@ -58,8 +58,21 @@ app.post("/sessionLogin", async (req, res) => {
   // Create a session cookie using the Firebase Admin SDK
   // Set that cookie with the name 'session'
   // And then return a 200 status code instead of a 501
-  res.status(501).send();
-});
+    const idToken = req.body.idToken.toString();
+    // Set session expiration to 5 days.
+    const expiresIn = 60 * 60 * 24 * 5 * 1000;
+
+    admin.auth().createSessionCookie(idToken, { expiresIn }).then((sessionCookie) => {
+      const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+      res.cookie("session", sessionCookie, options);
+      res.end(JSON.stringify({ status: "success" }));
+    },
+      (error) => {
+        console.log("error", error);
+        res.status(401).send("Unauthorized Request!!");
+      }
+    );
+  });
 
 app.get("/sessionLogout", (req, res) => {
   res.clearCookie("session");
@@ -69,8 +82,12 @@ app.get("/sessionLogout", (req, res) => {
 app.post("/dog-messages", authMiddleware, async (req, res) => {
   // CS5356 TODO #5
   // Get the message that was submitted from the request body
+  const mes = req.body.message.toString();
   // Get the user object from the request body
+  const user = req.user;
   // Add the message to the userFeed so its associated with the user
+  await userFeed.add(user, mes);
+  res.redirect("/dashboard");
 });
 
 app.listen(port);
