@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="06b18230-e151-48c3-b158-0acb9f7945a7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sign-in.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/sign-in.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/index.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sign-up.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/sign-up.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../partials/head.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/../partials/head.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../partials/nav.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/../partials/nav.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +23,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -38,5 +37,11 @@
       <updated>1651892054832</updated>
     </task>
     <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="461" y="163" key="SettingsEditor" timestamp="1652119337514">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="163" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1652119337514" />
   </component>
 </project>
